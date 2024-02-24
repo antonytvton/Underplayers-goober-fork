@@ -91,7 +91,6 @@ public class PressRecipes extends SerializableRecipe {
 		makeRecipe(StampType.WIRE, new OreDictStack(ALLOY.ingot()),		new ItemStack(ModItems.wire_advanced_alloy, 8));
 		makeRecipe(StampType.WIRE, new OreDictStack(MAGTUNG.ingot()),	new ItemStack(ModItems.wire_magnetized_tungsten, 8));
 
-		makeRecipe(StampType.CIRCUIT, new ComparableStack(ModItems.circuit_raw),			ModItems.circuit_aluminium);
 		makeRecipe(StampType.CIRCUIT, new ComparableStack(ModItems.circuit_bismuth_raw),	ModItems.circuit_bismuth);
 		makeRecipe(StampType.CIRCUIT, new ComparableStack(ModItems.circuit_arsenic_raw),	ModItems.circuit_arsenic);
 		makeRecipe(StampType.CIRCUIT, new ComparableStack(ModItems.circuit_tantalium_raw),	ModItems.circuit_tantalium);
