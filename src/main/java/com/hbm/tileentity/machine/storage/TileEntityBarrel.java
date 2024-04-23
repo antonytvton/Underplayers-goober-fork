@@ -10,6 +10,8 @@ import com.hbm.inventory.fluid.FluidType;
 import com.hbm.inventory.fluid.Fluids;
 import com.hbm.inventory.fluid.tank.FluidTank;
 import com.hbm.inventory.fluid.trait.FT_Corrosive;
+import com.hbm.inventory.fluid.trait.FT_Polluting;
+import com.hbm.inventory.fluid.trait.FluidTrait.FluidReleaseType;
 import com.hbm.inventory.gui.GUIBarrel;
 import com.hbm.lib.Library;
 import com.hbm.saveddata.TomSaveData;
@@ -246,8 +248,12 @@ public class TileEntityBarrel extends TileEntityMachineBase implements IFluidAcc
 			worldObj.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, "random.fizz", 1.0F, 1.0F);
 		}
 		
-		if(b == ModBlocks.barrel_corroded && worldObj.rand.nextInt(3) == 0) {
-			tank.setFill(tank.getFill() - 1);
+		if(b == ModBlocks.barrel_corroded ) {
+			if(worldObj.rand.nextInt(3) == 0) {
+				tank.setFill(tank.getFill() - 1);
+				FT_Polluting.pollute(worldObj, xCoord, yCoord, zCoord, tank.getTankType(), FluidReleaseType.SPILL, 1F);
+			}
+			if(worldObj.rand.nextInt(3 * 60 * 20) == 0) worldObj.func_147480_a(xCoord, yCoord, zCoord, false);
 		}
 		
 		//For when Tom's firestorm hits a barrel full of water

@@ -16,6 +16,7 @@ import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -377,10 +378,14 @@ public class ModEventHandlerRenderer {
 	public void tintFog(FogColors event) {
 		
 		EntityPlayer player = MainRegistry.proxy.me();
-		Vec3 color = getFogBlendColor(player.worldObj, (int) Math.floor(player.posX), (int) Math.floor(player.posZ), event.renderPartialTicks);
-		event.red = (float) color.xCoord;
-		event.green = (float) color.yCoord;
-		event.blue = (float) color.zCoord;
+		if(player.worldObj.getBlock((int) Math.floor(player.posX), (int) Math.floor(player.posY), (int) Math.floor(player.posZ)).getMaterial() != Material.water) {
+			Vec3 color = getFogBlendColor(player.worldObj, (int) Math.floor(player.posX), (int) Math.floor(player.posZ), event.red, event.green, event.blue, event.renderPartialTicks);
+			if(color != null) {
+				event.red = (float) color.xCoord;
+				event.green = (float) color.yCoord;
+				event.blue = (float) color.zCoord;
+			}
+		}
 		
 		float soot = (float) (renderSoot - RadiationConfig.sootFogThreshold);
 		float sootColor = 0.15F;
@@ -396,10 +401,10 @@ public class ModEventHandlerRenderer {
 	@SubscribeEvent
 	public void onRenderHUD(RenderGameOverlayEvent.Pre event) {
 		
-		if(event.type == ElementType.HOTBAR && (ModEventHandlerClient.flashTimestamp + ModEventHandlerClient.flashDuration - System.currentTimeMillis()) > 0) {
-			double mult = (ModEventHandlerClient.flashTimestamp + ModEventHandlerClient.flashDuration - System.currentTimeMillis()) / (double) ModEventHandlerClient.flashDuration * 2;
-			double horizontal = MathHelper.clamp_double(Math.sin(System.currentTimeMillis() * 0.02), -0.7, 0.7) * 5;
-			double vertical = MathHelper.clamp_double(Math.sin(System.currentTimeMillis() * 0.01 + 2), -0.7, 0.7) * 1;
+		if(event.type == ElementType.HOTBAR && (ModEventHandlerClient.shakeTimestamp + ModEventHandlerClient.shakeDuration - System.currentTimeMillis()) > 0) {
+			double mult = (ModEventHandlerClient.shakeTimestamp + ModEventHandlerClient.shakeDuration - System.currentTimeMillis()) / (double) ModEventHandlerClient.shakeDuration * 2;
+			double horizontal = MathHelper.clamp_double(Math.sin(System.currentTimeMillis() * 0.02), -0.7, 0.7) * 15;
+			double vertical = MathHelper.clamp_double(Math.sin(System.currentTimeMillis() * 0.01 + 2), -0.7, 0.7) * 3;
 			GL11.glTranslated(horizontal * mult, vertical * mult, 0);
 		}
 	}
@@ -408,19 +413,23 @@ public class ModEventHandlerRenderer {
 	private static int fogX;
 	private static int fogZ;
 	private static Vec3 fogRGBMultiplier;
+	private static boolean doesBiomeApply = false;
+	private static long fogTimer = 0;
 	
 	/** Same procedure as getting the blended sky color but for fog */
-	public static Vec3 getFogBlendColor(World world, int playerX, int playerZ, double partialTicks) {
+	public static Vec3 getFogBlendColor(World world, int playerX, int playerZ, float red, float green, float blue, double partialTicks) {
 		
-		if(playerX == fogX && playerZ == fogZ && fogInit) return fogRGBMultiplier;
-		
+		long millis = System.currentTimeMillis() - fogTimer;
+		if(playerX == fogX && playerZ == fogZ && fogInit && millis < 3000) return fogRGBMultiplier;
+
 		fogInit = true;
+		fogTimer = System.currentTimeMillis();
 		GameSettings settings = Minecraft.getMinecraft().gameSettings;
 		int[] ranges = ForgeModContainer.blendRanges;
 		int distance = 0;
 		
-		if(settings.fancyGraphics && settings.renderDistanceChunks >= 0 && settings.renderDistanceChunks < ranges.length) {
-			distance = ranges[settings.renderDistanceChunks];
+		if(settings.fancyGraphics && settings.renderDistanceChunks >= 0) {
+			distance = ranges[Math.min(settings.renderDistanceChunks, ranges.length - 1)];
 		}
 
 		float r = 0F;
@@ -428,11 +437,12 @@ public class ModEventHandlerRenderer {
 		float b = 0F;
 		
 		int divider = 0;
+		doesBiomeApply = false;
 		
 		for(int x = -distance; x <= distance; x++) {
 			for(int z = -distance; z <= distance; z++) {
 				BiomeGenBase biome = world.getBiomeGenForCoords(playerX + x,  playerZ + z);
-				Vec3 color = getBiomeFogColors(world, biome, partialTicks);
+				Vec3 color = getBiomeFogColors(world, biome, red, green, blue, partialTicks);
 				r += color.xCoord;
 				g += color.yCoord;
 				b += color.zCoord;
@@ -443,17 +453,17 @@ public class ModEventHandlerRenderer {
 		fogX = playerX;
 		fogZ = playerZ;
 		
-		fogRGBMultiplier = Vec3.createVectorHelper(r / divider, g / divider, b / divider);
+		if(doesBiomeApply) {
+			fogRGBMultiplier = Vec3.createVectorHelper(r / divider, g / divider, b / divider);
+		} else {
+			fogRGBMultiplier = null;
+		}
+
 		return fogRGBMultiplier;
 	}
 	
 	/** Returns the current biome's fog color adjusted for brightness if in a crater, or the world's cached fog color if not */
-	public static Vec3 getBiomeFogColors(World world, BiomeGenBase biome, double partialTicks) {
-
-		Vec3 worldFog = world.getFogColor((float) partialTicks);
-		double r = worldFog.xCoord;
-		double g = worldFog.yCoord;
-		double b = worldFog.zCoord;
+	public static Vec3 getBiomeFogColors(World world, BiomeGenBase biome, float r, float g, float b, double partialTicks) {
 		
 		if(biome instanceof BiomeGenCraterBase) {
 			int color = biome.getSkyColorByTemp(biome.temperature);
@@ -466,6 +476,8 @@ public class ModEventHandlerRenderer {
 			r *= skyBrightness;
 			g *= skyBrightness;
 			b *= skyBrightness;
+			
+			doesBiomeApply = true;
 		}
 		
 		return Vec3.createVectorHelper(r, g, b);

@@ -17,6 +17,8 @@ import com.hbm.items.ModItems;
 import com.hbm.items.tool.ItemCoordinateBase;
 import com.hbm.lib.Library;
 import com.hbm.main.MainRegistry;
+import com.hbm.packet.BufPacket;
+import com.hbm.packet.PacketDispatcher;
 import com.hbm.saveddata.SatelliteSavedData;
 import com.hbm.saveddata.satellites.Satellite;
 import com.hbm.saveddata.satellites.SatelliteHorizons;
@@ -30,11 +32,12 @@ import com.hbm.util.fauxpointtwelve.BlockPos;
 import com.hbm.util.fauxpointtwelve.DirPos;
 import com.hbm.world.WorldUtil;
 
-import api.hbm.energy.IEnergyUser;
+import api.hbm.energymk2.IEnergyReceiverMK2;
 import api.hbm.entity.IRadarDetectable;
 import api.hbm.entity.IRadarDetectableNT;
 import api.hbm.entity.IRadarDetectableNT.RadarScanParams;
 import api.hbm.entity.RadarEntry;
+import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -57,7 +60,7 @@ import net.minecraft.world.WorldServer;
  * Now with SmЯt™ lag-free entity detection! (patent pending)
  * @author hbm
  */
-public class TileEntityMachineRadarNT extends TileEntityMachineBase implements IEnergyUser, IGUIProvider, IConfigurableMachine, IControlReceiver {
+public class TileEntityMachineRadarNT extends TileEntityMachineBase implements IEnergyReceiverMK2, IGUIProvider, IConfigurableMachine, IControlReceiver {
 
 	public boolean scanMissiles = true;
 	public boolean scanShells = true;
@@ -205,6 +208,7 @@ public class TileEntityMachineRadarNT extends TileEntityMachineBase implements I
 						screen.refZ = zCoord;
 						screen.range = this.getRange();
 						screen.linked = true;
+						PacketDispatcher.wrapper.sendToAllAround(new BufPacket(xCoord, yCoord, zCoord, this), new TargetPoint(this.worldObj.provider.dimensionId, pos.getX(), pos.getY(), pos.getZ(), 25));
 					}
 				}
 			}
@@ -512,7 +516,7 @@ public class TileEntityMachineRadarNT extends TileEntityMachineBase implements I
 		if(worldObj.getTileEntity(xCoord, yCoord, zCoord) != this) {
 			return false;
 		} else {
-			return player.getDistance(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 128;
+			return true;
 		}
 	}
 

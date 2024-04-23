@@ -6,13 +6,13 @@ import com.hbm.config.FalloutConfigJSON;
 import com.hbm.config.FalloutConfigJSON.FalloutEntry;
 import com.hbm.config.WorldConfig;
 import com.hbm.entity.item.EntityFallingBlockNT;
+import com.hbm.entity.logic.EntityExplosionChunkloading;
 import com.hbm.saveddata.AuxSavedData;
 import com.hbm.world.WorldUtil;
 import com.hbm.world.biome.BiomeGenCraterBase;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Vec3;
@@ -24,7 +24,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.*;
 
-public class EntityFalloutRain extends Entity {
+public class EntityFalloutRain extends EntityExplosionChunkloading {
+	
 	private boolean firstTick = true; // Of course Vanilla has it private in Entity...
 
 	public EntityFalloutRain(World p_i1582_1_) {
@@ -47,55 +48,61 @@ public class EntityFalloutRain extends Entity {
 		
 		if(!worldObj.isRemote) {
 			
+			long start = System.currentTimeMillis();
+			
 			if(firstTick) {
-				if (chunksToProcess.isEmpty() && outerChunksToProcess.isEmpty()) gatherChunks();
+				if(chunksToProcess.isEmpty() && outerChunksToProcess.isEmpty()) gatherChunks();
 				firstTick = false;
 			}
 
 			if(tickDelay == 0) {
 				tickDelay = BombConfig.fDelay;
 				
-				if (!chunksToProcess.isEmpty()) {
-					long chunkPos = chunksToProcess.remove(chunksToProcess.size() - 1); // Just so it doesn't shift the whole list every time
-					int chunkPosX = (int) (chunkPos & Integer.MAX_VALUE);
-					int chunkPosZ = (int) (chunkPos >> 32 & Integer.MAX_VALUE);
-					boolean biomeModified = false;
-					for(int x = chunkPosX << 4; x <= (chunkPosX << 4) + 16; x++) {
-						for(int z = chunkPosZ << 4; z <= (chunkPosZ << 4) + 16; z++) {
-							double percent = Math.hypot(x - posX, z - posZ) * 100 / getScale();
-							stomp(x, z, percent);
-							BiomeGenBase biome = getBiomeChange(percent, getScale());
-							if(biome != null) {
-								WorldUtil.setBiome(worldObj, x, z, biome);
-								biomeModified = true;
-							}
-						}
-					}
-					if(biomeModified) WorldUtil.syncBiomeChange(worldObj, chunkPosX << 4, chunkPosZ << 4);
-					
-				} else if (!outerChunksToProcess.isEmpty()) {
-					long chunkPos = outerChunksToProcess.remove(outerChunksToProcess.size() - 1);
-					int chunkPosX = (int) (chunkPos & Integer.MAX_VALUE);
-					int chunkPosZ = (int) (chunkPos >> 32 & Integer.MAX_VALUE);
-					boolean biomeModified = false;
-					for(int x = chunkPosX << 4; x <= (chunkPosX << 4) + 16; x++) {
-						for(int z = chunkPosZ << 4; z <= (chunkPosZ << 4) + 16; z++) {
-							double distance = Math.hypot(x - posX, z - posZ);
-							if(distance <= getScale()) {
-								double percent = distance * 100 / getScale();
+				while(System.currentTimeMillis() < start + BombConfig.mk5) {
+					if(!chunksToProcess.isEmpty()) {
+						long chunkPos = chunksToProcess.remove(chunksToProcess.size() - 1); // Just so it doesn't shift the whole list every time
+						int chunkPosX = (int) (chunkPos & Integer.MAX_VALUE);
+						int chunkPosZ = (int) (chunkPos >> 32 & Integer.MAX_VALUE);
+						boolean biomeModified = false;
+						for(int x = chunkPosX << 4; x <= (chunkPosX << 4) + 16; x++) {
+							for(int z = chunkPosZ << 4; z <= (chunkPosZ << 4) + 16; z++) {
+								double percent = Math.hypot(x - posX, z - posZ) * 100 / getScale();
 								stomp(x, z, percent);
-								BiomeGenBase biome = getBiomeChange(percent, getScale());
+								BiomeGenBase biome = getBiomeChange(percent, getScale(), worldObj.getBiomeGenForCoords(x, z));
 								if(biome != null) {
 									WorldUtil.setBiome(worldObj, x, z, biome);
 									biomeModified = true;
 								}
 							}
 						}
+						if(biomeModified) WorldUtil.syncBiomeChange(worldObj, chunkPosX << 4, chunkPosZ << 4);
+						
+					} else if (!outerChunksToProcess.isEmpty()) {
+						long chunkPos = outerChunksToProcess.remove(outerChunksToProcess.size() - 1);
+						int chunkPosX = (int) (chunkPos & Integer.MAX_VALUE);
+						int chunkPosZ = (int) (chunkPos >> 32 & Integer.MAX_VALUE);
+						boolean biomeModified = false;
+						for(int x = chunkPosX << 4; x <= (chunkPosX << 4) + 16; x++) {
+							for(int z = chunkPosZ << 4; z <= (chunkPosZ << 4) + 16; z++) {
+								double distance = Math.hypot(x - posX, z - posZ);
+								if(distance <= getScale()) {
+									double percent = distance * 100 / getScale();
+									stomp(x, z, percent);
+									BiomeGenBase biome = getBiomeChange(percent, getScale(), worldObj.getBiomeGenForCoords(x, z));
+									if(biome != null) {
+										WorldUtil.setBiome(worldObj, x, z, biome);
+										biomeModified = true;
+									}
+								}
+							}
+						}
+						if(biomeModified) WorldUtil.syncBiomeChange(worldObj, chunkPosX << 4, chunkPosZ << 4);
+						
+					} else {
+						this.clearChunkLoader();
+						this.setDead();
+						break;
 					}
-					if(biomeModified) WorldUtil.syncBiomeChange(worldObj, chunkPosX << 4, chunkPosZ << 4);
-					
-				} else {
-					setDead();
 				}
 			}
 
@@ -114,11 +121,14 @@ public class EntityFalloutRain extends Entity {
 		}
 	}
 	
-	public static BiomeGenBase getBiomeChange(double dist, int scale) {
+	public static BiomeGenBase getBiomeChange(double dist, int scale, BiomeGenBase original) {
 		if(!WorldConfig.enableCraterBiomes) return null;
-		if(scale >= 150 && dist < 15)	return BiomeGenCraterBase.craterInnerBiome;
-		if(scale >= 100 && dist < 55)	return BiomeGenCraterBase.craterBiome;
-		if(scale >= 25)					return BiomeGenCraterBase.craterOuterBiome;
+		if(scale >= 150 && dist < 15)
+			return BiomeGenCraterBase.craterInnerBiome;
+		if(scale >= 100 && dist < 55 && original != BiomeGenCraterBase.craterInnerBiome)
+			return BiomeGenCraterBase.craterBiome;
+		if(scale >= 25 && original != BiomeGenCraterBase.craterInnerBiome && original != BiomeGenCraterBase.craterBiome)
+			return BiomeGenCraterBase.craterOuterBiome;
 		return null;
 	}
 
@@ -161,7 +171,7 @@ public class EntityFalloutRain extends Entity {
 
 			Block b = worldObj.getBlock(x, y, z);
 
-			if(b.getMaterial() == Material.air) continue;
+			if(b.getMaterial() == Material.air || b == ModBlocks.fallout) continue;
 			if(b == Blocks.bedrock) return;
 			
 			if(b == ModBlocks.volcano_core) {
@@ -191,7 +201,7 @@ public class EntityFalloutRain extends Entity {
 			
 			for(FalloutEntry entry : FalloutConfigJSON.entries) {
 				
-				if(entry.eval(worldObj, x, y, z, b, meta, dist)) {
+				if(entry.eval(worldObj, x, y, z, b, meta, dist, b, meta)) {
 					if(entry.isSolid()) {
 						depth++;
 					}
@@ -203,12 +213,12 @@ public class EntityFalloutRain extends Entity {
 			float hardness = b.getBlockHardness(worldObj, x, y, z);
 			if(dist < 65 && hardness <= Blocks.stonebrick.getExplosionResistance(null) && hardness >= 0/* && !b.hasTileEntity(worldObj.getBlockMetadata(x, y, z))*/) {
 				
-				Block bl = worldObj.getBlock(x, y - 1, z);
-				if(bl == Blocks.air) {
+				if(worldObj.getBlock(x, y - 1, z) == Blocks.air) {
 					for(int i = 0; i <= depth; i++) {
-						hardness = worldObj.getBlock(x, y + i, z).getBlockHardness(worldObj, x, y + i, z);
+						Block block = worldObj.getBlock(x, y + i, z);
+						hardness = block.getBlockHardness(worldObj, x, y + i, z);
 						if(hardness <= Blocks.stonebrick.getExplosionResistance(null) && hardness >= 0) {
-							EntityFallingBlockNT entityfallingblock = new EntityFallingBlockNT(worldObj, x + 0.5D, y + 0.5D + i, z + 0.5D, worldObj.getBlock(x, y + i, z), worldObj.getBlockMetadata(x, y + i, z));
+							EntityFallingBlockNT entityfallingblock = new EntityFallingBlockNT(worldObj, x + 0.5D, y + 0.5D + i, z + 0.5D, block, worldObj.getBlockMetadata(x, y + i, z));
 							entityfallingblock.canDrop = false; //turn off block drops because block dropping was coded by a mule with dementia
 							worldObj.spawnEntityInWorld(entityfallingblock);
 						}
@@ -232,6 +242,7 @@ public class EntityFalloutRain extends Entity {
 
 	@Override
 	protected void entityInit() {
+		super.entityInit();
 		this.dataWatcher.addObject(16, 0);
 	}
 
