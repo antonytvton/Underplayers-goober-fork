@@ -2,9 +2,7 @@ package com.hbm.packet;
 
 import com.hbm.config.MobConfig;
 import com.hbm.entity.mob.EntityDuck;
-import com.hbm.inventory.fluid.FluidType;
-import com.hbm.inventory.fluid.Fluids;
-import com.hbm.items.weapon.ItemMissile.PartSize;
+import com.hbm.items.weapon.ItemCustomMissilePart.PartSize;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.tileentity.TileEntityTickingBase;
 import com.hbm.tileentity.bomb.TileEntityLaunchTable;
@@ -17,7 +15,7 @@ import com.hbm.tileentity.machine.TileEntitySoyuzLauncher;
 import com.hbm.tileentity.machine.storage.TileEntityBarrel;
 import com.hbm.tileentity.machine.storage.TileEntityMachineBattery;
 
-import api.hbm.energy.IEnergyConnector.ConnectionPriority;
+import api.hbm.energymk2.IEnergyReceiverMK2.ConnectionPriority;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
@@ -70,6 +68,7 @@ public class AuxButtonPacket implements IMessage {
 
 	public static class Handler implements IMessageHandler<AuxButtonPacket, IMessage> {
 
+		@SuppressWarnings("incomplete-switch")
 		@Override
 		public IMessage onMessage(AuxButtonPacket m, MessageContext ctx) {
 			

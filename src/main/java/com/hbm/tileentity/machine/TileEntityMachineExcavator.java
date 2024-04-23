@@ -29,12 +29,13 @@ import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.util.Compat;
 import com.hbm.util.EnumUtil;
 import com.hbm.util.I18nUtil;
+import com.hbm.util.InventoryUtil;
 import com.hbm.util.ItemStackUtil;
 import com.hbm.util.fauxpointtwelve.BlockPos;
 import com.hbm.util.fauxpointtwelve.DirPos;
 
 import api.hbm.conveyor.IConveyorBelt;
-import api.hbm.energy.IEnergyUser;
+import api.hbm.energymk2.IEnergyReceiverMK2;
 import api.hbm.fluid.IFluidStandardReceiver;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
@@ -57,7 +58,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityMachineExcavator extends TileEntityMachineBase implements IEnergyUser, IFluidStandardReceiver, IControlReceiver, IGUIProvider, IUpgradeInfoProvider {
+public class TileEntityMachineExcavator extends TileEntityMachineBase implements IEnergyReceiverMK2, IFluidStandardReceiver, IControlReceiver, IGUIProvider, IUpgradeInfoProvider {
 
 	public static final long maxPower = 1_000_000;
 	public long power;
@@ -673,7 +674,7 @@ public class TileEntityMachineExcavator extends TileEntityMachineBase implements
 		
 		if(inv instanceof ISidedInventory) {
 			ISidedInventory sided = (ISidedInventory) inv;
-			access = CraneInserter.masquerade(sided, dir.ordinal());
+			access = InventoryUtil.masquerade(sided, dir.ordinal());
 		}
 		
 		for(ItemStack item : items) {
