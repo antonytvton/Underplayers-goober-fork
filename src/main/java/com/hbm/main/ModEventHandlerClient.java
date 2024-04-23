@@ -2,7 +2,6 @@ package com.hbm.main;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -14,6 +13,10 @@ import org.lwjgl.opengl.GL11;
 import com.hbm.blocks.ILookOverlay;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.BlockAshes;
+import com.hbm.blocks.rail.IRailNTM;
+import com.hbm.blocks.rail.IRailNTM.MoveContext;
+import com.hbm.blocks.rail.IRailNTM.RailCheckType;
+import com.hbm.blocks.rail.IRailNTM.RailContext;
 import com.hbm.config.GeneralConfig;
 import com.hbm.entity.mob.EntityHunterChopper;
 import com.hbm.entity.projectile.EntityChopperMine;
@@ -32,7 +35,6 @@ import com.hbm.interfaces.Spaghetti;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.gui.GUIArmorTable;
 import com.hbm.inventory.gui.GUIScreenPreview;
-import com.hbm.inventory.gui.GUIScreenWikiRender;
 import com.hbm.items.ISyncButtons;
 import com.hbm.items.ModItems;
 import com.hbm.items.armor.ArmorFSB;
@@ -40,9 +42,6 @@ import com.hbm.items.armor.ArmorFSBPowered;
 import com.hbm.items.armor.ArmorNo9;
 import com.hbm.items.armor.ItemArmorMod;
 import com.hbm.items.armor.JetpackBase;
-import com.hbm.items.machine.ItemDepletedFuel;
-import com.hbm.items.machine.ItemFluidDuct;
-import com.hbm.items.machine.ItemRBMKPellet;
 import com.hbm.items.weapon.ItemGunBase;
 import com.hbm.lib.Library;
 import com.hbm.lib.RefStrings;
@@ -71,6 +70,7 @@ import com.hbm.tileentity.machine.TileEntityNukeFurnace;
 import com.hbm.util.I18nUtil;
 import com.hbm.util.ItemStackUtil;
 import com.hbm.util.LoggingUtil;
+import com.hbm.util.fauxpointtwelve.BlockPos;
 import com.hbm.wiaj.GuiWorldInAJar;
 import com.hbm.wiaj.cannery.CanneryBase;
 import com.hbm.wiaj.cannery.Jars;
@@ -86,7 +86,6 @@ import com.hbm.sound.MovingSoundPlayerLoop.EnumHbmSound;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
@@ -113,7 +112,6 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
@@ -151,8 +149,6 @@ public class ModEventHandlerClient {
 	
 	public static final int flashDuration = 5_000;
 	public static long flashTimestamp;
-	public static final int shakeDuration = 1_500;
-	public static long shakeTimestamp;
 	
 	@SubscribeEvent
 	public void onOverlayRender(RenderGameOverlayEvent.Pre event) {
@@ -171,7 +167,7 @@ public class ModEventHandlerClient {
 			GL11.glDepthMask(false);
 			tess.startDrawingQuads();
 			float brightness = (flashTimestamp + flashDuration - System.currentTimeMillis()) / (float) flashDuration;
-			tess.setColorRGBA_F(1F, 1F, 1F, brightness * 1F);
+			tess.setColorRGBA_F(1F, 1F, 1F, brightness * 0.8F);
 			tess.addVertex(width, 0, 0);
 			tess.addVertex(0, 0, 0);
 			tess.addVertex(0, height, 0);
@@ -219,11 +215,6 @@ public class ModEventHandlerClient {
 					} else if(world.getBlock(mop.blockX, mop.blockY, mop.blockZ) instanceof ILookOverlay) {
 						((ILookOverlay) world.getBlock(mop.blockX, mop.blockY, mop.blockZ)).printHook(event, world, mop.blockX, mop.blockY, mop.blockZ);
 					}
-					
-					/*List<String> text = new ArrayList();
-					text.add("Meta: " + world.getBlockMetadata(mop.blockX, mop.blockY, mop.blockZ));
-					ILookOverlay.printGeneric(event, "DEBUG", 0xffff00, 0x4040000, text);*/
-					
 				} else if(mop.typeOfHit == mop.typeOfHit.ENTITY) {
 					Entity entity = mop.entityHit;
 					
@@ -330,9 +321,6 @@ public class ModEventHandlerClient {
 			
 			if(animation == null)
 				continue;
-
-			if(animation.holdLastFrame)
-				continue;
 			
 			long time = System.currentTimeMillis() - animation.startMillis;
 			
@@ -373,31 +361,24 @@ public class ModEventHandlerClient {
 		}
 	}
 	
-	@SubscribeEvent(receiveCanceled = true)
-	public void onHUDRenderShield(RenderGameOverlayEvent.Pre event) {
-
-		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-		
-		if(event.type == event.type.ARMOR) {
-
-			HbmPlayerProps props = HbmPlayerProps.getData(player);
-			if(props.getEffectiveMaxShield() > 0) {
-				RenderScreenOverlay.renderShieldBar(event.resolution, Minecraft.getMinecraft().ingameGUI);
-			}
-		}
-	}
-	
-	@SubscribeEvent(receiveCanceled = true, priority = EventPriority.LOW)
-	public void onHUDRenderBar(RenderGameOverlayEvent.Post event) {
+	@SubscribeEvent
+	public void onOverlayRender(RenderGameOverlayEvent.Post event) {
 		
 		/// HANDLE ELECTRIC FSB HUD ///
 		
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		Tessellator tess = Tessellator.instance;
 		
-		if(event.type == event.type.ARMOR) {
+		if(!event.isCanceled() && event.type == event.type.HEALTH) {
+			HbmPlayerProps props = HbmPlayerProps.getData(player);
+			if(props.maxShield > 0) {
+				RenderScreenOverlay.renderShieldBar(event.resolution, Minecraft.getMinecraft().ingameGUI);
+			}
+		}
+		
+		if(!event.isCanceled() && event.type == event.type.ARMOR) {
 			
-			if(ForgeHooks.getTotalArmorValue(player) == 0) {
+			if(ForgeHooks.getTotalArmorValue(player) == 0/* && GuiIngameForge.left_height == 59*/) {
 				GuiIngameForge.left_height -= 10;
 			}
 
@@ -414,7 +395,7 @@ public class ModEventHandlerClient {
 
 				for(int i = 0; i < (noHelmet ? 3 : 4); i++) {
 					
-					int top = height - GuiIngameForge.left_height + 7;
+					int top = height - GuiIngameForge.left_height + 6;
 
 					ItemStack stack = player.inventory.armorInventory[i];
 
@@ -468,6 +449,7 @@ public class ModEventHandlerClient {
 				GL11.glEnable(GL11.GL_TEXTURE_2D);
 
 			}
+
 		}
 	}
 	
@@ -826,8 +808,6 @@ public class ModEventHandlerClient {
 			CanneryBase cannery = Jars.canneries.get(comp);
 			if(cannery != null) {
 				list.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("cannery.f1"));
-				lastCannery = comp;
-				canneryTimestamp = System.currentTimeMillis();
 			}
 		} catch(Exception ex) {
 			list.add(EnumChatFormatting.RED + "Error loading cannery: " + ex.getLocalizedMessage());
@@ -842,9 +822,6 @@ public class ModEventHandlerClient {
 			}
 		}*/
 	}
-	
-	private static long canneryTimestamp;
-	private static ComparableStack lastCannery = null;
 	
 	private ResourceLocation ashes = new ResourceLocation(RefStrings.MODID + ":textures/misc/overlay_ash.png");
 	
@@ -918,24 +895,20 @@ public class ModEventHandlerClient {
 
 	public static int currentBrightness = 0;
 	public static int lastBrightness = 0;
-
-	static boolean isRenderingItems = false;
 	
 	@SubscribeEvent
 	public void clentTick(ClientTickEvent event) {
 		
 		Minecraft mc = Minecraft.getMinecraft();
 		ArmorNo9.updateWorldHook(mc.theWorld);
-
-		boolean supportsHighRenderDistance = FMLClientHandler.instance().hasOptifine() || Loader.isModLoaded("angelica");
 		
-		if(mc.gameSettings.renderDistanceChunks > 16 && GeneralConfig.enableRenderDistCheck && !supportsHighRenderDistance) {
+		if(mc.gameSettings.renderDistanceChunks > 16 && GeneralConfig.enableRenderDistCheck && ! FMLClientHandler.instance().hasOptifine()) {
 			mc.gameSettings.renderDistanceChunks = 16;
 			LoggingUtil.errorWithHighlight("========================== WARNING ==========================");
-			LoggingUtil.errorWithHighlight("Dangerous render distance detected: Values over 16 only work on 1.8+ or with Optifine/Angelica installed!!");
+			LoggingUtil.errorWithHighlight("Dangerous render distance detected: Values over 16 only work on 1.8+ or with Optifine installed!!");
 			LoggingUtil.errorWithHighlight("Set '1.25_enableRenderDistCheck' in hbm.cfg to 'false' to disable this check.");
 			LoggingUtil.errorWithHighlight("========================== WARNING ==========================");
-			LoggingUtil.errorWithHighlight("If you got this error after removing Optifine/Angelica: Consider deleting your option files after removing mods.");
+			LoggingUtil.errorWithHighlight("If you got this error after removing Optifine: Consider deleting your option files after removing mods.");
 			LoggingUtil.errorWithHighlight("If you got this error after downgrading your Minecraft version: Consider using a launcher that doesn't reuse the same folders for every game instance. MultiMC for example, it's really good and it comes with a dedicated cat button. You like cats, right? Are you using the Microsoft launcher? The one launcher that turns every version switch into a tightrope act because all the old config and options files are still here because different instances all use the same folder structure instead of different folders like a competent launcher would, because some MO-RON thought that this was an acceptable way of doing things? Really? The launcher that circumcises every crashlog into indecipherable garbage, tricking oblivious people into posting that as a \"crash report\", effectively wasting everyone's time? The launcher made by the company that thought it would be HI-LA-RI-OUS to force everyone to use Microsoft accounts, effectively breaking every other launcher until they implement their terrible auth system?");
 			LoggingUtil.errorWithHighlight("========================== WARNING ==========================");
 		}
@@ -961,14 +934,9 @@ public class ModEventHandlerClient {
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_F1)) {
 			
-			ComparableStack comp = canneryTimestamp > System.currentTimeMillis() - 100 ? lastCannery : null;
-			
-			if(comp == null) {
-				ItemStack stack = getMouseOverStack();
-				if(stack != null) comp = new ComparableStack(stack).makeSingular();
-			}
-			
-			if(comp != null) {
+			ItemStack stack = getMouseOverStack();
+			if(stack != null) {
+				ComparableStack comp = new ComparableStack(stack).makeSingular();
 				CanneryBase cannery = Jars.canneries.get(comp);
 				if(cannery != null) {
 					FMLCommonHandler.instance().showGuiScreen(new GuiWorldInAJar(cannery.createScript(), cannery.getName(), cannery.getIcon(), cannery.seeAlso()));
@@ -984,46 +952,6 @@ public class ModEventHandlerClient {
 				stack.stackSize = 1;
 				FMLCommonHandler.instance().showGuiScreen(new GUIScreenPreview(stack));
 			}
-		}
-
-		if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && Keyboard.isKeyDown(Keyboard.KEY_0) && Keyboard.isKeyDown(Keyboard.KEY_1)) {
-			if (!isRenderingItems) {
-				isRenderingItems = true;
-
-				MainRegistry.logger.info("Taking a screenshot of ALL items, if you did this by mistake: fucking lmao get rekt nerd");
-
-				List<Item> ignoredItems = Arrays.asList(
-					ModItems.assembly_template,
-					ModItems.crucible_template,
-					ModItems.chemistry_template,
-					ModItems.chemistry_icon,
-					ModItems.fluid_icon,
-					ModItems.achievement_icon,
-					Items.spawn_egg,
-					Item.getItemFromBlock(Blocks.mob_spawner)
-				);
-
-				List<Class<? extends Item>> collapsedClasses = Arrays.asList(
-					ItemRBMKPellet.class,
-					ItemDepletedFuel.class,
-					ItemFluidDuct.class
-				);
-
-				List<ItemStack> stacks = new ArrayList<ItemStack>();
-				for (Object reg : Item.itemRegistry) {
-					Item item = (Item) reg;
-					if(ignoredItems.contains(item)) continue;
-					if(collapsedClasses.contains(item.getClass())) {
-						stacks.add(new ItemStack(item));
-					} else {
-						item.getSubItems(item, null, stacks);
-					}
-				}
-
-				FMLCommonHandler.instance().showGuiScreen(new GUIScreenWikiRender(stacks.toArray(new ItemStack[0])));
-			}
-		} else {
-			isRenderingItems = false;
 		}
 		
 		if(event.phase == Phase.START) {
@@ -1309,7 +1237,6 @@ public class ModEventHandlerClient {
 
 	public static IIcon particleBase;
 	public static IIcon particleLeaf;
-	public static IIcon particleSplash;
 
 	@SubscribeEvent
 	public void onTextureStitch(TextureStitchEvent.Pre event) {
@@ -1317,7 +1244,6 @@ public class ModEventHandlerClient {
 		if(event.map.getTextureType() == 0) {
 			particleBase = event.map.registerIcon(RefStrings.MODID + ":particle/particle_base");
 			particleLeaf = event.map.registerIcon(RefStrings.MODID + ":particle/dead_leaf");
-			particleSplash = event.map.registerIcon(RefStrings.MODID + ":particle/particle_splash");
 		}
 	}
 
@@ -1409,9 +1335,7 @@ public class ModEventHandlerClient {
 			case 12: main.splashText = "Imagine being scared by splash texts!"; break;
 			}
 			
-			double d = Math.random();
-			if(d < 0.1) main.splashText = "Redditors aren't people!";
-			else if(d < 0.2) main.splashText = "Can someone tell me what corrosive fumes the people on Reddit are huffing so I can avoid those more effectively?";
+			if(Math.random() < 0.1) main.splashText = "Redditors aren't people!";
 		}
 	}
 }

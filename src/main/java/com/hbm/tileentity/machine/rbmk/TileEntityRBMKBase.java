@@ -90,7 +90,7 @@ public abstract class TileEntityRBMKBase extends TileEntityLoadedBase implements
 	
 	//unused
 	public int trackingRange() {
-		return 15;
+		return 25;
 	}
 	
 	@Override
@@ -135,14 +135,14 @@ public abstract class TileEntityRBMKBase extends TileEntityLoadedBase implements
 		this.heat -= processedWater * heatConsumption;
 	}
 	
-	public static final ForgeDirection[] neighborDirs = new ForgeDirection[] {
+	public static final ForgeDirection[] heatDirs = new ForgeDirection[] {
 			ForgeDirection.NORTH,
 			ForgeDirection.EAST,
 			ForgeDirection.SOUTH,
 			ForgeDirection.WEST
 	};
 	
-	protected TileEntityRBMKBase[] neighborCache = new TileEntityRBMKBase[4];
+	protected TileEntityRBMKBase[] heatCache = new TileEntityRBMKBase[4];
 	
 	/**
 	 * Moves heat to neighboring parts, if possible, in a relatively fair manner
@@ -156,24 +156,24 @@ public abstract class TileEntityRBMKBase extends TileEntityLoadedBase implements
 		int steamTot = this.steam;
 		
 		int index = 0;
-		for(ForgeDirection dir : neighborDirs) {
+		for(ForgeDirection dir : heatDirs) {
 			
-			if(neighborCache[index] != null && neighborCache[index].isInvalid())
-				neighborCache[index] = null;
+			if(heatCache[index] != null && heatCache[index].isInvalid())
+				heatCache[index] = null;
 			
-			if(neighborCache[index] == null) {
+			if(heatCache[index] == null) {
 				TileEntity te = Compat.getTileStandard(worldObj, xCoord + dir.offsetX, yCoord, zCoord + dir.offsetZ);
 				
 				if(te instanceof TileEntityRBMKBase) {
 					TileEntityRBMKBase base = (TileEntityRBMKBase) te;
-					neighborCache[index] = base;
+					heatCache[index] = base;
 				}
 			}
 			
 			index++;
 		}
 		
-		for(TileEntityRBMKBase base : neighborCache) {
+		for(TileEntityRBMKBase base : heatCache) {
 			
 			if(base != null) {
 				rec.add(base);

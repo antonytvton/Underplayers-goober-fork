@@ -16,7 +16,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
@@ -68,8 +67,7 @@ public class ItemPipette extends Item implements IFillableItem {
 		stack.stackTagCompound.setShort("fill", fill);
 	}
 
-	@Override
-	public int getFill(ItemStack stack) {
+	public short getFill(ItemStack stack) {
 		if(!stack.hasTagCompound()) {
 			initNBT(stack);
 		}
@@ -94,7 +92,7 @@ public class ItemPipette extends Item implements IFillableItem {
 				stack.stackTagCompound.setShort("capacity", (short) a);
 				player.addChatMessage(new ChatComponentText(a + "/" + this.getMaxFill() + "mB"));
 			} else {
-				player.addChatMessage(new ChatComponentTranslation("desc.item.pipette.noEmpty"));
+				player.addChatMessage(new ChatComponentText(I18nUtil.resolveKey("desc.item.pipette.noEmpty")));
 			}
 		}
 		return stack;
@@ -134,16 +132,13 @@ public class ItemPipette extends Item implements IFillableItem {
 		this.setFill(stack, type, (short) (this.getFill(stack) + toFill));
 
 		// fizzling checks
-		if(this.getFill(stack) > 0 && willFizzle(type)) {
-			stack.stackSize = 0;
+		if(this.getFill(stack) > 0 && (this.getType(stack).isCorrosive() && type != Fluids.ACID)) {
+			if(this == ModItems.pipette) {
+				stack.stackSize = 0;
+			}
 		}
 
 		return amount - toFill;
-	}
-
-	public boolean willFizzle(FluidType type) {
-		if (this != ModItems.pipette) return false;
-		return type.isCorrosive() && type != Fluids.ACID;
 	}
 
 	@Override
@@ -204,8 +199,4 @@ public class ItemPipette extends Item implements IFillableItem {
 		}
 	}
 
-	@Override
-	public FluidType getFirstFluidType(ItemStack stack) {
-		return this.getType(stack);
-	}
 }

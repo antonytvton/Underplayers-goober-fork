@@ -14,13 +14,13 @@ import com.hbm.explosion.ExplosionChaos;
 import com.hbm.explosion.ExplosionLarge;
 import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.MissileStruct;
-import com.hbm.items.ModItems;
-import com.hbm.items.weapon.ItemCustomMissilePart;
-import com.hbm.items.weapon.ItemCustomMissilePart.FuelType;
-import com.hbm.items.weapon.ItemCustomMissilePart.PartSize;
-import com.hbm.items.weapon.ItemCustomMissilePart.WarheadType;
+import com.hbm.items.weapon.ItemMissile;
+import com.hbm.items.weapon.ItemMissile.FuelType;
+import com.hbm.items.weapon.ItemMissile.PartSize;
+import com.hbm.items.weapon.ItemMissile.WarheadType;
 import com.hbm.main.MainRegistry;
 
+import api.hbm.entity.IRadarDetectable;
 import api.hbm.entity.IRadarDetectableNT;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -28,7 +28,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
-public class EntityMissileCustom extends EntityMissileBaseNT implements IChunkLoader {
+public class EntityMissileCustom extends EntityMissileBaseNT implements IChunkLoader, IRadarDetectable {
 
 	protected float fuel;
 	protected float consumption;
@@ -61,8 +61,8 @@ public class EntityMissileCustom extends EntityMissileBaseNT implements IChunkLo
 			this.dataWatcher.updateObject(11, Integer.valueOf(0));
 		}
 
-		ItemCustomMissilePart fuselage = (ItemCustomMissilePart) template.fuselage;
-		ItemCustomMissilePart thruster = (ItemCustomMissilePart) template.thruster;
+		ItemMissile fuselage = (ItemMissile) template.fuselage;
+		ItemMissile thruster = (ItemMissile) template.thruster;
 
 		this.fuel = (Float) fuselage.attributes[1];
 		this.consumption = (Float) thruster.attributes[1];
@@ -72,11 +72,8 @@ public class EntityMissileCustom extends EntityMissileBaseNT implements IChunkLo
 
 	@Override
 	protected void killMissile() {
-		if(!this.isDead) {
-			this.setDead();
-			ExplosionLarge.explode(worldObj, posX, posY, posZ, 5, true, false, true);
-			ExplosionLarge.spawnShrapnelShower(worldObj, posX, posY, posZ, motionX, motionY, motionZ, 15, 0.075);
-		}
+		ExplosionLarge.explode(worldObj, posX, posY, posZ, 5, true, false, true);
+		ExplosionLarge.spawnShrapnelShower(worldObj, posX, posY, posZ, motionX, motionY, motionZ, 15, 0.075);
 	}
 	
 	@Override
@@ -131,7 +128,7 @@ public class EntityMissileCustom extends EntityMissileBaseNT implements IChunkLo
 
 		Vec3 v = Vec3.createVectorHelper(motionX, motionY, motionZ).normalize();
 		String smoke = "";
-		ItemCustomMissilePart part = (ItemCustomMissilePart) Item.getItemById(this.dataWatcher.getWatchableObjectInt(10));
+		ItemMissile part = (ItemMissile) Item.getItemById(this.dataWatcher.getWatchableObjectInt(10));
 		FuelType type = (FuelType) part.attributes[0];
 
 		switch(type) {
@@ -148,7 +145,7 @@ public class EntityMissileCustom extends EntityMissileBaseNT implements IChunkLo
 	@Override
 	public void onImpact() { //TODO: demolish this steaming pile of shit
 
-		ItemCustomMissilePart part = (ItemCustomMissilePart) Item.getItemById(this.dataWatcher.getWatchableObjectInt(9));
+		ItemMissile part = (ItemMissile) Item.getItemById(this.dataWatcher.getWatchableObjectInt(9));
 
 		WarheadType type = (WarheadType) part.attributes[0];
 		float strength = (Float) part.attributes[1];
@@ -222,9 +219,25 @@ public class EntityMissileCustom extends EntityMissileBaseNT implements IChunkLo
 	}
 
 	@Override
+	public RadarTargetType getTargetType() {
+
+		ItemMissile part = (ItemMissile) Item.getItemById(this.dataWatcher.getWatchableObjectInt(10));
+		PartSize top = part.top;
+		PartSize bottom = part.bottom;
+
+		if(top == PartSize.SIZE_10 && bottom == PartSize.SIZE_10) return RadarTargetType.MISSILE_10;
+		if(top == PartSize.SIZE_10 && bottom == PartSize.SIZE_15) return RadarTargetType.MISSILE_10_15;
+		if(top == PartSize.SIZE_15 && bottom == PartSize.SIZE_15) return RadarTargetType.MISSILE_15;
+		if(top == PartSize.SIZE_15 && bottom == PartSize.SIZE_20) return RadarTargetType.MISSILE_15_20;
+		if(top == PartSize.SIZE_20 && bottom == PartSize.SIZE_20) return RadarTargetType.MISSILE_20;
+
+		return RadarTargetType.MISSILE_TIER1;
+	}
+
+	@Override
 	public String getUnlocalizedName() {
 
-		ItemCustomMissilePart part = (ItemCustomMissilePart) Item.getItemById(this.dataWatcher.getWatchableObjectInt(10));
+		ItemMissile part = (ItemMissile) Item.getItemById(this.dataWatcher.getWatchableObjectInt(10));
 		PartSize top = part.top;
 		PartSize bottom = part.bottom;
 
@@ -240,7 +253,7 @@ public class EntityMissileCustom extends EntityMissileBaseNT implements IChunkLo
 	@Override
 	public int getBlipLevel() {
 
-		ItemCustomMissilePart part = (ItemCustomMissilePart) Item.getItemById(this.dataWatcher.getWatchableObjectInt(10));
+		ItemMissile part = (ItemMissile) Item.getItemById(this.dataWatcher.getWatchableObjectInt(10));
 		PartSize top = part.top;
 		PartSize bottom = part.bottom;
 
@@ -255,9 +268,4 @@ public class EntityMissileCustom extends EntityMissileBaseNT implements IChunkLo
 
 	@Override public List<ItemStack> getDebris() { return new ArrayList(); }
 	@Override public ItemStack getDebrisRareDrop() { return null; }
-
-	@Override
-	public ItemStack getMissileItemForInfo() {
-		return new ItemStack(ModItems.missile_custom);
-	}
 }

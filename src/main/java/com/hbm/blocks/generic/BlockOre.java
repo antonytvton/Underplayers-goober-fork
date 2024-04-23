@@ -44,13 +44,13 @@ public class BlockOre extends Block {
 	@Spaghetti("*throws up*")
 	@Override
 	public Item getItemDropped(int i, Random rand, int j) {
-		if(this == ModBlocks.ore_fluorite) {
+		if(this == ModBlocks.ore_fluorite || this == ModBlocks.basalt_fluorite) {
 			return ModItems.fluorite;
 		}
 		if(this == ModBlocks.ore_niter) {
 			return ModItems.niter;
 		}
-		if(this == ModBlocks.ore_sulfur || this == ModBlocks.ore_nether_sulfur) {
+		if(this == ModBlocks.ore_sulfur || this == ModBlocks.ore_nether_sulfur || this == ModBlocks.ore_meteor_sulfur || this == ModBlocks.basalt_sulfur) {
 			return ModItems.sulfur;
 		}
 		if(this == ModBlocks.waste_trinitite || this == ModBlocks.waste_trinitite_red) {
@@ -77,10 +77,108 @@ public class BlockOre extends Block {
 		if(this == ModBlocks.block_meteor_broken) {
 			return ModItems.fragment_meteorite;
 		}
+		if(this == ModBlocks.block_meteor_treasure) {
+			switch(rand.nextInt(36)) {
+			case 0:
+				return ModItems.coil_advanced_alloy;
+			case 1:
+				return ModItems.plate_advanced_alloy;
+			case 2:
+				return ModItems.powder_desh_mix;
+			case 3:
+				return ModItems.ingot_desh;
+			case 4:
+				return ModItems.battery_advanced;
+			case 5:
+				return ModItems.battery_lithium_cell;
+			case 6:
+				return ModItems.battery_advanced_cell;
+			case 7:
+				return ModItems.nugget_schrabidium;
+			case 8:
+				return ModItems.ingot_plutonium;
+			case 9:
+				return ModItems.ingot_thorium_fuel;
+			case 10:
+				return ModItems.ingot_u233;
+			case 11:
+				return ModItems.turbine_tungsten;
+			case 12:
+				return ModItems.ingot_dura_steel;
+			case 13:
+				return ModItems.ingot_polymer;
+			case 14:
+				return ModItems.ingot_tungsten;
+			case 15:
+				return ModItems.ingot_combine_steel;
+			case 16:
+				return ModItems.ingot_lanthanium;
+			case 17:
+				return ModItems.ingot_actinium;
+			case 18:
+				return Item.getItemFromBlock(ModBlocks.block_meteor);
+			case 19:
+				return Item.getItemFromBlock(ModBlocks.fusion_heater);
+			case 20:
+				return ModItems.circuit_red_copper;
+			case 21:
+				return Item.getItemFromBlock(ModBlocks.watz_element);
+			case 22:
+				return Item.getItemFromBlock(ModBlocks.ore_rare);
+			case 23:
+				return Item.getItemFromBlock(ModBlocks.fusion_conductor);
+			case 24:
+				return Item.getItemFromBlock(ModBlocks.pwr_fuel);
+			case 25:
+				return Item.getItemFromBlock(ModBlocks.machine_diesel);
+			case 26:
+				return Item.getItemFromBlock(ModBlocks.machine_rtg_grey);
+			case 27:
+				return ModItems.pellet_rtg;
+			case 28:
+				return ModItems.pellet_rtg_weak;
+			case 29:
+				return ModItems.rtg_unit;
+			case 30:
+				return ModItems.gun_spark_ammo;
+			case 31: case 32:
+				return ModItems.ammo_nuke;
+			case 33:
+				return ModItems.gun_defabricator_ammo;
+			case 34:
+				return ModItems.gun_osipr_ammo2;
+			case 35:
+				return ModItems.glitch;
+			}
+		}
 		if(this == ModBlocks.ore_rare || this == ModBlocks.ore_gneiss_rare) {
 			return ModItems.chunk_ore;
 		}
-		if(this == ModBlocks.ore_asbestos || this == ModBlocks.ore_gneiss_asbestos) {
+		if(this == ModBlocks.deco_aluminium) {
+			return ModItems.ingot_aluminium;
+		}
+		if(this == ModBlocks.deco_beryllium) {
+			return ModItems.ingot_beryllium;
+		}
+		if(this == ModBlocks.deco_lead) {
+			return ModItems.ingot_lead;
+		}
+		if(this == ModBlocks.deco_red_copper) {
+			return ModItems.ingot_red_copper;
+		}
+		if(this == ModBlocks.deco_steel) {
+			return ModItems.ingot_steel;
+		}
+		if(this == ModBlocks.deco_titanium) {
+			return ModItems.ingot_titanium;
+		}
+		if(this == ModBlocks.deco_tungsten) {
+			return ModItems.ingot_tungsten;
+		}
+		if(this == ModBlocks.deco_asbestos) {
+			return ModItems.ingot_asbestos;
+		}
+		if(this == ModBlocks.ore_asbestos || this == ModBlocks.ore_gneiss_asbestos || this == ModBlocks.basalt_asbestos) {
 			return ModItems.ingot_asbestos;
 		}
 		if(this == ModBlocks.ore_lignite) {
@@ -104,14 +202,17 @@ public class BlockOre extends Block {
 
 	@Override
 	public int quantityDropped(Random rand) {
-		if(this == ModBlocks.ore_fluorite) {
+		if(this == ModBlocks.ore_fluorite || this == ModBlocks.basalt_fluorite) {
 			return 2 + rand.nextInt(3);
 		}
 		if(this == ModBlocks.ore_niter) {
 			return 2 + rand.nextInt(3);
 		}
-		if(this == ModBlocks.ore_sulfur || this == ModBlocks.ore_nether_sulfur) {
+		if(this == ModBlocks.ore_sulfur || this == ModBlocks.ore_nether_sulfur || this == ModBlocks.ore_meteor_sulfur || this == ModBlocks.basalt_sulfur) {
 			return 2 + rand.nextInt(3);
+		}
+		if(this == ModBlocks.ore_rare || this == ModBlocks.ore_gneiss_rare) {
+			return 4 + rand.nextInt(8);
 		}
 		if(this == ModBlocks.block_meteor_broken) {
 			return 1 + rand.nextInt(3);

@@ -58,23 +58,10 @@ public class GunAnimationPacket implements IMessage {
 					return null;
 				
 				AnimType type = AnimType.values()[m.type];
-				ItemGunBase base = (ItemGunBase) stack.getItem();
-
-				BusAnimation animation = base.getAnimation(stack, type);
-
-				// Fallback to regular reload if no empty reload animation
-				if(animation == null && type == AnimType.RELOAD_EMPTY) {
-					animation = base.getAnimation(stack, AnimType.RELOAD);
-				}
-
-				// Fallback to regular CYCLE if no ALT_CYCLE (or CYCLE_EMPTY) exists
-				if(animation == null && (type == AnimType.ALT_CYCLE || type == AnimType.CYCLE_EMPTY)) {
-					animation = base.getAnimation(stack, AnimType.CYCLE);
-				}
+				BusAnimation animation = ((ItemGunBase) stack.getItem()).getAnimation(stack, type);
 				
 				if(animation != null) {
-					boolean isReloadAnimation = type == AnimType.RELOAD || type == AnimType.RELOAD_CYCLE || type == AnimType.RELOAD_EMPTY;
-					HbmAnimations.hotbar[slot] = new Animation(stack.getItem().getUnlocalizedName(), System.currentTimeMillis(), animation, isReloadAnimation && base.mainConfig.reloadAnimationsSequential);
+					HbmAnimations.hotbar[slot] = new Animation(stack.getItem().getUnlocalizedName(), System.currentTimeMillis(), animation);
 				}
 				
 			} catch(Exception x) { }

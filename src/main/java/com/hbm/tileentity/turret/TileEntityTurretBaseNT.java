@@ -9,6 +9,7 @@ import com.hbm.blocks.BlockDummyable;
 import com.hbm.entity.logic.EntityBomber;
 import com.hbm.entity.missile.EntityMissileBaseNT;
 import com.hbm.entity.missile.EntityMissileCustom;
+import com.hbm.entity.missile.EntitySiegeDropship;
 import com.hbm.entity.projectile.EntityBulletBaseNT;
 import com.hbm.entity.train.EntityRailCarBase;
 import com.hbm.handler.BulletConfigSyncingUtil;
@@ -27,7 +28,7 @@ import com.hbm.tileentity.IGUIProvider;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.util.CompatExternal;
 
-import api.hbm.energymk2.IEnergyReceiverMK2;
+import api.hbm.energy.IEnergyUser;
 import api.hbm.entity.IRadarDetectableNT;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.relauncher.Side;
@@ -58,7 +59,7 @@ import net.minecraftforge.common.util.ForgeDirection;
  * @author hbm
  *
  */
-public abstract class TileEntityTurretBaseNT extends TileEntityMachineBase implements IEnergyReceiverMK2, IControlReceiver, IGUIProvider {
+public abstract class TileEntityTurretBaseNT extends TileEntityMachineBase implements IEnergyUser, IControlReceiver, IGUIProvider {
 
 	@Override
 	public boolean hasPermission(EntityPlayer player) {
@@ -83,10 +84,6 @@ public abstract class TileEntityTurretBaseNT extends TileEntityMachineBase imple
 	//only used by clients for interpolation
 	public double lastRotationYaw;
 	public double lastRotationPitch;
-	//only used by clients for approach
-	public double syncRotationYaw;
-	public double syncRotationPitch;
-	protected int turnProgress;
 	//is the turret on?
 	public boolean isOn = false;
 	//is the turret aimed at the target?
@@ -159,41 +156,46 @@ public abstract class TileEntityTurretBaseNT extends TileEntityMachineBase imple
 		if(worldObj.isRemote) {
 			this.lastRotationPitch = this.rotationPitch;
 			this.lastRotationYaw = this.rotationYaw;
-			this.rotationPitch = this.syncRotationPitch;
-			this.rotationYaw = this.syncRotationYaw;
 		}
+
+		this.aligned = false;
 		
 		if(!worldObj.isRemote) {
-
-			this.aligned = false;
+			
 			this.updateConnections();
 			
 			if(this.target != null && !target.isEntityAlive()) {
 				this.target = null;
 				this.stattrak++;
 			}
-			
-			if(target != null) {
-				if(!this.entityInLOS(this.target)) {
-					this.target = null;
-				}
+		}
+		
+		if(target != null) {
+			if(!this.entityInLOS(this.target)) {
+				this.target = null;
 			}
-				
+		}
+		
+		if(!worldObj.isRemote) {
+			
 			if(target != null) {
 				this.tPos = this.getEntityPos(target);
 			} else {
 				this.tPos = null;
 			}
+		}
+		
+		if(isOn() && hasPower()) {
 			
-			if(isOn() && hasPower()) {
-				
-				if(tPos != null)
-					this.alignTurret();
-			} else {
-	
-				this.target = null;
-				this.tPos = null;
-			}
+			if(tPos != null)
+				this.alignTurret();
+		} else {
+
+			this.target = null;
+			this.tPos = null;
+		}
+		
+		if(!worldObj.isRemote) {
 			
 			if(this.target != null && !target.isEntityAlive()) {
 				this.target = null;
@@ -235,6 +237,10 @@ public abstract class TileEntityTurretBaseNT extends TileEntityMachineBase imple
 			
 		} else {
 			
+			Vec3 vec = Vec3.createVectorHelper(this.getBarrelLength(), 0, 0);
+			vec.rotateAroundZ((float) -this.rotationPitch);
+			vec.rotateAroundY((float) -(this.rotationYaw + Math.PI * 0.5));
+			
 			//this will fix the interpolation error when the turret crosses the 360° point
 			if(Math.abs(this.lastRotationYaw - this.rotationYaw) > Math.PI) {
 				
@@ -254,8 +260,6 @@ public abstract class TileEntityTurretBaseNT extends TileEntityMachineBase imple
 			data.setDouble("tY", this.tPos.yCoord);
 			data.setDouble("tZ", this.tPos.zCoord);
 		}
-		data.setDouble("pitch", this.rotationPitch);
-		data.setDouble("yaw", this.rotationYaw);
 		data.setLong("power", this.power);
 		data.setBoolean("isOn", this.isOn);
 		data.setBoolean("targetPlayers", this.targetPlayers);
@@ -288,10 +292,7 @@ public abstract class TileEntityTurretBaseNT extends TileEntityMachineBase imple
 	@Override
 	public void networkUnpack(NBTTagCompound nbt) {
 		super.networkUnpack(nbt);
-
-		this.turnProgress = 2;
-		this.syncRotationPitch = nbt.getDouble("pitch");
-		this.syncRotationYaw = nbt.getDouble("yaw");
+		
 		this.power = nbt.getLong("power");
 		this.isOn = nbt.getBoolean("isOn");
 		this.targetPlayers = nbt.getBoolean("targetPlayers");
@@ -649,6 +650,7 @@ public abstract class TileEntityTurretBaseNT extends TileEntityMachineBase imple
 			if(e instanceof EntityMinecart) return true;
 			if(e instanceof EntityRailCarBase) return true;
 			if(e instanceof EntityBomber) return true;
+			if(e instanceof EntitySiegeDropship) return true;
 			for(Class c : CompatExternal.turretTargetMachine) if(c.isAssignableFrom(e.getClass())) return true;
 		}
 		

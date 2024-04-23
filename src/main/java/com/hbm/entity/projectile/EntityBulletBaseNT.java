@@ -111,20 +111,12 @@ public class EntityBulletBaseNT extends EntityThrowableInterp implements IBullet
 		
 		ItemStack gun = entity.getHeldItem();
 		boolean offsetShot = true;
-		boolean accuracyBoost = false;
 		
 		if(gun != null && gun.getItem() instanceof ItemGunBase) {
 			GunConfiguration cfg = ((ItemGunBase) gun.getItem()).mainConfig;
-
-			if(cfg != null) {
-				if(cfg.hasSights && entity.isSneaking()) {
-					offsetShot = false;
-					accuracyBoost = true;
-				}
-
-				if(cfg.isCentered){
-					offsetShot = false;
-				}
+			
+			if(cfg != null && cfg.hasSights && entity.isSneaking()) {
+				offsetShot = false;
 			}
 		}
 
@@ -148,7 +140,7 @@ public class EntityBulletBaseNT extends EntityThrowableInterp implements IBullet
 		this.renderDistanceWeight = 10.0D;
 		this.setSize(0.5F, 0.5F);
 
-		this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, 1.0F, this.config.spread * (accuracyBoost ? 0.25F : 1F));
+		this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, 1.0F, this.config.spread * (offsetShot ? 1F : 0.25F));
 	}
 
 	public EntityBulletBaseNT(World world, int config, EntityLivingBase entity, EntityLivingBase target, float motion, float deviation) {
@@ -465,7 +457,7 @@ public class EntityBulletBaseNT extends EntityThrowableInterp implements IBullet
 		}
 		
 		if(config.nuke > 0 && !worldObj.isRemote) {
-	    	worldObj.spawnEntityInWorld(EntityNukeExplosionMK5.statFac(worldObj, config.nuke, posX, posY, posZ));
+	    	worldObj.spawnEntityInWorld(EntityNukeExplosionMK5.statFac(worldObj, config.nuke, posX, posY, posZ).mute());
 			NBTTagCompound data = new NBTTagCompound();
 			data.setString("type", "muke");
 			if(MainRegistry.polaroidID == 11 || rand.nextInt(100) == 0) data.setBoolean("balefire", true);

@@ -1,6 +1,12 @@
 package com.hbm.lib;
 
-import com.hbm.entity.projectile.*;
+import com.hbm.entity.projectile.EntityBullet;
+import com.hbm.entity.projectile.EntityDischarge;
+import com.hbm.entity.projectile.EntityFire;
+import com.hbm.entity.projectile.EntityLN2;
+import com.hbm.entity.projectile.EntityLaserBeam;
+import com.hbm.entity.projectile.EntityMinerBeam;
+import com.hbm.entity.projectile.EntityPlasmaBeam;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.util.DamageSource;
@@ -93,6 +99,10 @@ public class ModDamageSource extends DamageSource {
 
 	public static DamageSource euthanized(Entity ent, Entity hit) {
 		return (new EntityDamageSourceIndirect(s_euthanized, ent, hit)).setDamageBypassesArmor();
+	}
+
+	public static DamageSource causeDischargeDamage(EntityDischarge ent, Entity hit) {
+		return (new EntityDamageSourceIndirect(s_emp, ent, hit)).setDamageBypassesArmor();
 	}
 
 	public static DamageSource causeFireDamage(EntityFire ent, Entity hit) {

@@ -20,13 +20,11 @@ import com.hbm.packet.PacketDispatcher;
 import com.hbm.sound.AudioWrapper;
 import com.hbm.tileentity.INBTPacketReceiver;
 import com.hbm.tileentity.TileEntityLoadedBase;
-import com.hbm.util.CompatEnergyControl;
 import com.hbm.util.fauxpointtwelve.BlockPos;
 import com.hbm.util.fauxpointtwelve.DirPos;
 
-import api.hbm.energymk2.IEnergyProviderMK2;
+import api.hbm.energy.IEnergyGenerator;
 import api.hbm.fluid.IFluidStandardTransceiver;
-import api.hbm.tile.IInfoProviderEC;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.relauncher.Side;
@@ -41,7 +39,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.common.util.ForgeDirection;
 
 @Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
-public class TileEntityChungus extends TileEntityLoadedBase implements IFluidAcceptor, IFluidSource, IEnergyProviderMK2, INBTPacketReceiver, IFluidStandardTransceiver, SimpleComponent, IInfoProviderEC {
+public class TileEntityChungus extends TileEntityLoadedBase implements IFluidAcceptor, IFluidSource, IEnergyGenerator, INBTPacketReceiver, IFluidStandardTransceiver, SimpleComponent {
 
 	public long power;
 	public static final long maxPower = 100000000000L;
@@ -53,7 +51,6 @@ public class TileEntityChungus extends TileEntityLoadedBase implements IFluidAcc
 	public List<IFluidAcceptor> list2 = new ArrayList();
 	
 	public FluidTank[] tanks;
-	protected double[] info = new double[3];
 	
 	private AudioWrapper audio;
 	private float audioDesync;
@@ -72,8 +69,6 @@ public class TileEntityChungus extends TileEntityLoadedBase implements IFluidAcc
 		
 		if(!worldObj.isRemote) {
 			
-			this.info = new double[3];
-			
 			boolean operational = false;
 			FluidType in = tanks[0].getTankType();
 			boolean valid = false;
@@ -88,9 +83,6 @@ public class TileEntityChungus extends TileEntityLoadedBase implements IFluidAcc
 					tanks[0].setFill(tanks[0].getFill() - ops * trait.amountReq);
 					tanks[1].setFill(tanks[1].getFill() + ops * trait.amountProduced);
 					this.power += (ops * trait.heatEnergy * eff);
-					info[0] = ops * trait.amountReq;
-					info[1] = ops * trait.amountProduced;
-					info[2] = ops * trait.heatEnergy * eff;
 					valid = true;
 					operational = ops > 0;
 				}
@@ -100,7 +92,7 @@ public class TileEntityChungus extends TileEntityLoadedBase implements IFluidAcc
 			if(power > maxPower) power = maxPower;
 			
 			ForgeDirection dir = ForgeDirection.getOrientation(this.getBlockMetadata() - BlockDummyable.offset);
-			this.tryProvide(worldObj, xCoord - dir.offsetX * 11, yCoord, zCoord - dir.offsetZ * 11, dir.getOpposite());
+			this.sendPower(worldObj, xCoord - dir.offsetX * 11, yCoord, zCoord - dir.offsetZ * 11, dir.getOpposite());
 			
 			for(DirPos pos : this.getConPos()) {
 				this.sendFluid(tanks[1], worldObj, pos.getX(), pos.getY(), pos.getZ(), pos.getDir());
@@ -380,13 +372,5 @@ public class TileEntityChungus extends TileEntityLoadedBase implements IFluidAcc
 	@Override
 	public FluidTank[] getAllTanks() {
 		return tanks;
-	}
-
-	@Override
-	public void provideExtraInfo(NBTTagCompound data) {
-		data.setBoolean(CompatEnergyControl.B_ACTIVE, info[1] > 0);
-		data.setDouble(CompatEnergyControl.D_CONSUMPTION_MB, info[0]);
-		data.setDouble(CompatEnergyControl.D_OUTPUT_MB, info[1]);
-		data.setDouble(CompatEnergyControl.D_OUTPUT_HE, info[2]);
 	}
 }

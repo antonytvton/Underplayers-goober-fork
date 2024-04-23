@@ -21,7 +21,6 @@ import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.RecipesCommon.OreDictStack;
 import com.hbm.inventory.recipes.loader.SerializableRecipe;
 import com.hbm.items.ItemEnums.EnumAshType;
-import com.hbm.items.ItemEnums.EnumChunkType;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemPWRFuel.EnumPWRFuel;
 import com.hbm.items.machine.ItemWatzPellet.EnumWatzType;
@@ -266,12 +265,6 @@ public class CentrifugeRecipes extends SerializableRecipe {
 				new ItemStack(ModItems.nugget_pu_mix, 2),
 				new ItemStack(ModItems.nugget_bismuth, 6),
 				new ItemStack(ModItems.nuclear_waste_tiny, 1) });
-
-		recipes.put(new ComparableStack(DictFrame.fromOne(ModItems.chunk_ore, EnumChunkType.RARE)), new ItemStack[] {
-				new ItemStack(ModItems.powder_cobalt_tiny, 2),
-				new ItemStack(ModItems.powder_boron_tiny, 2),
-				new ItemStack(ModItems.powder_niobium_tiny, 2),
-				new ItemStack(ModItems.nugget_zirconium, 3) });
 		
 		ArrayList<ItemStack> naquadriaNuggets = OreDictionary.getOres("nuggetNaquadria");
 		if(naquadriaNuggets.size() != 0) {
@@ -290,6 +283,12 @@ public class CentrifugeRecipes extends SerializableRecipe {
 					new ItemStack(ModItems.nuclear_waste, 2) });
 		}
 		
+		recipes.put(new ComparableStack(ModItems.powder_cloud), new ItemStack[] {
+				new ItemStack(ModItems.powder_copper, 1),
+				new ItemStack(ModItems.sulfur, 1),
+				new ItemStack(ModItems.dust, 1),
+				new ItemStack(ModItems.dust, 1) });
+
 		recipes.put(new OreDictStack(COAL.ore()), new ItemStack[] {
 				new ItemStack(ModItems.powder_coal, 2),
 				new ItemStack(ModItems.powder_coal, 2),
@@ -420,6 +419,12 @@ public class CentrifugeRecipes extends SerializableRecipe {
 				new ItemStack(ModItems.powder_lapis, 6),
 				new ItemStack(ModItems.powder_cobalt_tiny, 1),
 				new ItemStack(ModItems.gem_sodalite, 1),
+				new ItemStack(Blocks.gravel, 1) });
+		
+		recipes.put(new ComparableStack(ModBlocks.ore_meteor_starmetal), new ItemStack[] {
+				new ItemStack(ModItems.powder_dura_steel, 3),
+				new ItemStack(ModItems.powder_astatine, 1),
+				new ItemStack(ModItems.powder_cobalt, 2),
 				new ItemStack(Blocks.gravel, 1) });
 		
 		recipes.put(new ComparableStack(ModBlocks.block_euphemium_cluster), new ItemStack[] {

@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.hbm.config.CustomMachineConfigJSON;
 import com.hbm.config.CustomMachineConfigJSON.MachineConfiguration;
-import com.hbm.main.MainRegistry;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -40,8 +39,7 @@ public class ItemCustomMachine extends ItemBlock {
 			MachineConfiguration conf = CustomMachineConfigJSON.niceList.get(id);
 			
 			if(conf != null) {
-				String localized = conf.localization.get(MainRegistry.proxy.getLanguageCode());
-				return localized != null ? localized : conf.localizedName;
+				return conf.localizedName;
 			}
 		}
 		

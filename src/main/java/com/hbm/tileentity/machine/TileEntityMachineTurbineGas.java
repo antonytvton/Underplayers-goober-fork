@@ -19,11 +19,9 @@ import com.hbm.main.MainRegistry;
 import com.hbm.sound.AudioWrapper;
 import com.hbm.tileentity.IGUIProvider;
 import com.hbm.tileentity.TileEntityMachineBase;
-import com.hbm.util.CompatEnergyControl;
 
-import api.hbm.energymk2.IEnergyProviderMK2;
+import api.hbm.energy.IEnergyGenerator;
 import api.hbm.fluid.IFluidStandardTransceiver;
-import api.hbm.tile.IInfoProviderEC;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -41,7 +39,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 @Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
-public class TileEntityMachineTurbineGas extends TileEntityMachineBase implements IFluidStandardTransceiver, IEnergyProviderMK2, IControlReceiver, IGUIProvider, SimpleComponent, IInfoProviderEC {
+public class TileEntityMachineTurbineGas extends TileEntityMachineBase implements IFluidStandardTransceiver, IEnergyGenerator, IControlReceiver, IGUIProvider, SimpleComponent {
 	
 	public long power;
 	public static final long maxPower = 1000000L;
@@ -136,7 +134,7 @@ public class TileEntityMachineTurbineGas extends TileEntityMachineBase implement
 			
 			//do net/battery deductions first...
 			power = Library.chargeItemsFromTE(slots, 0, power, maxPower);
-			this.tryProvide(worldObj, xCoord - dir.offsetZ * 5, yCoord + 1, zCoord + dir.offsetX * 5, rot); //sends out power
+			this.sendPower(worldObj, xCoord - dir.offsetZ * 5, yCoord + 1, zCoord + dir.offsetX * 5, rot); //sends out power
 			
 			//...and then cap it. Prevents potential future cases where power would be limited due to the fuel being too strong and the buffer too small.
 			if(this.power > this.maxPower)
@@ -650,16 +648,5 @@ public class TileEntityMachineTurbineGas extends TileEntityMachineBase implement
 	@SideOnly(Side.CLIENT)
 	public GuiScreen provideGUI(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		return new GUIMachineTurbineGas(player.inventory, this);
-	}
-
-	@Override
-	public void provideExtraInfo(NBTTagCompound data) {
-		data.setBoolean(CompatEnergyControl.B_ACTIVE, this.state == 1);
-		data.setDouble(CompatEnergyControl.D_HEAT_C, Math.max(20D, this.temp));
-		data.setDouble(CompatEnergyControl.D_TURBINE_PERCENT, this.powerSliderPos * 100D / 60D);
-		data.setInteger(CompatEnergyControl.I_TURBINE_SPEED, this.rpm);
-		data.setDouble(CompatEnergyControl.D_OUTPUT_HE, this.instantPowerOutput);
-		data.setDouble(CompatEnergyControl.D_CONSUMPTION_MB, this.waterToBoil);
-		data.setDouble(CompatEnergyControl.D_OUTPUT_MB, this.waterToBoil * 10);
 	}
 }

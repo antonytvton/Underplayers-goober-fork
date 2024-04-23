@@ -37,4 +37,5 @@ public class TileEntityPylonLarge extends TileEntityPylonBase {
 	public double getMaxWireLength() {
 		return 100;
 	}
+
 }

@@ -68,7 +68,6 @@ public class ItemToolAbilityFueled extends ItemToolAbility implements IFillableI
 		return true;
 	}
 
-	@Override
 	public int getFill(ItemStack stack) {
 		if(stack.stackTagCompound == null) {
 			stack.stackTagCompound = new NBTTagCompound();
@@ -120,10 +119,5 @@ public class ItemToolAbilityFueled extends ItemToolAbility implements IFillableI
 		ItemStack stack = new ItemStack(item);
 		tool.setFill(stack, 0);
 		return stack;
-	}
-
-	@Override
-	public FluidType getFirstFluidType(ItemStack stack) {
-		return null;
 	}
 }

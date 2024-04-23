@@ -8,13 +8,11 @@ import com.hbm.lib.RefStrings;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -30,8 +28,7 @@ public class ParticleSmokePlume extends EntityFX {
 	public ParticleSmokePlume(TextureManager p_i1213_1_, World p_i1218_1_, double p_i1218_2_, double p_i1218_4_, double p_i1218_6_) {
 		super(p_i1218_1_, p_i1218_2_, p_i1218_4_, p_i1218_6_);
 		theRenderEngine = p_i1213_1_;
-		maxAge = 80 + rand.nextInt(20);
-		this.particleScale = 0.25F;
+		maxAge = 100 + rand.nextInt(40);
 	}
 
 	public void onUpdate() {
@@ -40,8 +37,6 @@ public class ParticleSmokePlume extends EntityFX {
 		this.prevPosZ = this.posZ;
 
 		particleAlpha = 1 - ((float) age / (float) maxAge);
-		float prevScale = this.particleScale;
-		this.particleScale = 0.25F + ((float) age / (float) maxAge) * 2;
 
 		++this.age;
 
@@ -51,9 +46,9 @@ public class ParticleSmokePlume extends EntityFX {
 
 		double bak = Vec3.createVectorHelper(motionX, motionY, motionZ).lengthVector();
 
-		this.moveEntity(this.motionX, this.motionY + (this.particleScale - prevScale), this.motionZ);
+		this.moveEntity(this.motionX, this.motionY, this.motionZ);
 
-		if(this.isCollidedVertically) {
+		if(Math.abs(motionX) < 0.025 && Math.abs(motionZ) < 0.025) {
 			motionY = bak;
 		}
 
@@ -78,26 +73,21 @@ public class ParticleSmokePlume extends EntityFX {
 		RenderHelper.disableStandardItemLighting();
 
 		Random urandom = new Random(this.getEntityId());
-		
-		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-		double dX = player.lastTickPosX + (player.posX - player.lastTickPosX) * (double)p_70539_2_;
-		double dY = player.lastTickPosY + (player.posY - player.lastTickPosY) * (double)p_70539_2_;
-		double dZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * (double)p_70539_2_;
 
 		for(int i = 0; i < 6; i++) {
 
 			p_70539_1_.startDrawingQuads();
 
-			this.particleRed = this.particleGreen = this.particleBlue = urandom.nextFloat() * 0.75F + 0.1F;
+			this.particleRed = this.particleGreen = this.particleBlue = urandom.nextFloat() * 0.7F + 0.2F;
 
 			p_70539_1_.setColorRGBA_F(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha);
 			p_70539_1_.setNormal(0.0F, 1.0F, 0.0F);
 			p_70539_1_.setBrightness(240);
 
-			float scale = this.particleScale;
-			float pX = (float) ((this.prevPosX + (this.posX - this.prevPosX) * (double) p_70539_2_ - dX) + urandom.nextGaussian() * 0.5 * scale);
-			float pY = (float) ((this.prevPosY + (this.posY - this.prevPosY) * (double) p_70539_2_ - dY) + urandom.nextGaussian() * 0.5 * scale);
-			float pZ = (float) ((this.prevPosZ + (this.posZ - this.prevPosZ) * (double) p_70539_2_ - dZ) + urandom.nextGaussian() * 0.5 * scale);
+			float scale = 0.5F;
+			float pX = (float) ((this.prevPosX + (this.posX - this.prevPosX) * (double) p_70539_2_ - interpPosX) + urandom.nextGaussian() * 0.5);
+			float pY = (float) ((this.prevPosY + (this.posY - this.prevPosY) * (double) p_70539_2_ - interpPosY) + urandom.nextGaussian() * 0.5);
+			float pZ = (float) ((this.prevPosZ + (this.posZ - this.prevPosZ) * (double) p_70539_2_ - interpPosZ) + urandom.nextGaussian() * 0.5);
 
 			p_70539_1_.addVertexWithUV((double) (pX - p_70539_3_ * scale - p_70539_6_ * scale), (double) (pY - p_70539_4_ * scale), (double) (pZ - p_70539_5_ * scale - p_70539_7_ * scale), 1, 1);
 			p_70539_1_.addVertexWithUV((double) (pX - p_70539_3_ * scale + p_70539_6_ * scale), (double) (pY + p_70539_4_ * scale), (double) (pZ - p_70539_5_ * scale + p_70539_7_ * scale), 1, 0);

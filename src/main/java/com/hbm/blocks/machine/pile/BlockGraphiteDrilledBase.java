@@ -6,7 +6,6 @@ import java.util.Random;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.BlockFlammable;
 import com.hbm.inventory.RecipesCommon.MetaBlock;
-import com.hbm.inventory.material.Mats;
 import com.hbm.items.ModItems;
 import com.hbm.lib.RefStrings;
 
@@ -115,7 +114,7 @@ public abstract class BlockGraphiteDrilledBase extends BlockFlammable implements
 		ArrayList<ItemStack> drops = new ArrayList();
 		drops.add(new ItemStack(ModItems.ingot_graphite, 8));
 		if((meta & 4) == 4)
-			drops.add(new ItemStack(ModItems.shell, 1, Mats.MAT_ALUMINIUM.id));
+			drops.add(new ItemStack(ModItems.hull_small_aluminium, 1));
 		if(getInsertedItem() != null)
 			drops.add(new ItemStack(getInsertedItem(meta), 1));
 		return drops;

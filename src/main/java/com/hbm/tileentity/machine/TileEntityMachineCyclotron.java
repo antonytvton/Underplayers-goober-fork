@@ -30,14 +30,12 @@ import com.hbm.tileentity.IConditionalInvAccess;
 import com.hbm.tileentity.IGUIProvider;
 import com.hbm.tileentity.IUpgradeInfoProvider;
 import com.hbm.tileentity.TileEntityMachineBase;
-import com.hbm.util.CompatEnergyControl;
 import com.hbm.util.I18nUtil;
 import com.hbm.util.Tuple.Pair;
 import com.hbm.util.fauxpointtwelve.DirPos;
 
-import api.hbm.energymk2.IEnergyReceiverMK2;
+import api.hbm.energy.IEnergyUser;
 import api.hbm.fluid.IFluidStandardTransceiver;
-import api.hbm.tile.IInfoProviderEC;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -52,7 +50,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityMachineCyclotron extends TileEntityMachineBase implements IFluidSource, IFluidAcceptor, IEnergyReceiverMK2, IFluidStandardTransceiver, IGUIProvider, IConditionalInvAccess, IUpgradeInfoProvider, IInfoProviderEC {
+public class TileEntityMachineCyclotron extends TileEntityMachineBase implements IFluidSource, IFluidAcceptor, IEnergyUser, IFluidStandardTransceiver, IGUIProvider, IConditionalInvAccess, IUpgradeInfoProvider {
 	
 	public long power;
 	public static final long maxPower = 100000000;
@@ -224,7 +222,7 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 
 		if(rand < 2) {
 			
-			worldObj.spawnEntityInWorld(EntityNukeExplosionMK5.statFac(worldObj, (int)(BombConfig.fatmanRadius * 1.5), xCoord + 0.5, yCoord + 1.5, zCoord + 0.5));
+			worldObj.spawnEntityInWorld(EntityNukeExplosionMK5.statFac(worldObj, (int)(BombConfig.fatmanRadius * 1.5), xCoord + 0.5, yCoord + 1.5, zCoord + 0.5).mute());
 			
 			NBTTagCompound data = new NBTTagCompound();
 			data.setString("type", "muke");
@@ -233,7 +231,7 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 			
 		} else if(rand < 4) {
 			
-			EntityBalefire bf = new EntityBalefire(worldObj);
+			EntityBalefire bf = new EntityBalefire(worldObj).mute();
 			bf.posX = xCoord + 0.5;
 			bf.posY = yCoord + 1.5;
 			bf.posZ = zCoord + 0.5;
@@ -614,11 +612,5 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 		if(type == UpgradeType.POWER) return 3;
 		if(type == UpgradeType.EFFECT) return 3;
 		return 0;
-	}
-
-	@Override
-	public void provideExtraInfo(NBTTagCompound data) {
-		data.setBoolean(CompatEnergyControl.B_ACTIVE, this.isOn && this.progress > 0);
-		data.setDouble(CompatEnergyControl.D_CONSUMPTION_HE, this.progress > 0 ? consumption - 100_000 * getConsumption() : 0);
 	}
 }

@@ -1,6 +1,5 @@
 package com.hbm.tileentity.machine.oil;
 
-import com.hbm.inventory.FluidStack;
 import com.hbm.inventory.container.ContainerMachineVacuumDistill;
 import com.hbm.inventory.fluid.FluidType;
 import com.hbm.inventory.fluid.Fluids;
@@ -13,10 +12,9 @@ import com.hbm.sound.AudioWrapper;
 import com.hbm.tileentity.IGUIProvider;
 import com.hbm.tileentity.IPersistentNBT;
 import com.hbm.tileentity.TileEntityMachineBase;
-import com.hbm.util.Tuple.Quartet;
 import com.hbm.util.fauxpointtwelve.DirPos;
 
-import api.hbm.energymk2.IEnergyReceiverMK2;
+import api.hbm.energy.IEnergyUser;
 import api.hbm.fluid.IFluidStandardTransceiver;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -28,7 +26,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityMachineVacuumDistill extends TileEntityMachineBase implements IEnergyReceiverMK2, IFluidStandardTransceiver, IPersistentNBT, IGUIProvider {
+public class TileEntityMachineVacuumDistill extends TileEntityMachineBase implements IEnergyUser, IFluidStandardTransceiver, IPersistentNBT, IGUIProvider {
 	
 	public long power;
 	public static final long maxPower = 1_000_000;
@@ -40,7 +38,7 @@ public class TileEntityMachineVacuumDistill extends TileEntityMachineBase implem
 	public boolean isOn;
 
 	public TileEntityMachineVacuumDistill() {
-		super(12);
+		super(11);
 		
 		this.tanks = new FluidTank[5];
 		this.tanks[0] = new FluidTank(Fluids.OIL, 64_000).withPressure(2);
@@ -64,7 +62,6 @@ public class TileEntityMachineVacuumDistill extends TileEntityMachineBase implem
 			
 			this.updateConnections();
 			power = Library.chargeTEFromItems(slots, 0, power, maxPower);
-			tanks[0].setType(11, slots);
 			tanks[0].loadTank(1, 2, slots);
 			
 			refine();
@@ -150,24 +147,21 @@ public class TileEntityMachineVacuumDistill extends TileEntityMachineBase implem
 	}
 	
 	private void refine() {
-		Quartet<FluidStack, FluidStack, FluidStack, FluidStack> refinery = RefineryRecipes.getVacuum(tanks[0].getTankType());
-		if(refinery == null) {
-			for(int i = 1; i < 5; i++) tanks[i].setTankType(Fluids.NONE);
-			return;
-		}
-		
-		FluidStack[] stacks = new FluidStack[] {refinery.getW(), refinery.getX(), refinery.getY(), refinery.getZ()};
-		for(int i = 0; i < stacks.length; i++) tanks[i + 1].setTankType(stacks[i].type);
 		
 		if(power < 10_000) return;
 		if(tanks[0].getFill() < 100) return;
-		for(int i = 0; i < stacks.length; i++) if(tanks[i + 1].getFill() + stacks[i].fill > tanks[i + 1].getMaxFill()) return;
+		if(tanks[1].getFill() + RefineryRecipes.vac_frac_heavy > tanks[1].getMaxFill()) return;
+		if(tanks[2].getFill() + RefineryRecipes.vac_frac_reform > tanks[2].getMaxFill()) return;
+		if(tanks[3].getFill() + RefineryRecipes.vac_frac_light > tanks[3].getMaxFill()) return;
+		if(tanks[4].getFill() + RefineryRecipes.vac_frac_sour > tanks[4].getMaxFill()) return;
 
 		this.isOn = true;
 		power -= 10_000;
 		tanks[0].setFill(tanks[0].getFill() - 100);
-		
-		for(int i = 0; i < stacks.length; i++) tanks[i + 1].setFill(tanks[i + 1].getFill() + stacks[i].fill);
+		tanks[1].setFill(tanks[1].getFill() + RefineryRecipes.vac_frac_heavy);
+		tanks[2].setFill(tanks[2].getFill() + RefineryRecipes.vac_frac_reform);
+		tanks[3].setFill(tanks[3].getFill() + RefineryRecipes.vac_frac_light);
+		tanks[4].setFill(tanks[4].getFill() + RefineryRecipes.vac_frac_sour);
 	}
 	
 	private void updateConnections() {

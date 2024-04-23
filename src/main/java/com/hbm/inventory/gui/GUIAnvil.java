@@ -284,7 +284,7 @@ public class GUIAnvil extends GuiContainer {
 
 		for(AStack stack : recipe.input) {
 			if(stack instanceof ComparableStack) {
-				ComparableStack input = (ComparableStack) stack;
+				ItemStack input = ((ComparableStack) stack).toStack();
 				boolean hasItem = false;
 				int amount = 0;
 				for(int i = 0; i < inventory.mainInventory.length; i++) {
@@ -292,15 +292,15 @@ public class GUIAnvil extends GuiContainer {
 					if(stackItem == null) {
 						continue;
 					}
-					if(input.matchesRecipe(stackItem, true)) {
+					if(stackItem.getItem() == input.getItem() && input.getItemDamage() == stackItem.getItemDamage()) {
 						hasItem = true;
 						amount += stackItem.stackSize;
 					}
 				}
 				if(hasItem && amount >= stack.stacksize) {
-					list.add(">" + input.stacksize + "x " + input.toStack().getDisplayName());
+					list.add(">" + input.stackSize + "x " + input.getDisplayName());
 				} else {
-					list.add(EnumChatFormatting.RED + ">" + input.stacksize + "x " + input.toStack().getDisplayName());
+					list.add(EnumChatFormatting.RED + ">" + input.stackSize + "x " + input.getDisplayName());
 				}
 			} else if(stack instanceof OreDictStack) {
 				OreDictStack input = (OreDictStack) stack;

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.hbm.blocks.BlockFallingNT;
-import com.hbm.blocks.ISpotlight;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -92,7 +91,7 @@ public class EntityFallingBlockNT extends Entity {
 
 	public void onUpdate() {
 		
-		if(this.getBlock().getMaterial() == Material.air || this.getBlock() instanceof ISpotlight) {
+		if(this.getBlock().getMaterial() == Material.air) {
 			this.setDead();
 		} else {
 			this.prevPosX = this.posX;

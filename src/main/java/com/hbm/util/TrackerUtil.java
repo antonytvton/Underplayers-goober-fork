@@ -47,7 +47,7 @@ public class TrackerUtil {
 		if(world instanceof WorldServer) {
 			WorldServer server = (WorldServer) world;
 			EntityTrackerEntry entry = getTrackerEntry(server, e.getEntityId());
-			if(entry != null) entry.blocksDistanceThreshold = range;
+			entry.blocksDistanceThreshold = range;
 		}
 	}
 }

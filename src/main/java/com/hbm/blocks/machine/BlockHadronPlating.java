@@ -8,4 +8,5 @@ public class BlockHadronPlating extends Block {
 	public BlockHadronPlating(Material mat) {
 		super(mat);
 	}
+
 }

@@ -46,12 +46,10 @@ public class ItemStructurePattern extends ItemStructureTool {
 			for(int iy = minY; iy <= maxY; iy++) {
 				for(int iz = minZ; iz <= maxZ; iz++) {
 					
-					Block b = world.getBlock(ix + pos.getX(), iy + pos.getY(), iz + pos.getZ());
-					if(b.isAir(world, ix + pos.getX(), iy + pos.getY(), iz + pos.getZ())) continue;
-					
+					Block b = world.getBlock(ix + pos.getX(), iy + pos.getY(), iz + pos.getZ());					
 					int meta = world.getBlockMetadata(ix + pos.getX(), iy + pos.getY(), iz + pos.getZ());
 					
-					message += "placeBlockAtCurrentPosition(world, " + b.getUnlocalizedName() + ", " + meta + ", " + ix + ", " + iy + ", " + iz + ", box);\n";
+					message.concat("placeBlockAtCurrentPosition(world, " + b.getUnlocalizedName() + ", " + meta + ", " + ix + ", " + iy + ", " + iz + ", box);\n");
 				}
 			}
 		}

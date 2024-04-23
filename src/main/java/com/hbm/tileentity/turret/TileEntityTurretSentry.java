@@ -26,12 +26,12 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEntityTurretSentry extends TileEntityTurretBaseNT implements IGUIProvider {
 
-	protected boolean didJustShootLeft = false;
-	protected boolean retractingLeft = false;
+	private boolean didJustShootLeft = false;
+	private boolean retractingLeft = false;
 	public double barrelLeftPos = 0;
 	public double lastBarrelLeftPos = 0;
-	protected boolean didJustShootRight = false;
-	protected boolean retractingRight = false;
+	private boolean didJustShootRight = false;
+	private boolean retractingRight = false;
 	public double barrelRightPos = 0;
 	public double lastBarrelRightPos = 0;
 

@@ -13,7 +13,7 @@ import net.minecraft.util.EnumChatFormatting;
 public class ItemModMedal extends ItemArmorMod {
 
 	public ItemModMedal() {
-		super(ArmorModHandler.plate_only, true, true, false, false);
+		super(ArmorModHandler.extra, false, true, false, false);
 	}
 
 	@Override

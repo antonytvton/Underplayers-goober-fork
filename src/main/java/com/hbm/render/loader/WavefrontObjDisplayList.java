@@ -7,10 +7,11 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.client.model.obj.GroupObject;
 import net.minecraftforge.client.model.obj.WavefrontObject;
 
-public class WavefrontObjDisplayList implements IModelCustomNamed {
+public class WavefrontObjDisplayList implements IModelCustom {
 
 	public List<Pair<String, Integer>> nameToCallList = new ArrayList<>();
 	
@@ -93,14 +94,5 @@ public class WavefrontObjDisplayList implements IModelCustomNamed {
 				GL11.glCallList(p.getRight());
 			}
 		}
-	}
-
-	@Override
-	public List<String> getPartNames() {
-		List<String> names = new ArrayList<String>();
-		for(Pair<String, Integer> data : nameToCallList) {
-			names.add(data.getLeft());
-		}
-		return names;
 	}
 }

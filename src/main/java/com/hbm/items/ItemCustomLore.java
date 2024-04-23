@@ -17,8 +17,7 @@ import net.minecraft.util.EnumChatFormatting;
 
 public class ItemCustomLore extends Item {
 	
-	protected EnumRarity rarity;
-	protected boolean hasEffect = false;
+	EnumRarity rarity;
 	
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean bool) {
@@ -81,17 +80,19 @@ public class ItemCustomLore extends Item {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public boolean hasEffect(ItemStack stack) {
-		return hasEffect;
+	public boolean hasEffect(ItemStack p_77636_1_) {
+		if(this == ModItems.rune_isa || this == ModItems.rune_dagaz ||
+				this == ModItems.rune_hagalaz || this == ModItems.rune_jera ||
+				this == ModItems.rune_thurisaz || this == ModItems.egg_balefire_shard ||
+				this == ModItems.egg_balefire) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public ItemCustomLore setRarity(EnumRarity rarity) {
 		this.rarity = rarity;
-		return this;
-	}
-
-	public ItemCustomLore setEffect() {
-		this.hasEffect = true;
 		return this;
 	}
 	

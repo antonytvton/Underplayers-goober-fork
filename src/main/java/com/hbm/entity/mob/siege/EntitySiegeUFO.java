@@ -2,6 +2,7 @@ package com.hbm.entity.mob.siege;
 
 import com.hbm.entity.mob.EntityUFOBase;
 import com.hbm.entity.projectile.EntitySiegeLaser;
+import com.hbm.handler.SiegeOrchestrator;
 import api.hbm.entity.IRadiationImmune;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -45,6 +46,9 @@ public class EntitySiegeUFO extends EntityUFOBase implements IRadiationImmune {
 	public boolean attackEntityFrom(DamageSource source, float damage) {
 		
 		if(this.isEntityInvulnerable())
+			return false;
+		
+		if(SiegeOrchestrator.isSiegeMob(source.getEntity()))
 			return false;
 		
 		SiegeTier tier = this.getTier();

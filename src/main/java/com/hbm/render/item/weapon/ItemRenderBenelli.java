@@ -2,6 +2,7 @@ package com.hbm.render.item.weapon;
 
 import org.lwjgl.opengl.GL11;
 
+import com.hbm.items.weapon.ItemGunBase;
 import com.hbm.main.ResourceManager;
 import com.hbm.render.anim.HbmAnimations;
 
@@ -32,8 +33,14 @@ public class ItemRenderBenelli implements IItemRenderer
 		return type == ItemRenderType.ENTITY && (helper == ItemRendererHelper.ENTITY_ROTATION || helper == ItemRendererHelper.ENTITY_BOBBING);
 	}
 	
+	static final String body = "Body.001_Cube.001";
+	static final String frontGrip = "Pump_Cylinder.003";
+	static final String slide = "Cylinder";
+	static final String barrelAndTube = "Body_Cube.002";
+	
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+		int magSize = ItemGunBase.getMag(item);
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		GL11.glPushMatrix();
 
@@ -43,6 +50,9 @@ public class ItemRenderBenelli implements IItemRenderer
 		final float scale1 = 0.2F;
 		final double scale2 = 0.065D;
 		final double scale3 = 0.52D;
+
+		double[] recoil = HbmAnimations.getRelevantTransformation("RECOIL");
+		double[] feedNew = HbmAnimations.getRelevantTransformation("PUMP");
 		
 		switch (type) {
 		case EQUIPPED_FIRST_PERSON:// In hand from POV
@@ -53,43 +63,31 @@ public class ItemRenderBenelli implements IItemRenderer
 				GL11.glTranslatef(-1.007F, 0F, -2.5F);
 			}
 			else {
-				GL11.glRotatef(-10F, 0.0F, 1.0F, 0.0F);
-				GL11.glRotatef(20.0F, 1.0F, 0.0F, 0.0F);
-				GL11.glTranslatef(0.0F, -0.5F, -2.5F);
+				GL11.glRotatef(30.0F, 1.0F, 0.0F, 0.0F);
+				GL11.glTranslatef(0.0F, -1F, -2.5F);
 			}
-
 			GL11.glScalef(scale1, scale1, scale1);
-
-			HbmAnimations.applyRelevantTransformation("Body");
-			ResourceManager.benelli.renderPart("Body");
-
+			// Move on recoil
+			GL11.glTranslated(0, recoil[1], recoil[2]);
+			GL11.glRotated(recoil[0], 1, 0, 0);
+			// Move up for reload
 			GL11.glPushMatrix();
-
-			HbmAnimations.applyRelevantTransformation("Bolt");
-			ResourceManager.benelli.renderPart("Bolt");
-
+			ResourceManager.benelli.renderAll();
+			// Pump new round if empty
+			if (magSize == 0)
+				GL11.glTranslated(feedNew[0], feedNew[1], feedNew[2]);
+			ResourceManager.benelli.renderPart(slide);
 			GL11.glPopMatrix();
-
+			// Eject spent shell
 			GL11.glPushMatrix();
-
-			HbmAnimations.applyRelevantTransformation("Drum");
-			ResourceManager.benelli.renderPart("Drum");
-
 			GL11.glPopMatrix();
-
-			GL11.glPushMatrix();
-
-			HbmAnimations.applyRelevantTransformation("Shell");
-			ResourceManager.benelli.renderPart("Shell");
-
-			GL11.glPopMatrix();
-
 			break;
 		case EQUIPPED:// In hand from other's POV
 			GL11.glRotatef(15F, 0.0F, 0.0F, 1.0F);
 			GL11.glRotatef(-170, 0.0F, 1.0F, 0.0F);
 			GL11.glRotatef(-15F, 1.0F, 0.0F, 0.0F);
 			GL11.glTranslatef(-0.4F, 0.05F, -0.5F);
+			GL11.glRotated(recoil[0], 1, 0, 0);
 			GL11.glScaled(scale2 - scale2 * 2, scale2, scale2);
 
 			GL11.glPushMatrix();

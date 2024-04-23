@@ -20,6 +20,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.config.VersatileConfig;
+import com.hbm.entity.effect.EntityNukeCloudSmall;
 import com.hbm.entity.grenade.EntityGrenadeASchrab;
 import com.hbm.entity.grenade.EntityGrenadeNuclear;
 import com.hbm.entity.missile.EntityMIRV;
@@ -31,7 +32,7 @@ import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.util.ArmorUtil;
 
-import api.hbm.energymk2.IEnergyHandlerMK2;
+import api.hbm.energy.IEnergyUser;
 import cofh.api.energy.IEnergyProvider;
 
 public class ExplosionNukeGeneric {
@@ -102,6 +103,7 @@ public class ExplosionNukeGeneric {
 	private static boolean isExplosionExempt(Entity e) {
 		
 		if (e instanceof EntityOcelot ||
+				e instanceof EntityNukeCloudSmall ||
 				e instanceof EntityMIRV ||
 				e instanceof EntityGrenadeASchrab ||
 				e instanceof EntityGrenadeNuclear ||
@@ -425,9 +427,12 @@ public class ExplosionNukeGeneric {
 			Block b = world.getBlock(x,y,z);
 			TileEntity te = world.getTileEntity(x, y, z);
 			
-			if (te != null && te instanceof IEnergyHandlerMK2) {
-				((IEnergyHandlerMK2)te).setPower(0);
-				if(random.nextInt(5) < 1) world.setBlock(x, y, z, ModBlocks.block_electrical_scrap);
+			if (te != null && te instanceof IEnergyUser) {
+				
+				((IEnergyUser)te).setPower(0);
+				
+				if(random.nextInt(5) < 1)
+					world.setBlock(x, y, z, ModBlocks.block_electrical_scrap);
 			}
 			if (te != null && te instanceof IEnergyProvider) {
 
@@ -441,7 +446,7 @@ public class ExplosionNukeGeneric {
 				if(random.nextInt(5) <= 1)
 					world.setBlock(x, y, z, ModBlocks.block_electrical_scrap);
 			}
-			if((b == ModBlocks.fusion_conductor || b == ModBlocks.fusion_motor || b == ModBlocks.fusion_heater) && random.nextInt(10) == 0)
+			if((b == ModBlocks.fusion_conductor || b == ModBlocks.fwatz_conductor || b == ModBlocks.fusion_motor || b == ModBlocks.fusion_heater || b == ModBlocks.fwatz_computer) && random.nextInt(10) == 0)
 				world.setBlock(x, y, z, ModBlocks.block_electrical_scrap);
 		}
 	}

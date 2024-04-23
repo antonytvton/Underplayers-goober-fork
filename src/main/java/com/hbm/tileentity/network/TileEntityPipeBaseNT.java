@@ -153,17 +153,4 @@ public class TileEntityPipeBaseNT extends TileEntity implements IFluidConductor 
 		super.writeToNBT(nbt);
 		nbt.setInteger("type", this.type.getID());
 	}
-
-	public boolean isLoaded = true;
-	
-	@Override
-	public boolean isLoaded() {
-		return isLoaded;
-	}
-
-	@Override
-	public void onChunkUnload() {
-		super.onChunkUnload();
-		this.isLoaded = false;
-	}
 }

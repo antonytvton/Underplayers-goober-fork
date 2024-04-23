@@ -316,18 +316,5 @@ public class BlockPWR extends BlockContainer implements IBlockCT {
 			
 			return false;
 		}
-
-		public boolean isLoaded = true;
-		
-		@Override
-		public boolean isLoaded() {
-			return isLoaded;
-		}
-
-		@Override
-		public void onChunkUnload() {
-			super.onChunkUnload();
-			this.isLoaded = false;
-		}
 	}
 }

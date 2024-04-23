@@ -2,6 +2,7 @@ package com.hbm.render.tileentity;
 
 import java.nio.DoubleBuffer;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.opengl.GL11;
 
 import com.hbm.animloader.AnimatedModel;
@@ -10,7 +11,7 @@ import com.hbm.animloader.AnimationWrapper;
 import com.hbm.animloader.AnimationWrapper.EndResult;
 import com.hbm.animloader.AnimationWrapper.EndType;
 import com.hbm.blocks.BlockDummyable;
-import com.hbm.render.loader.IModelCustomNamed;
+import com.hbm.render.loader.WavefrontObjDisplayList;
 import com.hbm.tileentity.DoorDecl;
 import com.hbm.tileentity.TileEntityDoorGeneric;
 
@@ -74,33 +75,25 @@ public class RenderDoorGeneric extends TileEntitySpecialRenderer {
 			animModel.controller.setAnim(w);
 			animModel.renderAnimated(System.currentTimeMillis());
 		} else {
-			IModelCustomNamed model = door.getModel();
+			WavefrontObjDisplayList model = door.getModel();
 			
 			long ms = System.currentTimeMillis()-te.animStartTime;
 			float openTicks = MathHelper.clamp_float(te.state == 2 || te.state == 0 ? door.timeToOpen()*50-ms : ms, 0, door.timeToOpen()*50)*0.02F;
-
-			for(String partName : model.getPartNames()) {
-				if(!door.doesRender(partName, false))
+			for(Pair<String, Integer> p : model.nameToCallList){
+				if(!door.doesRender(p.getLeft(), false))
 					continue;
-				
 				GL11.glPushMatrix();
-				{
-					bindTexture(door.getTextureForPart(te.getSkinIndex(), partName));
-					doPartTransform(door, partName, openTicks, false);
-					model.renderPart(partName);
-
-					for(String innerPartName : door.getChildren(partName)) {
-						if(!door.doesRender(innerPartName, true))
-							continue;
-						
-						GL11.glPushMatrix();
-						{
-							bindTexture(door.getTextureForPart(te.getSkinIndex(), innerPartName));
-							doPartTransform(door, innerPartName, openTicks, true);
-							model.renderPart(innerPartName);
-						}
-						GL11.glPopMatrix();
-					}
+				bindTexture(door.getTextureForPart(te.getSkinIndex(), p.getLeft()));
+				doPartTransform(door, p.getLeft(), openTicks, false);
+				GL11.glCallList(p.getRight());
+				for(String name : door.getChildren(p.getLeft())){
+					if(!door.doesRender(name, true))
+						continue;
+					GL11.glPushMatrix();
+					bindTexture(door.getTextureForPart(te.getSkinIndex(), name));
+					doPartTransform(door, name, openTicks, true);
+					model.renderPart(name);
+					GL11.glPopMatrix();
 				}
 				GL11.glPopMatrix();
 			}

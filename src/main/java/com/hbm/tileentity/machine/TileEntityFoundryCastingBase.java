@@ -54,7 +54,6 @@ public abstract class TileEntityFoundryCastingBase extends TileEntityFoundryBase
 					}
 					
 					cooloff = 200;
-					this.markDirty();
 				}
 				
 			} else {

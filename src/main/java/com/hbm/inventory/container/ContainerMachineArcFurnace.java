@@ -1,10 +1,7 @@
 package com.hbm.inventory.container;
 
 import com.hbm.inventory.SlotSmelting;
-import com.hbm.items.ModItems;
 import com.hbm.tileentity.machine.TileEntityMachineArcFurnace;
-
-import api.hbm.energymk2.IBatteryItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -44,43 +41,34 @@ public class ContainerMachineArcFurnace extends Container {
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(EntityPlayer player, int index) {
-		ItemStack rStack = null;
-		Slot slot = (Slot) this.inventorySlots.get(index);
+	public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int par2) {
+		ItemStack var3 = null;
+		Slot var4 = (Slot) this.inventorySlots.get(par2);
 
-		if(slot != null && slot.getHasStack()) {
-			ItemStack stack = slot.getStack();
-			rStack = stack.copy();
+		if(var4 != null && var4.getHasStack()) {
+			ItemStack var5 = var4.getStack();
+			var3 = var5.copy();
 
-			if(index <= 5) {
-				if(!this.mergeItemStack(stack, 6, this.inventorySlots.size(), true)) {
+			if(par2 <= 5) {
+				if(!this.mergeItemStack(var5, 6, this.inventorySlots.size(), true)) {
 					return null;
 				}
 				
-				slot.onSlotChange(stack, rStack);
+				var4.onSlotChange(var5, var3);
 				
-			} else {
-				
-				if(rStack.getItem() instanceof IBatteryItem || rStack.getItem() == ModItems.battery_creative) {
-					if(!this.mergeItemStack(stack, 5, 6, false))
-						return null;
-					
-				} else if(rStack.getItem() == ModItems.arc_electrode_desh || rStack.getItem() == ModItems.arc_electrode) {
-					if(!this.mergeItemStack(stack, 2, 5, false))
-						return null;
-					
-				} else if(!this.mergeItemStack(stack, 0, 1, false))
+			} else if(!this.mergeItemStack(var5, 0, 1, false)) {
+				if(!this.mergeItemStack(var5, 2, 6, false))
 					return null;
 			}
 
-			if(stack.stackSize == 0) {
-				slot.putStack((ItemStack) null);
+			if(var5.stackSize == 0) {
+				var4.putStack((ItemStack) null);
 			} else {
-				slot.onSlotChanged();
+				var4.onSlotChanged();
 			}
 		}
 
-		return rStack;
+		return var3;
 	}
 
 	@Override

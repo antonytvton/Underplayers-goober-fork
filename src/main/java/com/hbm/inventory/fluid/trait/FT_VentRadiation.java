@@ -26,7 +26,7 @@ public class FT_VentRadiation extends FluidTrait {
 	}
 	
 	@Override
-	public void onFluidRelease(World world, int x, int y, int z, FluidTank tank, int overflowAmount, FluidReleaseType type) {
+	public void onFluidRelease(World world, int x, int y, int z, FluidTank tank, int overflowAmount) {
 		ChunkRadiationManager.proxy.incrementRad(world, x, y, z, overflowAmount * radPerMB);
 	}
 	

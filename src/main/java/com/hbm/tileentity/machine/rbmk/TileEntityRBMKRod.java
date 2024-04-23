@@ -11,10 +11,8 @@ import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemRBMKRod;
 import com.hbm.tileentity.machine.rbmk.TileEntityRBMKConsole.ColumnType;
 import com.hbm.util.Compat;
-import com.hbm.util.CompatEnergyControl;
 import com.hbm.util.ParticleUtil;
 
-import api.hbm.tile.IInfoProviderEC;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -33,7 +31,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 @Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
-public class TileEntityRBMKRod extends TileEntityRBMKSlottedBase implements IRBMKFluxReceiver, IRBMKLoadable, SimpleComponent, IInfoProviderEC {
+public class TileEntityRBMKRod extends TileEntityRBMKSlottedBase implements IRBMKFluxReceiver, IRBMKLoadable, SimpleComponent {
 	
 	//amount of "neutron energy" buffered for the next tick to use for the reaction
 	public double fluxFast;
@@ -52,11 +50,6 @@ public class TileEntityRBMKRod extends TileEntityRBMKSlottedBase implements IRBM
 	@Override
 	public boolean isModerated() {
 		return ((RBMKRod)this.getBlockType()).moderated;
-	}
-	
-	@Override
-	public int trackingRange() {
-		return 25;
 	}
 
 	@SuppressWarnings("incomplete-switch") //shut the fuck up
@@ -504,16 +497,5 @@ public class TileEntityRBMKRod extends TileEntityRBMKSlottedBase implements IRBM
 	@SideOnly(Side.CLIENT)
 	public GuiScreen provideGUI(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		return new GUIRBMKRod(player.inventory, this);
-	}
-
-	@Override
-	public void provideExtraInfo(NBTTagCompound data) {
-		if(slots[0] != null && slots[0].getItem() instanceof ItemRBMKRod) {
-			data.setDouble(CompatEnergyControl.D_DEPLETION_PERCENT, ((1.0D - ItemRBMKRod.getEnrichment(slots[0])) * 100_000.0D) / 1_000.0D);
-			data.setDouble(CompatEnergyControl.D_XENON_PERCENT, ItemRBMKRod.getPoison(slots[0]));
-			data.setDouble(CompatEnergyControl.D_SKIN_C, ItemRBMKRod.getHullHeat(slots[0]));
-			data.setDouble(CompatEnergyControl.D_CORE_C, ItemRBMKRod.getCoreHeat(slots[0]));
-			data.setDouble(CompatEnergyControl.D_MELT_C, ((ItemRBMKRod) slots[0].getItem()).meltingPoint);
-		}
 	}
 }

@@ -1,6 +1,7 @@
 package com.hbm.entity.mob.siege;
 
 import com.hbm.entity.projectile.EntitySiegeLaser;
+import com.hbm.handler.SiegeOrchestrator;
 import com.hbm.items.ModItems;
 
 import api.hbm.entity.IRadiationImmune;
@@ -42,6 +43,9 @@ public class EntitySiegeSkeleton extends EntityMob implements IRangedAttackMob, 
 	public boolean attackEntityFrom(DamageSource source, float damage) {
 		
 		if(this.isEntityInvulnerable())
+			return false;
+		
+		if(SiegeOrchestrator.isSiegeMob(source.getEntity()))
 			return false;
 		
 		SiegeTier tier = this.getTier();

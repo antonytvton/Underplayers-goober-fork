@@ -17,9 +17,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-@Deprecated
 public abstract class GunFrame extends Item implements IGunHUDProvider, IClickReceiver {
 	
+	private List<IStatusBarProvider> statusBars = new ArrayList();
+
 	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isCurrentItem) {
 		
@@ -35,6 +36,7 @@ public abstract class GunFrame extends Item implements IGunHUDProvider, IClickRe
 	}
 	
 	public void updatePlayerClient(ItemStack stack, World world, EntityPlayer player, int slot, boolean isCurrentItem) { }
+	
 	public void updatePlayerServer(ItemStack stack, World world, EntityPlayer player, int slot, boolean isCurrentItem) { }
 
 	@Override

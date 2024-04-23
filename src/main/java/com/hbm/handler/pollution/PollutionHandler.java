@@ -10,22 +10,18 @@ import java.util.UUID;
 
 import com.hbm.config.MobConfig;
 import com.hbm.config.RadiationConfig;
-import com.hbm.entity.mob.glyphid.EntityGlyphid;
-import com.hbm.entity.mob.glyphid.EntityGlyphidDigger;
-import com.hbm.entity.mob.glyphid.EntityGlyphidScout;
 
+import com.hbm.entity.mob.EntityGlyphidDigger;
+import com.hbm.entity.mob.EntityGlyphidScout;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.relauncher.Side;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -34,7 +30,6 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraft.world.gen.ChunkProviderServer;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -48,8 +43,6 @@ public class PollutionHandler {
 	public static final float SOOT_PER_SECOND = 1F / 25F;
 	/** Baserate of heavy metal generation, balanced around the soot values of combustion engines */
 	public static final float HEAVY_METAL_PER_SECOND = 1F / 50F;
-	/** Baserate for poison when spilled */
-	public static final float POISON_PER_SECOND = 1F / 50F;
 	public static Vec3 targetCoords;
 
 	///////////////////////
@@ -187,8 +180,6 @@ public class PollutionHandler {
 	public void updateSystem(TickEvent.ServerTickEvent event) {
 		
 		if(event.side == Side.SERVER && event.phase == Phase.END) {
-			
-			handleWorldDestruction();
 
 			eggTimer++;
 			if(eggTimer < 60) return;
@@ -254,43 +245,6 @@ public class PollutionHandler {
 				
 				entry.getValue().pollution.clear();
 				entry.getValue().pollution.putAll(newPollution);
-			}
-		}
-	}
-
-	protected static final float DESTRUCTION_THRESHOLD = 15F;
-	protected static final int DESTRUCTION_COUNT = 5;
-	
-	protected static void handleWorldDestruction() {
-		
-		for(Entry<World, PollutionPerWorld> entry : perWorld.entrySet()) {
-			
-			World world = entry.getKey();
-			WorldServer serv = (WorldServer) world;
-			ChunkProviderServer provider = (ChunkProviderServer) serv.getChunkProvider();
-			
-			for(Entry<ChunkCoordIntPair, PollutionData> pollution : entry.getValue().pollution.entrySet()) {
-				
-				float poison = pollution.getValue().pollution[PollutionType.POISON.ordinal()];
-				if(poison < DESTRUCTION_THRESHOLD) continue;
-				
-				ChunkCoordIntPair entryPos = pollution.getKey();
-				
-				for(int i = 0; i < DESTRUCTION_COUNT; i++) {
-					int x = (entryPos.chunkXPos << 6) + world.rand.nextInt(64);
-					int z = (entryPos.chunkZPos << 6) + world.rand.nextInt(64);
-					
-					if(provider.chunkExists(x >> 4, z >> 4)) {
-						int y = world.getHeightValue(x, z) - world.rand.nextInt(3) + 1;
-						Block b = world.getBlock(x, y, z);
-						
-						if(b == Blocks.grass || (b == Blocks.dirt && world.getBlockMetadata(x, y, z) == 0)) {
-							world.setBlock(x, y, z, Blocks.dirt, 1, 3);
-						} else if(b == Blocks.tallgrass || b.getMaterial() == Material.leaves || b.getMaterial() == Material.plants) {
-							world.setBlock(x, y, z, Blocks.air);
-						}
-					}
-				}
 			}
 		}
 	}
@@ -378,7 +332,7 @@ public class PollutionHandler {
 		PollutionData data = getPollutionData(world, (int) Math.floor(event.x), (int) Math.floor(event.y), (int) Math.floor(event.z));
 		if(data == null) return;
 		
-		if(living instanceof IMob && !(living instanceof EntityGlyphid)) {
+		if(living instanceof IMob) {
 			
 			if(data.pollution[PollutionType.SOOT.ordinal()] > RadiationConfig.buffMobThreshold) {
 				if(living.getEntityAttribute(SharedMonsterAttributes.maxHealth) != null && living.getEntityAttribute(SharedMonsterAttributes.maxHealth).getModifier(maxHealth) == null) living.getEntityAttribute(SharedMonsterAttributes.maxHealth).applyModifier(new AttributeModifier(maxHealth, "Soot Anger Health Increase", 1D, 1));
@@ -387,7 +341,7 @@ public class PollutionHandler {
 			}
 		}
 	}
-	///RAMPANT MODE STUFFS///
+    ///RAMPANT MODE STUFFS///
 
 	@SubscribeEvent
 	public void rampantTargetSetter(PlayerSleepInBedEvent event){
@@ -396,9 +350,13 @@ public class PollutionHandler {
 
 	@SubscribeEvent
 	public void rampantScoutPopulator(WorldEvent.PotentialSpawns event){
-		
-		if(MobConfig.rampantNaturalScoutSpawn && !event.world.isRemote && event.world.provider.dimensionId == 0 && event.type == EnumCreatureType.monster
-				&& event.world.canBlockSeeTheSky(event.x, event.y, event.z) && !event.isCanceled()) {
+		//yell at me if this vertical formatting hurts your brain
+		if(MobConfig.rampantNaturalScoutSpawn
+				&& !event.world.isRemote
+				&& event.world.provider.dimensionId == 0
+				&& event.type == EnumCreatureType.monster
+				&& event.world.canBlockSeeTheSky(event.x, event.y, event.z)
+				&& !event.isCanceled()) {
 
 					if (event.world.rand.nextInt(MobConfig.rampantScoutSpawnChance) == 0) {
 
@@ -406,14 +364,13 @@ public class PollutionHandler {
 
 						if (soot >= MobConfig.rampantScoutSpawnThresh) {
 							EntityGlyphidScout scout = new EntityGlyphidScout(event.world);
-							scout.setLocationAndAngles(event.x, event.y, event.z, event.world.rand.nextFloat() * 360.0F, 0.0F);
 							if(scout.isValidLightLevel()) {
 								//escort for the scout, which can also deal with obstacles
 								EntityGlyphidDigger digger = new EntityGlyphidDigger(event.world);
 								scout.setLocationAndAngles(event.x, event.y, event.z, event.world.rand.nextFloat() * 360.0F, 0.0F);
 								digger.setLocationAndAngles(event.x, event.y, event.z, event.world.rand.nextFloat() * 360.0F, 0.0F);
-								if(scout.getCanSpawnHere()) event.world.spawnEntityInWorld(scout);
-								if(digger.getCanSpawnHere()) event.world.spawnEntityInWorld(digger);
+								event.world.spawnEntityInWorld(scout);
+								event.world.spawnEntityInWorld(digger);
 							}
 						}
 					}

@@ -238,22 +238,24 @@ public class TileEntityTurretArty extends TileEntityTurretBaseArtillery implemen
 					this.barrelPos = 0;
 				}
 			}
-			this.lastRotationPitch = this.rotationPitch;
-			this.lastRotationYaw = this.rotationYaw;
-			this.rotationPitch = this.syncRotationPitch;
-			this.rotationYaw = this.syncRotationYaw;
 		}
 		
-		if(!worldObj.isRemote) {
-			if(this.mode == this.MODE_MANUAL) {
-				if(!this.targetQueue.isEmpty()) {
-					this.tPos = this.targetQueue.get(0);
-				}
-			} else {
-				this.targetQueue.clear();
+		if(this.mode == this.MODE_MANUAL) {
+			if(!this.targetQueue.isEmpty()) {
+				this.tPos = this.targetQueue.get(0);
 			}
-	
-			this.aligned = false;
+		} else {
+			this.targetQueue.clear();
+		}
+		
+		if(worldObj.isRemote) {
+			this.lastRotationPitch = this.rotationPitch;
+			this.lastRotationYaw = this.rotationYaw;
+		}
+
+		this.aligned = false;
+		
+		if(!worldObj.isRemote) {
 			
 			this.updateConnections();
 			
@@ -261,12 +263,15 @@ public class TileEntityTurretArty extends TileEntityTurretBaseArtillery implemen
 				this.target = null;
 				this.stattrak++;
 			}
+		}
 		
-			if(target != null && this.mode != this.MODE_MANUAL) {
-				if(!this.entityInLOS(this.target)) {
-					this.target = null;
-				}
+		if(target != null && this.mode != this.MODE_MANUAL) {
+			if(!this.entityInLOS(this.target)) {
+				this.target = null;
 			}
+		}
+		
+		if(!worldObj.isRemote) {
 			
 			if(target != null) {
 				this.tPos = this.getEntityPos(target);
@@ -275,15 +280,18 @@ public class TileEntityTurretArty extends TileEntityTurretBaseArtillery implemen
 					this.tPos = null;
 				}
 			}
+		}
 		
-			if(isOn() && hasPower()) {
-				
-				if(tPos != null)
-					this.alignTurret();
-			} else {
-				this.target = null;
-				this.tPos = null;
-			}
+		if(isOn() && hasPower()) {
+			
+			if(tPos != null)
+				this.alignTurret();
+		} else {
+			this.target = null;
+			this.tPos = null;
+		}
+		
+		if(!worldObj.isRemote) {
 			
 			if(!isOn()) this.targetQueue.clear();
 			
@@ -326,6 +334,10 @@ public class TileEntityTurretArty extends TileEntityTurretBaseArtillery implemen
 			}
 			
 		} else {
+			
+			Vec3 vec = Vec3.createVectorHelper(this.getBarrelLength(), 0, 0);
+			vec.rotateAroundZ((float) -this.rotationPitch);
+			vec.rotateAroundY((float) -(this.rotationYaw + Math.PI * 0.5));
 			
 			//this will fix the interpolation error when the turret crosses the 360° point
 			if(Math.abs(this.lastRotationYaw - this.rotationYaw) > Math.PI) {

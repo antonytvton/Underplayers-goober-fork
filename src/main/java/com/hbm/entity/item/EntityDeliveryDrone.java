@@ -21,8 +21,8 @@ public class EntityDeliveryDrone extends EntityDroneBase implements IInventory, 
 	protected ItemStack[] slots = new ItemStack[this.getSizeInventory()];
 	public FluidStack fluid;
 	
-	protected boolean chunkLoading = false;
 	private Ticket loaderTicket;
+	public boolean isChunkLoading = false;
 	
 	public EntityDeliveryDrone(World world) {
 		super(world);
@@ -36,7 +36,6 @@ public class EntityDeliveryDrone extends EntityDroneBase implements IInventory, 
 	
 	public EntityDeliveryDrone setChunkLoading() {
 		init(ForgeChunkManager.requestTicket(MainRegistry.instance, worldObj, Type.ENTITY));
-		this.chunkLoading = true;
 		return this;
 	}
 
@@ -78,7 +77,6 @@ public class EntityDeliveryDrone extends EntityDroneBase implements IInventory, 
 		}
 
 		nbt.setByte("load", this.dataWatcher.getWatchableObjectByte(11));
-		nbt.setBoolean("chunkLoading", chunkLoading);
 	}
 
 	@Override
@@ -102,7 +100,6 @@ public class EntityDeliveryDrone extends EntityDroneBase implements IInventory, 
 		}
 
 		this.dataWatcher.updateObject(11, nbt.getByte("load"));
-		if(nbt.getBoolean("chunkLoading")) this.setChunkLoading();
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import com.hbm.lib.HbmCollection.EnumGunManufacturer;
 import com.hbm.particle.SpentCasing;
 import com.hbm.particle.SpentCasing.CasingType;
 import com.hbm.render.anim.BusAnimation;
+import com.hbm.render.anim.BusAnimationKeyframe;
 import com.hbm.render.anim.BusAnimationSequence;
 import com.hbm.render.anim.HbmAnimations.AnimType;
 import com.hbm.render.util.RenderScreenOverlay.Crosshair;
@@ -49,16 +50,16 @@ public class Gun20GaugeFactory {
 		
 		config.animations.put(AnimType.CYCLE, new BusAnimation()
 				.addBus("LEVER_ROTATE", new BusAnimationSequence()
-						.addKeyframePosition(0, 0, 0, 250)
-						.addKeyframePosition(0, 0, 45, 500)
-						.addKeyframePosition(0, 0, 0, 500)
+						.addKeyframe(new BusAnimationKeyframe(0, 0, 0, 250))
+						.addKeyframe(new BusAnimationKeyframe(0, 0, 45, 500))
+						.addKeyframe(new BusAnimationKeyframe(0, 0, 0, 500))
 						)
 				.addBus("LEVER_RECOIL", new BusAnimationSequence()
-						.addKeyframePosition(0.5, 0, 0, 50)
-						.addKeyframePosition(0, 0, 0, 50)
-						.addKeyframePosition(0, 0, 0, 150)
-						.addKeyframePosition(0, -0.5, 0, 500)
-						.addKeyframePosition(0, 0, 0, 500)
+						.addKeyframe(new BusAnimationKeyframe(0.5, 0, 0, 50))
+						.addKeyframe(new BusAnimationKeyframe(0, 0, 0, 50))
+						.addKeyframe(new BusAnimationKeyframe(0, 0, 0, 150))
+						.addKeyframe(new BusAnimationKeyframe(0, -0.5, 0, 500))
+						.addKeyframe(new BusAnimationKeyframe(0, 0, 0, 500))
 						)
 				);
 		

@@ -1,6 +1,10 @@
 package com.hbm.tileentity.conductor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.hbm.blocks.ModBlocks;
+import com.hbm.calc.UnionOfTileEntitiesAndBooleansForFluids;
 import com.hbm.interfaces.IFluidDuct;
 import com.hbm.inventory.fluid.FluidType;
 import com.hbm.inventory.fluid.Fluids;
@@ -18,6 +22,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class TileEntityFluidDuctSimple extends TileEntity implements IFluidDuct {
 
 	protected FluidType type = Fluids.NONE;
+	public List<UnionOfTileEntitiesAndBooleansForFluids> uoteab = new ArrayList<UnionOfTileEntitiesAndBooleansForFluids>();
 	
 	
 	public ForgeDirection[] connections = new ForgeDirection[6];

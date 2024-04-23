@@ -68,7 +68,7 @@ public abstract class TileEntityRBMKControl extends TileEntityRBMKSlottedBase im
 	
 	@Override
 	public int trackingRange() {
-		return 100;
+		return 150;
 	}
 	
 	@Override

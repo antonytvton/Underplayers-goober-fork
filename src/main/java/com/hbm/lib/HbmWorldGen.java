@@ -10,12 +10,9 @@ import com.hbm.config.GeneralConfig;
 import com.hbm.config.MobConfig;
 import com.hbm.config.WorldConfig;
 import com.hbm.handler.MultiblockHandlerXR;
-import com.hbm.itempool.ItemPool;
-import com.hbm.itempool.ItemPoolsSingle;
 import com.hbm.items.ModItems;
 import com.hbm.main.MainRegistry;
 import com.hbm.saveddata.TomSaveData;
-import com.hbm.tileentity.bomb.TileEntityLandmine;
 import com.hbm.tileentity.deco.TileEntityLanternBehemoth;
 import com.hbm.tileentity.machine.storage.TileEntitySafe;
 import com.hbm.tileentity.machine.storage.TileEntitySoyuzCapsule;
@@ -51,6 +48,7 @@ import net.minecraft.world.biome.BiomeGenForest;
 import net.minecraft.world.biome.BiomeGenJungle;
 import net.minecraft.world.biome.BiomeGenRiver;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.ChunkProviderFlat;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.common.IWorldGenerator;
@@ -154,7 +152,6 @@ public class HbmWorldGen implements IWorldGenerator {
 			DungeonToolbox.generateOre(world, rand, i, j, WorldConfig.limestoneSpawn, 12, 25, 30, ModBlocks.stone_resource, EnumStoneType.LIMESTONE.ordinal());
 			
 			if(rand.nextInt(3) == 0) {
-				@SuppressWarnings("unchecked")
 				WeightedRandomGeneric<BedrockOreDefinition> item = (WeightedRandomGeneric<BedrockOreDefinition>) WeightedRandom.getRandomItem(rand, BedrockOre.weightedOres);
 				BedrockOreDefinition def = item.get();
 				
@@ -219,11 +216,14 @@ public class HbmWorldGen implements IWorldGenerator {
 			}
 		}
 		
-		boolean enableDungeons = world.getWorldInfo().isMapFeaturesEnabled();
-		if(GeneralConfig.enableDungeons == 1) enableDungeons = true;
-		if(GeneralConfig.enableDungeons == 0) enableDungeons = false;
+		boolean enableDungeons = true;
 		
-		if(enableDungeons && world.provider.dimensionId == 0) {
+		if(world.getChunkProvider() instanceof ChunkProviderFlat) {
+			ChunkProviderFlat provider = (ChunkProviderFlat) world.getChunkProvider();
+			enableDungeons = provider.hasDungeons;
+		}
+
+		if(GeneralConfig.enableDungeons && world.provider.dimensionId == 0 && enableDungeons) {
 			
 			if(MobConfig.enableHives && rand.nextInt(MobConfig.hiveSpawn) == 0) {
 				int x = i + rand.nextInt(16) + 8;
@@ -334,13 +334,13 @@ public class HbmWorldGen implements IWorldGenerator {
 				}
 			}
 
-			/*if(WorldConfig.siloStructure > 0 && rand.nextInt(WorldConfig.siloStructure) == 0) {
+			if(WorldConfig.siloStructure > 0 && rand.nextInt(WorldConfig.siloStructure) == 0) {
 				int x = i + rand.nextInt(16);
 				int z = j + rand.nextInt(16);
 				int y = world.getHeightValue(x, z);
 
 				new Silo().generate(world, rand, x, y, z);
-			}*/
+			}
 
 			if(WorldConfig.factoryStructure > 0 && rand.nextInt(WorldConfig.factoryStructure) == 0) {
 				int x = i + rand.nextInt(16);
@@ -394,8 +394,6 @@ public class HbmWorldGen implements IWorldGenerator {
 
 				if(world.getBlock(x, y - 1, z).canPlaceTorchOnTop(world, x, y - 1, z)) {
 					world.setBlock(x, y, z, ModBlocks.mine_ap);
-					TileEntityLandmine landmine = (TileEntityLandmine) world.getTileEntity(x, y, z);
-					landmine.waitingForPlayer = true;
 
 					if(GeneralConfig.enableDebugMode)
 						MainRegistry.logger.info("[Debug] Successfully spawned landmine at " + x + " " + (y) + " " + z);
@@ -431,8 +429,6 @@ public class HbmWorldGen implements IWorldGenerator {
 				int y = world.getHeightValue(x, z);
 				if(world.getBlock(x, y - 1, z).canPlaceTorchOnTop(world, x, y - 1, z)) {
 					world.setBlock(x, y, z, ModBlocks.mine_he);
-					TileEntityLandmine landmine = (TileEntityLandmine) world.getTileEntity(x, y, z);
-					landmine.waitingForPlayer = true;
 				}
 			}
 
@@ -527,29 +523,39 @@ public class HbmWorldGen implements IWorldGenerator {
 
 				if(world.getBlock(x, y - 1, z).canPlaceTorchOnTop(world, x, y - 1, z)) {
 					world.setBlock(x, y, z, ModBlocks.safe, rand.nextInt(4) + 2, 2);
-					TileEntitySafe safe = (TileEntitySafe) world.getTileEntity(x, y, z);
 					
 					switch(rand.nextInt(10)) {
-					case 0: case 1: case 2: case 3:
-						safe.setMod(1);
-						WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_VAULT_RUSTY), safe, rand.nextInt(4) + 3);
+					case 0:
+					case 1:
+					case 2:
+					case 3:
+						((TileEntitySafe)world.getTileEntity(x, y, z)).setPins(rand.nextInt(999) + 1);
+						((TileEntitySafe)world.getTileEntity(x, y, z)).setMod(1);
+						((TileEntitySafe)world.getTileEntity(x, y, z)).lock();
+						WeightedRandomChestContent.generateChestContents(rand, HbmChestContents.vault1, (TileEntitySafe)world.getTileEntity(x, y, z), rand.nextInt(4) + 3);
 						break;
-					case 4: case 5: case 6:
-						safe.setMod(0.1);
-						WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_VAULT_STANDARD), safe, rand.nextInt(3) + 2);
+					case 4:
+					case 5:
+					case 6:
+						((TileEntitySafe)world.getTileEntity(x, y, z)).setPins(rand.nextInt(999) + 1);
+						((TileEntitySafe)world.getTileEntity(x, y, z)).setMod(0.1);
+						((TileEntitySafe)world.getTileEntity(x, y, z)).lock();
+						WeightedRandomChestContent.generateChestContents(rand, HbmChestContents.vault2, (TileEntitySafe)world.getTileEntity(x, y, z), rand.nextInt(3) + 2);
 						break;
-					case 7: case 8:
-						safe.setMod(0.02);
-						WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_VAULT_REINFORCED), safe, rand.nextInt(3) + 1);
+					case 7:
+					case 8:
+						((TileEntitySafe)world.getTileEntity(x, y, z)).setPins(rand.nextInt(999) + 1);
+						((TileEntitySafe)world.getTileEntity(x, y, z)).setMod(0.02);
+						((TileEntitySafe)world.getTileEntity(x, y, z)).lock();
+						WeightedRandomChestContent.generateChestContents(rand, HbmChestContents.vault3, (TileEntitySafe)world.getTileEntity(x, y, z), rand.nextInt(3) + 1);
 						break;
 					case 9:
-						safe.setMod(0.0);
-						WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_VAULT_UNBREAKABLE), safe, rand.nextInt(2) + 1);
+						((TileEntitySafe)world.getTileEntity(x, y, z)).setPins(rand.nextInt(999) + 1);
+						((TileEntitySafe)world.getTileEntity(x, y, z)).setMod(0.0);
+						((TileEntitySafe)world.getTileEntity(x, y, z)).lock();
+						WeightedRandomChestContent.generateChestContents(rand, HbmChestContents.vault4, (TileEntitySafe)world.getTileEntity(x, y, z), rand.nextInt(2) + 1);
 						break;
 					}
-
-					safe.setPins(rand.nextInt(999) + 1);
-					safe.lock();
 					
 					if(GeneralConfig.enableDebugMode)
 						MainRegistry.logger.info("[Debug] Successfully spawned safe at " + x + " " + (y + 1) +" " + z);
@@ -666,7 +672,8 @@ public class HbmWorldGen implements IWorldGenerator {
 				if (world.getBlock(10000, 250, 10000) == Blocks.air) {
 					world.setBlock(10000, 250, 10000, Blocks.chest);
 					if (world.getBlock(10000, 250, 10000) == Blocks.chest) {
-						WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_POWDER), (TileEntityChest) world.getTileEntity(10000, 250, 10000), 29);
+						WeightedRandomChestContent.generateChestContents(rand, HbmChestContents.powder,
+								(TileEntityChest) world.getTileEntity(10000, 250, 10000), 29);
 					}
 				}
 			}
@@ -674,7 +681,8 @@ public class HbmWorldGen implements IWorldGenerator {
 				if (world.getBlock(0, 250, 10000) == Blocks.air) {
 					world.setBlock(0, 250, 10000, Blocks.chest);
 					if (world.getBlock(0, 250, 10000) == Blocks.chest) {
-						WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_POWDER), (TileEntityChest) world.getTileEntity(0, 250, 10000), 29);
+						WeightedRandomChestContent.generateChestContents(rand, HbmChestContents.powder,
+								(TileEntityChest) world.getTileEntity(0, 250, 10000), 29);
 					}
 				}
 			}
@@ -682,7 +690,8 @@ public class HbmWorldGen implements IWorldGenerator {
 				if (world.getBlock(-10000, 250, 10000) == Blocks.air) {
 					world.setBlock(-10000, 250, 10000, Blocks.chest);
 					if (world.getBlock(-10000, 250, 10000) == Blocks.chest) {
-						WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_POWDER), (TileEntityChest) world.getTileEntity(-10000, 250, 10000), 29);
+						WeightedRandomChestContent.generateChestContents(rand, HbmChestContents.powder,
+								(TileEntityChest) world.getTileEntity(-10000, 250, 10000), 29);
 					}
 				}
 			}
@@ -690,7 +699,8 @@ public class HbmWorldGen implements IWorldGenerator {
 				if (world.getBlock(10000, 250, 0) == Blocks.air) {
 					world.setBlock(10000, 250, 0, Blocks.chest);
 					if (world.getBlock(10000, 250, 0) == Blocks.chest) {
-						WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_POWDER), (TileEntityChest) world.getTileEntity(10000, 250, 0), 29);
+						WeightedRandomChestContent.generateChestContents(rand, HbmChestContents.powder,
+								(TileEntityChest) world.getTileEntity(10000, 250, 0), 29);
 					}
 				}
 			}
@@ -698,7 +708,8 @@ public class HbmWorldGen implements IWorldGenerator {
 				if (world.getBlock(-10000, 250, 0) == Blocks.air) {
 					world.setBlock(-10000, 250, 0, Blocks.chest);
 					if (world.getBlock(-10000, 250, 0) == Blocks.chest) {
-						WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_POWDER), (TileEntityChest) world.getTileEntity(-10000, 250, 0), 29);
+						WeightedRandomChestContent.generateChestContents(rand, HbmChestContents.powder,
+								(TileEntityChest) world.getTileEntity(-10000, 250, 0), 29);
 					}
 				}
 			}
@@ -706,7 +717,8 @@ public class HbmWorldGen implements IWorldGenerator {
 				if (world.getBlock(10000, 250, -10000) == Blocks.air) {
 					world.setBlock(10000, 250, -10000, Blocks.chest);
 					if (world.getBlock(10000, 250, -10000) == Blocks.chest) {
-						WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_POWDER), (TileEntityChest) world.getTileEntity(10000, 250, -10000), 29);
+						WeightedRandomChestContent.generateChestContents(rand, HbmChestContents.powder,
+								(TileEntityChest) world.getTileEntity(10000, 250, -10000), 29);
 					}
 				}
 			}
@@ -714,7 +726,8 @@ public class HbmWorldGen implements IWorldGenerator {
 				if (world.getBlock(0, 250, -10000) == Blocks.air) {
 					world.setBlock(0, 250, -10000, Blocks.chest);
 					if (world.getBlock(0, 250, -10000) == Blocks.chest) {
-						WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_POWDER), (TileEntityChest) world.getTileEntity(0, 250, -10000), 29);
+						WeightedRandomChestContent.generateChestContents(rand, HbmChestContents.powder,
+								(TileEntityChest) world.getTileEntity(0, 250, -10000), 29);
 					}
 				}
 			}
@@ -722,7 +735,8 @@ public class HbmWorldGen implements IWorldGenerator {
 				if (world.getBlock(-10000, 250, -10000) == Blocks.air) {
 					world.setBlock(-10000, 250, -10000, Blocks.chest);
 					if (world.getBlock(-10000, 250, -10000) == Blocks.chest) {
-						WeightedRandomChestContent.generateChestContents(rand, ItemPool.getPool(ItemPoolsSingle.POOL_POWDER), (TileEntityChest) world.getTileEntity(-10000, 250, -10000), 29);
+						WeightedRandomChestContent.generateChestContents(rand, HbmChestContents.powder,
+								(TileEntityChest) world.getTileEntity(-10000, 250, -10000), 29);
 					}
 				}
 			}
@@ -754,7 +768,6 @@ public class HbmWorldGen implements IWorldGenerator {
 				DungeonToolbox.generateOre(world, rand, i, j, WorldConfig.netherPlutoniumSpawn, 4, 0, 127, ModBlocks.ore_nether_plutonium, Blocks.netherrack);
 			
 			if(rand.nextInt(10) == 0) {
-				@SuppressWarnings("unchecked")
 				WeightedRandomGeneric<BedrockOreDefinition> item = (WeightedRandomGeneric<BedrockOreDefinition>) WeightedRandom.getRandomItem(rand, BedrockOre.weightedOresNether);
 				BedrockOreDefinition def = item.get();
 				int randPosX = i + rand.nextInt(2) + 8;

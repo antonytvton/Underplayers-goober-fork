@@ -4,14 +4,13 @@ import com.hbm.inventory.fluid.FluidType;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
 
-import api.hbm.tile.ILoadedTile;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public interface IFluidConnector extends ILoadedTile {
+public interface IFluidConnector {
 	
 	/**
 	 * Returns the amount of fluid that remains

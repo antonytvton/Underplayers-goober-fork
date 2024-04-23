@@ -3,14 +3,11 @@ package com.hbm.tileentity.machine;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.lib.Library;
 import com.hbm.tileentity.TileEntityLoadedBase;
-import com.hbm.util.CompatEnergyControl;
 
-import api.hbm.energymk2.IEnergyProviderMK2;
-import api.hbm.tile.IInfoProviderEC;
+import api.hbm.energy.IEnergyGenerator;
 import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityMachineSPP extends TileEntityLoadedBase implements IEnergyProviderMK2, IInfoProviderEC {
+public class TileEntityMachineSPP extends TileEntityLoadedBase implements IEnergyGenerator {
 	
 	public long power;
 	public static final long maxPower = 100000;
@@ -22,11 +19,11 @@ public class TileEntityMachineSPP extends TileEntityLoadedBase implements IEnerg
 		
 		if(!worldObj.isRemote) {
 
-			this.tryProvide(worldObj, xCoord + 1, yCoord, zCoord, Library.POS_X);
-			this.tryProvide(worldObj, xCoord - 1, yCoord, zCoord, Library.NEG_X);
-			this.tryProvide(worldObj, xCoord, yCoord, zCoord + 1, Library.POS_Z);
-			this.tryProvide(worldObj, xCoord, yCoord, zCoord - 1, Library.NEG_Z);
-			this.tryProvide(worldObj, xCoord, yCoord - 1, zCoord, Library.NEG_Y);
+			this.sendPower(worldObj, xCoord + 1, yCoord, zCoord, Library.POS_X);
+			this.sendPower(worldObj, xCoord - 1, yCoord, zCoord, Library.NEG_X);
+			this.sendPower(worldObj, xCoord, yCoord, zCoord + 1, Library.POS_Z);
+			this.sendPower(worldObj, xCoord, yCoord, zCoord - 1, Library.NEG_Z);
+			this.sendPower(worldObj, xCoord, yCoord - 1, zCoord, Library.NEG_Y);
 			
 			if(worldObj.getTotalWorldTime() % 20 == 0)
 				gen = checkStructure() * 15;
@@ -89,9 +86,4 @@ public class TileEntityMachineSPP extends TileEntityLoadedBase implements IEnerg
 		return this.maxPower;
 	}
 
-	@Override
-	public void provideExtraInfo(NBTTagCompound data) {
-		data.setBoolean(CompatEnergyControl.B_ACTIVE, this.gen > 0);
-		data.setDouble(CompatEnergyControl.D_OUTPUT_HE, this.gen);
-	}
 }

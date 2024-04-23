@@ -128,7 +128,9 @@ public class ItemBobmazonPacket implements IMessage {
 							item == ModItems.cap_nuka ||
 							item == ModItems.cap_quantum ||
 							item == ModItems.cap_rad ||
-							item == ModItems.cap_sparkle)
+							item == ModItems.cap_sparkle ||
+							item == ModItems.cap_star ||
+							item == ModItems.cap_sunset)
 						count += stack.stackSize;
 					
 				}
@@ -155,7 +157,9 @@ public class ItemBobmazonPacket implements IMessage {
 							item == ModItems.cap_nuka ||
 							item == ModItems.cap_quantum ||
 							item == ModItems.cap_rad ||
-							item == ModItems.cap_sparkle) {
+							item == ModItems.cap_sparkle ||
+							item == ModItems.cap_star ||
+							item == ModItems.cap_sunset) {
 						
 						int size = stack.stackSize;
 						for(int j = 0; j < size; j++) {

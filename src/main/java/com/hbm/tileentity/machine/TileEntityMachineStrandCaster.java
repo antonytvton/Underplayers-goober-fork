@@ -192,8 +192,7 @@ public class TileEntityMachineStrandCaster extends TileEntityFoundryCastingBase 
 	@Override
 	public boolean standardCheck(World world, int x, int y, int z, ForgeDirection side, Mats.MaterialStack stack) {
 		if(this.type != null && this.type != stack.material) return false;
-		int limit = this.getInstalledMold() != null ? this.getInstalledMold().getCost() * 9 : this.getCapacity();
-		return !(this.amount >= limit || getInstalledMold() == null);
+		return !(this.amount >= this.getCapacity() || getInstalledMold() == null);
 	}
 
 	@Override
@@ -212,22 +211,7 @@ public class TileEntityMachineStrandCaster extends TileEntityFoundryCastingBase 
 			this.sendFluid(steam, worldObj, pos.getX(), pos.getY(), pos.getZ(), pos.getDir());
 		}
 	}
- 	@Override
-	public Mats.MaterialStack standardAdd(World world, int x, int y, int z, ForgeDirection side, Mats.MaterialStack stack) {
-		this.type = stack.material;
-        int limit = this.getInstalledMold() != null ? this.getInstalledMold().getCost() * 9 : this.getCapacity();
-		if(stack.amount + this.amount <= limit) {
-			this.amount += stack.amount;
-			return null;
-		}
 
-		int required = limit - this.amount;
-		this.amount = limit;
-
-		stack.amount -= required;
-
-		return stack;
-	}
 	@Override
 	public FluidTank[] getSendingTanks() {
 		return new FluidTank[] { steam };
@@ -282,7 +266,11 @@ public class TileEntityMachineStrandCaster extends TileEntityFoundryCastingBase 
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack stack) {
-		if(i == 0) return stack.getItem() == ModItems.mold;
+
+		if(i == 0) {
+			return stack.getItem() == ModItems.mold;
+		}
+
 		return false;
 	}
 
@@ -337,16 +325,4 @@ public class TileEntityMachineStrandCaster extends TileEntityFoundryCastingBase 
 		return bb;
 	}
 
-	public boolean isLoaded = true;
-	
-	@Override
-	public boolean isLoaded() {
-		return isLoaded;
-	}
-
-	@Override
-	public void onChunkUnload() {
-		super.onChunkUnload();
-		this.isLoaded = false;
-	}
 }

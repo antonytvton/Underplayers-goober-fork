@@ -7,6 +7,7 @@ import com.hbm.blocks.ILookOverlay;
 import com.hbm.handler.MultiblockHandlerXR;
 import com.hbm.inventory.material.Mats;
 import com.hbm.items.ModItems;
+import com.hbm.items.machine.ItemMold;
 import com.hbm.items.machine.ItemScraps;
 import com.hbm.tileentity.TileEntityProxyCombo;
 import com.hbm.tileentity.machine.TileEntityMachineStrandCaster;
@@ -185,7 +186,8 @@ public class MachineStrandCaster extends BlockDummyable implements ICrucibleAcce
 			if(cast.slots[0] == null) {
 				text.add(EnumChatFormatting.RED + I18nUtil.resolveKey("foundry.noCast"));
 			} else if(cast.slots[0].getItem() == ModItems.mold) {
-				text.add(EnumChatFormatting.BLUE + cast.getInstalledMold().getTitle());
+				ItemMold.Mold mold = ((ItemMold) cast.slots[0].getItem()).getMold(cast.slots[0]);
+				text.add(EnumChatFormatting.BLUE + mold.getTitle());
 			}
 		}
 		ILookOverlay.printGeneric(event, I18nUtil.resolveKey(this.getUnlocalizedName() + ".name"), 0xFF4000, 0x401000, text);

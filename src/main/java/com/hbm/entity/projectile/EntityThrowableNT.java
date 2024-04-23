@@ -142,6 +142,9 @@ public abstract class EntityThrowableNT extends Entity implements IProjectile {
 	
 	@Override
 	public void onUpdate() {
+		this.lastTickPosX = this.posX;
+		this.lastTickPosY = this.posY;
+		this.lastTickPosZ = this.posZ;
 		super.onUpdate();
 
 		if(this.throwableShake > 0) {

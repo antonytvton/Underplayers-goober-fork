@@ -1,15 +1,15 @@
 package com.hbm.blocks.generic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.BlockLoot.TileEntityLoot;
 import com.hbm.blocks.generic.BlockPedestal.TileEntityPedestal;
-import com.hbm.itempool.ItemPool;
-import com.hbm.itempool.ItemPoolsRedRoom;
 import com.hbm.items.ModItems;
 import com.hbm.items.tool.ItemModDoor;
 import com.hbm.main.MainRegistry;
+import com.hbm.util.WeightedRandomObject;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -23,7 +23,6 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.WeightedRandom;
-import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -52,23 +51,19 @@ public class BlockKeyhole extends BlockStone {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		
-		if(player.getHeldItem() != null) {
-			boolean cracked = player.getHeldItem().getItem() == ModItems.key_red_cracked;
-			if((player.getHeldItem().getItem() == ModItems.key_red || cracked) && side != 0 && side != 1) {
-				if(cracked) player.getHeldItem().stackSize--;
-				if(world.isRemote) return true;
-				ForgeDirection dir = ForgeDirection.getOrientation(side);
-				generateRoom(world, x - dir.offsetX * 4, y - 2, z - dir.offsetZ * 4);
-				int b = 0;
-				if(side == 2) b = 1;
-				if(side == 5) b = 2;
-				if(side == 3) b = 3;
-				if(side == 4) b = 0;
-				ItemModDoor.placeDoorBlock(world, x, y - 1, z, b, ModBlocks.door_red);
-				world.playSoundAtEntity(player, "hbm:block.lockOpen", 1.0F, 1.0F);
-				player.triggerAchievement(MainRegistry.achRedRoom);
-				return true;
-			}
+		if(player.getHeldItem() != null && player.getHeldItem().getItem() == ModItems.key_red && side != 0 && side != 1) {
+			if(world.isRemote) return true;
+			ForgeDirection dir = ForgeDirection.getOrientation(side);
+			generateRoom(world, x - dir.offsetX * 4, y - 2, z - dir.offsetZ * 4);
+			int b = 0;
+			if(side == 2) b = 1;
+			if(side == 5) b = 2;
+			if(side == 3) b = 3;
+			if(side == 4) b = 0;
+			ItemModDoor.placeDoorBlock(world, x, y - 1, z, b, ModBlocks.door_red);
+			world.playSoundAtEntity(player, "hbm:block.lockOpen", 1.0F, 1.0F);
+			player.triggerAchievement(MainRegistry.achRedRoom);
+			return true;
 		}
 		
 		return false;
@@ -210,10 +205,43 @@ public class BlockKeyhole extends BlockStone {
 		for(EntityItem item : items) item.setDead();
 	}
 	
+	public static List<WeightedRandomObject> pedestalItems;
+	
 	public static void spawnPedestalItem(World world, int x, int y, int z) {
 		world.setBlock(x, y, z, ModBlocks.pedestal);
 		TileEntityPedestal pedestal = (TileEntityPedestal) world.getTileEntity(x, y, z);
-		WeightedRandomChestContent content = (WeightedRandomChestContent) WeightedRandom.getRandomItem(world.rand, ItemPool.getPool(ItemPoolsRedRoom.POOL_RED_PEDESTAL));
-		pedestal.item = content.theItemId.copy();
+		if(pedestalItems == null) initPedestal();
+		pedestal.item = ((WeightedRandomObject) WeightedRandom.getRandomItem(world.rand, pedestalItems)).asStack().copy();
+	}
+	
+	public static void initPedestal() {
+		pedestalItems = new ArrayList();
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.ballistic_gauntlet), 10));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.night_vision), 10));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.protection_charm), 10));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.armor_polish), 10));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.bandaid), 10));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.serum), 10));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.quartz_plutonium), 10));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.morning_glory), 10));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.lodestone), 10));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.spider_milk), 10));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.ink), 10));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.heart_container), 10));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.black_diamond), 5));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.wd40), 10));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.scrumpy), 10));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.wild_p), 5));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.card_aos), 5));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.card_qos), 5));
+
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.starmetal_sword), 5));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.radaway_flush), 5));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.gem_alexandrite), 5));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.crackpipe), 5));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.flask_infusion), 5));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModBlocks.boxcar), 5));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.book_of_), 5));
+		pedestalItems.add(new WeightedRandomObject(new ItemStack(ModItems.gun_revolver_pip), 5));
 	}
 }

@@ -3,7 +3,6 @@ package com.hbm.handler;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.function.Consumer;
 
 import com.hbm.lib.HbmCollection.EnumGunManufacturer;
 import com.hbm.render.anim.BusAnimation;
@@ -36,14 +35,9 @@ public class GunConfiguration implements Cloneable {
 	public int durability;
 	
 	//animations!
-	public HashMap<AnimType, BusAnimation> animations = new HashMap<AnimType, BusAnimation>();
-	//lazy-ish loading for animations, required for loading animations from ResourceManager, since that occurs after we've initialised the guns
-	public Consumer<Void> loadAnimations;
-	public boolean animationsLoaded = false;
+	public HashMap<AnimType, BusAnimation> animations = new HashMap();
 	//when sneaking, disables crosshair and centers the bullet spawn point
 	public boolean hasSights;
-	//does this weapon behave like fully sick old-school boomer shooters
-	public boolean isCentered;
 	//texture overlay when sneaking
 	public ResourceLocation scopeTexture;
 	//whether the FOV multiplier should be absolute or multiplicative to other modifiers, multiplicative mode is experimental!
@@ -51,20 +45,17 @@ public class GunConfiguration implements Cloneable {
 	//the target FOV/multiplied FOV modifier when sneaking
 	public float zoomFOV = 0.0F;
 	
-	//duration of every animation cycle, used also for how quickly a burst fire rifle can fire
-	public int firingDuration;
-	//sound path to the shooting sound
-	public String firingSound = "";
-	public String firingSoundEmpty = null;
-	public float firingVolume = 1.0F;
-	public float firingPitch = 1.0F;
 	//how long the reload animation will play
 	//MUST BE GREATER THAN ZERO ! ! !
 	public int reloadDuration;
-	public int emptyReloadAdditionalDuration;
+	//duration of every animation cycle, used also for how quickly a burst fire rifle can fire
+	public int firingDuration;
 	//sound path to the reload sound
 	public String reloadSound = "";
-	public String reloadSoundEmpty = null;
+	//sound path to the shooting sound
+	public String firingSound = "";
+	public float firingVolume = 1.0F;
+	public float firingPitch = 1.0F;
 	//whether the reload sound should be played at the beginning or at the end of the reload
 	public boolean reloadSoundEnd = true;
 	public String equipSound = "";
@@ -73,8 +64,6 @@ public class GunConfiguration implements Cloneable {
 	public int ammoCap;
 	//0 does not allow direct reload, 1 is full clip, 2 is single bullet
 	public int reloadType;
-	// If the animations are designed to be sequential, the last frame will be held until the next anmiation starts
-	public boolean reloadAnimationsSequential = false;
 	//whether or not the infinity enchantment should work
 	public boolean allowsInfinity;
 	//whether the ammo count should be displayed
@@ -90,10 +79,10 @@ public class GunConfiguration implements Cloneable {
 	
 	public String name = "";
 	public EnumGunManufacturer manufacturer = EnumGunManufacturer.NONE;
-	public List<String> comment = new ArrayList<String>();
+	public List<String> comment = new ArrayList();
 
 	//bullet configs for main and alt fire
-	public List<Integer> config = new ArrayList<Integer>();
+	public List<Integer> config = new ArrayList();
 
 	//crosshair
 	public Crosshair crosshair;
@@ -116,7 +105,6 @@ public class GunConfiguration implements Cloneable {
 	public static final String RSOUND_REVOLVER = "hbm:weapon.revolverReload";
 	public static final String RSOUND_RIFLE = "";
 	public static final String RSOUND_MAG = "hbm:weapon.magReload";
-	public static final String RSOUND_MAG_BOLT = "hbm:weapon.magReloadBolt";
 	public static final String RSOUND_SHOTGUN = "hbm:weapon.shotgunReload";
 	public static final String RSOUND_LAUNCHER = "hbm:weapon.rpgReload";
 	public static final String RSOUND_GRENADE = "hbm:weapon.hkReload";

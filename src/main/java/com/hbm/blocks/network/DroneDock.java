@@ -1,8 +1,5 @@
 package com.hbm.blocks.network;
 
-import java.util.List;
-
-import com.hbm.blocks.ITooltipProvider;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.network.TileEntityDroneDock;
@@ -16,12 +13,11 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class DroneDock extends BlockContainer implements ITooltipProvider {
+public class DroneDock extends BlockContainer {
 
 	@SideOnly(Side.CLIENT) private IIcon iconTop;
 	@SideOnly(Side.CLIENT) private IIcon iconBottom;
@@ -64,10 +60,5 @@ public class DroneDock extends BlockContainer implements ITooltipProvider {
 		} else {
 			return false;
 		}
-	}
-
-	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean ext) {
-		this.addStandardInfo(stack, player, list, ext);
 	}
 }

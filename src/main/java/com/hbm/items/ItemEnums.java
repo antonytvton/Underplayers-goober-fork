@@ -63,13 +63,7 @@ public class ItemEnums {
 		DIGAMMAKNOW,
 		DIGAMMAKAUAIMOHO,
 		DIGAMMAUPONTOP,
-		DIGAMMAFOROURRIGHT,
-		QUESTIONMARK
-	}
-
-	public static enum EnumFuelAdditive {
-		ANTIKNOCK,
-		DEICER
+		DIGAMMAFOROURRIGHT
 	}
 
 	public static enum EnumPages {

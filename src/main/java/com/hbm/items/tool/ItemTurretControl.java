@@ -168,6 +168,10 @@ public class ItemTurretControl extends Item {
 		j = event.charge;
 
 		if(stack.hasTagCompound()) {
+			int x = stack.getTagCompound().getInteger("xCoord");
+			int y = stack.getTagCompound().getInteger("yCoord");
+			int z = stack.getTagCompound().getInteger("zCoord");
+			
 			/// ///
 		}
 	}
@@ -200,6 +204,8 @@ public class ItemTurretControl extends Item {
 
 			if(world.getBlock(x, y, z) instanceof TurretBase) {
 
+				TileEntity te = world.getTileEntity(x, y, z);
+				
 				/// ///
 			}
 

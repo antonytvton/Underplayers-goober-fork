@@ -3,7 +3,6 @@ package com.hbm.render.item.weapon;
 import org.lwjgl.opengl.GL11;
 
 import com.hbm.main.ResourceManager;
-import com.hbm.render.anim.HbmAnimations;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -56,26 +55,8 @@ public class ItemRenderWeaponFFColt implements IItemRenderer {
 			GL11.glScaled(s0, s0, s0);
 			GL11.glRotated(100, 0, -1, 0);
 			GL11.glRotated(25, 1, 0, 0);
-
-			HbmAnimations.applyRelevantTransformation("Body");
-			Minecraft.getMinecraft().renderEngine.bindTexture(main);
-			ResourceManager.ff_python.renderPart("Body");
-
-			GL11.glPushMatrix();
-			HbmAnimations.applyRelevantTransformation("Cylinder");
-			ResourceManager.ff_python.renderPart("Cylinder");
-			GL11.glPopMatrix();
-
-			Minecraft.getMinecraft().renderEngine.bindTexture(grip);
-			ResourceManager.ff_python.renderPart("Grip");
-
-			HbmAnimations.applyRelevantTransformation("Hammer");
-			Minecraft.getMinecraft().renderEngine.bindTexture(hammer);
-			ResourceManager.ff_python.renderPart("Hammer");
 			
-			GL11.glPopMatrix();
-			
-			return;
+			break;
 			
 		case EQUIPPED:
 

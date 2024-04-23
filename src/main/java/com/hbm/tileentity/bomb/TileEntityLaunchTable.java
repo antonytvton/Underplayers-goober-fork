@@ -2,6 +2,8 @@ package com.hbm.tileentity.bomb;
 
 import java.util.List;
 
+import com.hbm.blocks.ModBlocks;
+import com.hbm.blocks.bomb.LaunchPad;
 import com.hbm.entity.missile.EntityMissileCustom;
 import com.hbm.handler.MissileStruct;
 import com.hbm.interfaces.IFluidAcceptor;
@@ -13,9 +15,9 @@ import com.hbm.inventory.fluid.tank.FluidTank;
 import com.hbm.inventory.gui.GUIMachineLaunchTable;
 import com.hbm.items.ModItems;
 import com.hbm.items.weapon.ItemCustomMissile;
-import com.hbm.items.weapon.ItemCustomMissilePart;
-import com.hbm.items.weapon.ItemCustomMissilePart.FuelType;
-import com.hbm.items.weapon.ItemCustomMissilePart.PartSize;
+import com.hbm.items.weapon.ItemMissile;
+import com.hbm.items.weapon.ItemMissile.FuelType;
+import com.hbm.items.weapon.ItemMissile.PartSize;
 import com.hbm.lib.Library;
 import com.hbm.main.MainRegistry;
 import com.hbm.packet.AuxElectricityPacket;
@@ -26,7 +28,7 @@ import com.hbm.tileentity.IGUIProvider;
 import com.hbm.tileentity.IRadarCommandReceiver;
 import com.hbm.tileentity.TileEntityLoadedBase;
 
-import api.hbm.energymk2.IEnergyReceiverMK2;
+import api.hbm.energy.IEnergyUser;
 import api.hbm.fluid.IFluidStandardReceiver;
 import api.hbm.item.IDesignatorItem;
 import cpw.mods.fml.common.Optional;
@@ -53,7 +55,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 @Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
-public class TileEntityLaunchTable extends TileEntityLoadedBase implements ISidedInventory, IEnergyReceiverMK2, IFluidContainer, IFluidAcceptor, IFluidStandardReceiver, IGUIProvider, SimpleComponent, IRadarCommandReceiver {
+public class TileEntityLaunchTable extends TileEntityLoadedBase implements ISidedInventory, IEnergyUser, IFluidContainer, IFluidAcceptor, IFluidStandardReceiver, IGUIProvider, SimpleComponent, IRadarCommandReceiver {
 
 	private ItemStack slots[];
 
@@ -279,29 +281,22 @@ public class TileEntityLaunchTable extends TileEntityLoadedBase implements ISide
 	
 	public void launchFromDesignator() {
 
-		if(slots[1] != null && slots[1].getItem() instanceof IDesignatorItem) {
-			IDesignatorItem designator = (IDesignatorItem) slots[1].getItem();
-			
-			if(designator.isReady(worldObj, slots[1], xCoord, yCoord, zCoord)) {
-				Vec3 coords = designator.getCoords(worldObj, slots[1], xCoord, yCoord, zCoord);
-				int tX = (int) Math.floor(coords.xCoord);
-				int tZ = (int) Math.floor(coords.zCoord);
-				
-				this.launchTo(tX, tZ);
-			}
-		}
+		int tX = slots[1].stackTagCompound.getInteger("xCoord");
+		int tZ = slots[1].stackTagCompound.getInteger("zCoord");
+		
+		this.launchTo(tX, tZ);
 	}
 	
 	public void launchTo(int tX, int tZ) {
 
 		worldObj.playSoundEffect(xCoord, yCoord, zCoord, "hbm:weapon.missileTakeOff", 10.0F, 1.0F);
 		
-		ItemCustomMissilePart chip = (ItemCustomMissilePart) Item.getItemById(ItemCustomMissile.readFromNBT(slots[0], "chip"));
+		ItemMissile chip = (ItemMissile) Item.getItemById(ItemCustomMissile.readFromNBT(slots[0], "chip"));
 		float c = (Float)chip.attributes[0];
 		float f = 1.0F;
 		
 		if(getStruct(slots[0]).fins != null) {
-			ItemCustomMissilePart fins = (ItemCustomMissilePart) Item.getItemById(ItemCustomMissile.readFromNBT(slots[0], "stability"));
+			ItemMissile fins = (ItemMissile) Item.getItemById(ItemCustomMissile.readFromNBT(slots[0], "stability"));
 			f = (Float) fins.attributes[0];
 		}
 		
@@ -331,7 +326,7 @@ public class TileEntityLaunchTable extends TileEntityLoadedBase implements ISide
 		if(multipart == null || multipart.fuselage == null)
 			return;
 		
-		ItemCustomMissilePart fuselage = (ItemCustomMissilePart)multipart.fuselage;
+		ItemMissile fuselage = (ItemMissile)multipart.fuselage;
 		
 		float f = (Float)fuselage.attributes[1];
 		int fuel = (int)f;
@@ -372,7 +367,7 @@ public class TileEntityLaunchTable extends TileEntityLoadedBase implements ISide
 		if(multipart == null || multipart.fuselage == null)
 			return false;
 		
-		ItemCustomMissilePart fuselage = (ItemCustomMissilePart)multipart.fuselage;
+		ItemMissile fuselage = (ItemMissile)multipart.fuselage;
 		
 		return fuselage.top == padSize;
 	}
@@ -393,7 +388,7 @@ public class TileEntityLaunchTable extends TileEntityLoadedBase implements ISide
 		if(multipart == null || multipart.fuselage == null)
 			return -1;
 		
-		ItemCustomMissilePart fuselage = (ItemCustomMissilePart)multipart.fuselage;
+		ItemMissile fuselage = (ItemMissile)multipart.fuselage;
 		
 		if((FuelType)fuselage.attributes[0] == FuelType.SOLID) {
 			
@@ -413,7 +408,7 @@ public class TileEntityLaunchTable extends TileEntityLoadedBase implements ISide
 		if(multipart == null || multipart.fuselage == null)
 			return -1;
 		
-		ItemCustomMissilePart fuselage = (ItemCustomMissilePart)multipart.fuselage;
+		ItemMissile fuselage = (ItemMissile)multipart.fuselage;
 		
 		switch((FuelType)fuselage.attributes[0]) {
 			case KEROSENE:
@@ -438,7 +433,7 @@ public class TileEntityLaunchTable extends TileEntityLoadedBase implements ISide
 		if(multipart == null || multipart.fuselage == null)
 			return -1;
 		
-		ItemCustomMissilePart fuselage = (ItemCustomMissilePart)multipart.fuselage;
+		ItemMissile fuselage = (ItemMissile)multipart.fuselage;
 		
 		switch((FuelType)fuselage.attributes[0]) {
 			case KEROSENE:
@@ -462,7 +457,7 @@ public class TileEntityLaunchTable extends TileEntityLoadedBase implements ISide
 		if(multipart == null || multipart.fuselage == null)
 			return;
 		
-		ItemCustomMissilePart fuselage = (ItemCustomMissilePart)multipart.fuselage;
+		ItemMissile fuselage = (ItemMissile)multipart.fuselage;
 		
 		switch((FuelType)fuselage.attributes[0]) {
 			case KEROSENE:
@@ -709,11 +704,9 @@ public class TileEntityLaunchTable extends TileEntityLoadedBase implements ISide
 	@Callback
 	@Optional.Method(modid = "OpenComputers")
 	public Object[] launch(Context context, Arguments args) {
-		if(this.canLaunch()) {
-			this.launchFromDesignator();
-			return new Object[] {true};
-		}
-		return new Object[] {false};
+		//worldObj.getBlock(xCoord, yCoord, zCoord).explode(worldObj, xCoord, yCoord, zCoord);
+		((LaunchPad) ModBlocks.launch_pad).explode(worldObj, xCoord, yCoord, zCoord);
+		return new Object[] {};
 	}
 
 	@Override
