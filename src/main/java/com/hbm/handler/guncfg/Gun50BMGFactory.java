@@ -110,7 +110,7 @@ public class Gun50BMGFactory {
 		config.reloadSoundEnd = false;
 		config.ammoCap = 50;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.NONE;
 		config.durability = 100_000;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
@@ -171,14 +171,14 @@ public class Gun50BMGFactory {
 	public static GunConfiguration getM2Config() {
 		GunConfiguration config = getAR15Config();
 		
-		config.rateOfFire = 2;
+		config.rateOfFire = 3;
 		config.durability *= 10;
 		config.ammoCap = 0;
 		config.crosshair = Crosshair.L_BOX;
 		config.reloadType = GunConfiguration.RELOAD_NONE;
 		config.hasSights = true;
 		config.zoomFOV = 0.66F;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.durability = 10_000;
 		config.firingSound = "hbm:turret.chekhov_fire";
 		config.equipSound = "hbm:turret.howard_reload";
@@ -219,7 +219,7 @@ public class Gun50BMGFactory {
 		config.hasSights = true;
 		config.zoomFOV = 0.2F; //x5 magnification
 		config.scopeTexture = scope_luna;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_CLASSIC;
 		config.reloadSound = GunConfiguration.RSOUND_SHOTGUN;
 		config.reloadSoundEnd = true;
@@ -253,8 +253,8 @@ public class Gun50BMGFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50bmg.stackFromEnum(Ammo50BMG.STOCK));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 30;
-		bullet.dmgMax = 36;
+		bullet.dmgMin = 15;
+		bullet.dmgMax = 20;
 		
 		bullet.spentCasing = CASING50BMG.clone().register("50BMGStock");
 		
@@ -267,8 +267,8 @@ public class Gun50BMGFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50bmg.stackFromEnum(Ammo50BMG.INCENDIARY));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 30;
-		bullet.dmgMax = 36;
+		bullet.dmgMin = 12;
+		bullet.dmgMax = 20;
 		bullet.wear = 15;
 		bullet.incendiary = 5;
 		
@@ -283,8 +283,8 @@ public class Gun50BMGFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50bmg.stackFromEnum(Ammo50BMG.PHOSPHORUS));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 30;
-		bullet.dmgMax = 36;
+		bullet.dmgMin = 12;
+		bullet.dmgMax = 20;
 		bullet.wear = 15;
 		bullet.incendiary = 5;
 		bullet.doesPenetrate = false;
@@ -316,8 +316,8 @@ public class Gun50BMGFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50bmg.stackFromEnum(Ammo50BMG.EXPLOSIVE));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 60;
-		bullet.dmgMax = 64;
+		bullet.dmgMin = 10;
+		bullet.dmgMax = 12;
 		bullet.wear = 25;
 		bullet.explosive = 1;
 		
@@ -332,8 +332,8 @@ public class Gun50BMGFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50bmg.stackFromEnum(Ammo50BMG.AP));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 62;
-		bullet.dmgMax = 68;
+		bullet.dmgMin = 20;
+		bullet.dmgMax = 35;
 		bullet.wear = 15;
 		bullet.leadChance = 10;
 		
@@ -348,8 +348,8 @@ public class Gun50BMGFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50bmg.stackFromEnum(Ammo50BMG.DU));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 80;
-		bullet.dmgMax = 86;
+		bullet.dmgMin = 45;
+		bullet.dmgMax = 50;
 		bullet.wear = 25;
 		bullet.leadChance = 50;
 		
@@ -364,8 +364,8 @@ public class Gun50BMGFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50bmg.stackFromEnum(Ammo50BMG.STAR));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 98;
-		bullet.dmgMax = 102;
+		bullet.dmgMin = 56;
+		bullet.dmgMax = 67;
 		bullet.wear = 25;
 		bullet.leadChance = 100;
 		
@@ -380,8 +380,8 @@ public class Gun50BMGFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50bmg.stackFromEnum(Ammo50BMG.SLEEK));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 50;
-		bullet.dmgMax = 70;
+		bullet.dmgMin = 34;
+		bullet.dmgMax = 40;
 		bullet.wear = 10;
 		bullet.leadChance = 100;
 		bullet.doesPenetrate = false;
@@ -466,8 +466,8 @@ public class Gun50BMGFactory {
 
 		bullet.ammo = new ComparableStack(ModItems.ammo_50bmg.stackFromEnum(Ammo50BMG.FLECHETTE_PO));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 60;
-		bullet.dmgMax = 64;
+		bullet.dmgMin = 40;
+		bullet.dmgMax = 45;
 		bullet.style = bullet.STYLE_FLECHETTE;
 		BulletConfigFactory.makeFlechette(bullet);
 		

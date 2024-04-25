@@ -28,7 +28,7 @@ public class GunRocketHomingFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 1;
 		config.reloadType = GunConfiguration.RELOAD_SINGLE;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_KRUCK;
 		config.firingSound = "hbm:weapon.rpgShoot";
 		config.reloadSound = GunConfiguration.RSOUND_LAUNCHER;
@@ -60,7 +60,7 @@ GunConfiguration config = new GunConfiguration();
 		config.firingDuration = 0;
 		config.ammoCap = 1;
 		config.reloadType = GunConfiguration.RELOAD_SINGLE;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_KRUCK;
 		config.firingSound = "hbm:weapon.rpgShoot";
 		config.reloadSound = GunConfiguration.RSOUND_LAUNCHER;

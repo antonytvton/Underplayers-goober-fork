@@ -34,7 +34,7 @@ public class Gun5mmFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 0;
 		config.reloadType = GunConfiguration.RELOAD_NONE;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_CIRCLE;
 		config.durability = 10000;
 		config.firingSound = "hbm:weapon.lacunaeShoot";

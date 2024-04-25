@@ -43,7 +43,7 @@ public class Gun20GaugeFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 6;
 		config.reloadType = GunConfiguration.RELOAD_SINGLE;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_CIRCLE;
 		config.reloadSound = GunConfiguration.RSOUND_SHOTGUN;
 		

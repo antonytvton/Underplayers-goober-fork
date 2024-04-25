@@ -50,7 +50,7 @@ public class GunGrenadeFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 1;
 		config.reloadType = GunConfiguration.RELOAD_SINGLE;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_CIRCUMFLEX;
 		config.firingSound = "hbm:weapon.hkShoot";
 		config.reloadSound = GunConfiguration.RSOUND_GRENADE;
@@ -79,7 +79,7 @@ public class GunGrenadeFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 4;
 		config.reloadType = GunConfiguration.RELOAD_SINGLE;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_CIRCUMFLEX;
 		config.firingSound = "hbm:weapon.glShoot";
 		config.reloadSound = GunConfiguration.RSOUND_GRENADE_NEW;

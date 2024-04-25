@@ -25,6 +25,7 @@ import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 
 public class HbmPotion extends Potion {
@@ -41,6 +42,7 @@ public class HbmPotion extends Potion {
 	public static HbmPotion stability;
 	public static HbmPotion potionsickness;
 	public static HbmPotion death;
+	public static HbmPotion psyco;
 
 	public HbmPotion(int id, boolean isBad, int color) {
 		super(id, isBad, color);
@@ -54,7 +56,6 @@ public class HbmPotion extends Potion {
 		radx = registerPotion(PotionConfig.radxID, false, 0xBB4B00, "potion.hbm_radx", 5, 0);
 		lead = registerPotion(PotionConfig.leadID, true, 0x767682, "potion.hbm_lead", 6, 0);
 		radaway = registerPotion(PotionConfig.radawayID, false, 0xBB4B00, "potion.hbm_radaway", 7, 0);
-		//telekinesis = registerPotion(PotionConfig.telekinesisID, true, 0x00F3FF, "potion.hbm_telekinesis", 0, 1);
 		phosphorus = registerPotion(PotionConfig.phosphorusID, true, 0xFFFF00, "potion.hbm_phosphorus", 1, 1);
 		stability = registerPotion(PotionConfig.stabilityID, false, 0xD0D0D0, "potion.hbm_stability", 2, 1);
 		potionsickness = registerPotion(PotionConfig.potionsicknessID, false, 0xff8080, "potion.hbm_potionsickness", 3, 1);
@@ -126,8 +127,9 @@ public class HbmPotion extends Potion {
 		}
 		if(this == radaway) {
 			HbmLivingProps.incrementRadiation(entity, -(level + 1));
-			
 		}
+		
+
 		if(this == bang) {
 			
 			entity.attackEntityFrom(ModDamageSource.bang, 1000);
@@ -171,6 +173,8 @@ public class HbmPotion extends Potion {
 			int k = 60;
 			return k > 0 ? par1 % k == 0 : true;
 		}
+		
+
 		
 		return false;
 	}

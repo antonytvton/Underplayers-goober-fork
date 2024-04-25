@@ -36,7 +36,7 @@ public class Gun9mmFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 32;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_SPLIT;
 		config.durability = 2500;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
@@ -71,7 +71,7 @@ public class Gun9mmFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 30;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_SPLIT;
 		config.durability = 2500;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;

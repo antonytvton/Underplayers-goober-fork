@@ -36,7 +36,7 @@ public class Gun45ACPFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 30;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_SPLIT;
 		config.durability = 5000;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
@@ -64,7 +64,7 @@ public class Gun45ACPFactory {
 		config.ammoCap = 21;
 		config.durability = 10000;
 		config.reloadType = 1;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.hasSights = true;
 		config.absoluteFOV = true;
 		config.zoomFOV = 0.5F;
@@ -113,7 +113,7 @@ public class Gun45ACPFactory {
 		config.ammoCap = 40;
 		config.durability = 40000;
 		config.reloadType = 1;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.hasSights = true;
 		config.crosshair = Crosshair.CROSS;
 		config.reloadSound = "hbm:weapon.SMGMagInPB3";

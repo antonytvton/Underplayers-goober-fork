@@ -125,7 +125,7 @@ public class Gun556mmFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 0;
 		config.reloadType = GunConfiguration.RELOAD_NONE;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_CIRCUMFLEX;
 		config.firingSound = "hbm:weapon.glauncher";
 		config.reloadSound = GunConfiguration.RSOUND_GRENADE;

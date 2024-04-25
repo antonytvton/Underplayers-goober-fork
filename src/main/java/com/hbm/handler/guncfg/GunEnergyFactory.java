@@ -74,7 +74,7 @@ public class GunEnergyFactory {
 		config.ammoCap = 0;
 		config.durability = 1500;
 		config.reloadType = GunConfiguration.RELOAD_NONE;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_SPLIT;
 		config.firingSound = "hbm:weapon.teslaShoot";
 		
@@ -101,7 +101,7 @@ public class GunEnergyFactory {
 		config.ammoCap = 100;
 		config.durability = 1000;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_CIRCLE;
 		config.firingSound = "hbm:weapon.flamethrowerShoot";
 		config.reloadSound = "hbm:weapon.flamerReload";
@@ -138,7 +138,7 @@ public class GunEnergyFactory {
 		config.durability = 100000;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
 		config.ammoCap = 1000;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_ARROWS;
 		config.firingSound = "hbm:weapon.zomgShoot";
 		config.reloadSound = "hbm:weapon.b92Reload";
@@ -168,7 +168,7 @@ public class GunEnergyFactory {
 		config.ammoCap = 300; //good for 15 seconds of continued spray
 		config.durability = 10000;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_CIRCLE;
 		config.firingSound = "hbm:weapon.extinguisher";
 		config.reloadSound = "hbm:weapon.flamerReload";
@@ -197,7 +197,7 @@ public class GunEnergyFactory {
 		config.ammoCap = 1;
 		config.durability = 2_500;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.CIRCLE;
 		config.firingSound = "hbm:weapon.coilgunShoot";
 		config.reloadSoundEnd = false;
@@ -226,7 +226,7 @@ public class GunEnergyFactory {
 		config.ammoCap = 1_000;
 		config.durability = 10_000;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_CIRCLE;
 		
 		config.name = "Cryo Cannon";

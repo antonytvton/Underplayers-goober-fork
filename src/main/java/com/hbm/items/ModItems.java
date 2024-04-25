@@ -4759,30 +4759,32 @@ public class ModItems {
 
 		ArmorMaterial aMatT45 = EnumHelper.addArmorMaterial("HBM_T45", 150, new int[] { 3, 8, 6, 3 }, 0);
 		aMatT45.customCraftingMaterial = ModItems.plate_armor_titanium;
-		t45_helmet = new ArmorT45(aMatT45, 0, 1000000, 10000, 1000, 5).setCap(10F).setMod(0.5F)
+		t45_helmet = new ArmorT45(aMatT45, 0, 2500000, 1, 20, 5).setCap(10F).setMod(0.4F).setThreshold(6)
 				.setFireproof(true)
 				.enableVATS(true)
 				.setHasGeigerSound(true)
 				.setHasHardLanding(true)
 				.addEffect(new PotionEffect(Potion.damageBoost.id, 20, 0))
-				.setBlastProtection(0.5F)
+				.addEffect(new PotionEffect(Potion.moveSlowdown.id, 20, 1))
+				.setBlastProtection(0.4F)
 				.addResistance("monoxide", 0F)
-				.addResistance("fall", 0)
+				.addResistance("fall", 0.25F)
 				.hides(EnumPlayerPart.HAT)
 				.setUnlocalizedName("t45_helmet").setMaxStackSize(1).setTextureName(RefStrings.MODID + ":t45_helmet");
-		t45_plate = new ArmorT45(aMatT45, 1, 1000000, 10000, 1000, 5).cloneStats((ArmorFSB) t45_helmet).setUnlocalizedName("t45_plate").setMaxStackSize(1).setTextureName(RefStrings.MODID + ":t45_plate");
-		t45_legs = new ArmorT45(aMatT45, 2, 1000000, 10000, 1000, 5).cloneStats((ArmorFSB) t45_helmet).setUnlocalizedName("t45_legs").setMaxStackSize(1).setTextureName(RefStrings.MODID + ":t45_legs");
-		t45_boots = new ArmorT45(aMatT45, 3, 1000000, 10000, 1000, 5).cloneStats((ArmorFSB) t45_helmet).setUnlocalizedName("t45_boots").setMaxStackSize(1).setTextureName(RefStrings.MODID + ":t45_boots");
+		t45_plate = new ArmorT45(aMatT45, 1, 2500000, 1, 20, 5).cloneStats((ArmorFSB) t45_helmet).setUnlocalizedName("t45_plate").setMaxStackSize(1).setTextureName(RefStrings.MODID + ":t45_plate");
+		t45_legs = new ArmorT45(aMatT45, 2, 2500000, 1, 20, 5).cloneStats((ArmorFSB) t45_helmet).setUnlocalizedName("t45_legs").setMaxStackSize(1).setTextureName(RefStrings.MODID + ":t45_legs");
+		t45_boots = new ArmorT45(aMatT45, 3, 2500000, 1, 20, 5).cloneStats((ArmorFSB) t45_helmet).setUnlocalizedName("t45_boots").setMaxStackSize(1).setTextureName(RefStrings.MODID + ":t45_boots");
 
 		ArmorMaterial aMatDesh = EnumHelper.addArmorMaterial("HBM_DESH", 150, new int[] { 3, 8, 6, 3 }, 0);
 		aMatDesh.customCraftingMaterial = ModItems.ingot_desh;
-		steamsuit_helmet = new ArmorDesh(aMatDesh, 0, RefStrings.MODID + ":textures/armor/starmetal_1.png", Fluids.STEAM, 64_000, 500, 50, 1).setThreshold(5F).setMod(0.8F)
+		steamsuit_helmet = new ArmorDesh(aMatDesh, 0, RefStrings.MODID + ":textures/armor/starmetal_1.png", Fluids.STEAM, 64_000, 500, 50, 1).setThreshold(4.5F).setMod(0.45F)
 				.setFireproof(true)
 				.setHasHardLanding(true)
 				.addEffect(new PotionEffect(Potion.digSpeed.id, 20, 4))
+				.addEffect(new PotionEffect(Potion.moveSlowdown.id, 20, 0))
 				.setBlastProtection(0.5F)
 				.addResistance("monoxide", 0F)
-				.addResistance("fall", 0)
+				.addResistance("fall", 0.4F)
 				.hides(EnumPlayerPart.HAT)
 				.setUnlocalizedName("steamsuit_helmet").setMaxStackSize(1).setTextureName(RefStrings.MODID + ":steamsuit_helmet");
 		steamsuit_plate = new ArmorDesh(aMatDesh, 1, RefStrings.MODID + ":textures/armor/starmetal_1.png", Fluids.STEAM, 64_000, 500, 50, 1).cloneStats((ArmorFSB) steamsuit_helmet).setUnlocalizedName("steamsuit_plate").setMaxStackSize(1).setTextureName(RefStrings.MODID + ":steamsuit_plate");

@@ -34,7 +34,7 @@ public class GunDartFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 1;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_CROSS;
 		config.durability = 1000;
 		config.reloadSound = GunConfiguration.RSOUND_GRENADE;
@@ -65,7 +65,7 @@ public class GunDartFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 1;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.NONE;
 		config.durability = 1000;
 		config.reloadSound = GunConfiguration.RSOUND_GRENADE;

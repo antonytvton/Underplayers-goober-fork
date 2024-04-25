@@ -27,7 +27,7 @@ public class GunGaussFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 0;
 		config.reloadType = GunConfiguration.RELOAD_NONE;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.CIRCLE;
 		config.durability = 15000;
 		config.firingSound = "hbm:weapon.tauShoot";
@@ -60,7 +60,7 @@ public class GunGaussFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 0;
 		config.reloadType = GunConfiguration.RELOAD_NONE;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_ARROWS;
 		
 		config.config = new ArrayList<Integer>();

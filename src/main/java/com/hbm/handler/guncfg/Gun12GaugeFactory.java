@@ -98,7 +98,7 @@ public class Gun12GaugeFactory {
 		config.ammoCap = 8;
 		config.durability = 2500;
 		config.reloadType = GunConfiguration.RELOAD_SINGLE;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.CIRCLE;
 		config.reloadSound = GunConfiguration.RSOUND_SHOTGUN;
 		config.reloadSoundEnd = false;
@@ -161,7 +161,7 @@ public class Gun12GaugeFactory {
 		config.ammoCap = 6;
 		config.durability = 1500;
 		config.reloadType = GunConfiguration.RELOAD_SINGLE;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_CIRCLE;
 		config.reloadSound = GunConfiguration.RSOUND_REVOLVER;
 		config.firingSound = "hbm:weapon.shotgunShoot";
@@ -189,7 +189,7 @@ public class Gun12GaugeFactory {
 		config.ammoCap = 0;
 		config.durability = 3000;
 		config.reloadType = GunConfiguration.RELOAD_NONE;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.isCentered = true;
 		config.crosshair = Crosshair.L_CIRCLE;
 		config.reloadSound = GunConfiguration.RSOUND_REVOLVER;
@@ -222,7 +222,7 @@ public class Gun12GaugeFactory {
 		config.crosshair = Crosshair.CIRCLE;
 		config.hasSights = true;
 		config.durability = 250000;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.firingSound = "hbm:weapon.deagleShoot";
 		config.firingPitch = 0.75F;
 		config.reloadType = 2;

@@ -36,7 +36,7 @@ public class GunDetonatorFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 1;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.DUAL;
 		config.durability = 1_000_000_000;
 		config.reloadSound = GunConfiguration.RSOUND_LAUNCHER;

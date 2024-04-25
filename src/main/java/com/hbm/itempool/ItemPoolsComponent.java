@@ -40,8 +40,6 @@ public class ItemPoolsComponent {
 					weighted(ModItems.wire_red_copper, 0, 1, 8, 5),
 					weighted(ModItems.piston_selenium, 0, 1, 1, 3),
 					weighted(ModItems.battery_advanced_cell, 0, 1, 1, 3),
-					weighted(ModItems.circuit_raw, 0, 1, 3, 5),
-					weighted(ModItems.circuit_aluminium, 0, 1, 2, 4),
 					weighted(ModItems.circuit_copper, 0, 1, 1, 3),
 					weighted(ModItems.circuit_red_copper, 0, 1, 1, 2),
 					weighted(ModItems.blade_titanium, 0, 1, 8, 1)

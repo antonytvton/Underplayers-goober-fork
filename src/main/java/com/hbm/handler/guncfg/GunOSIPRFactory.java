@@ -31,7 +31,7 @@ public class GunOSIPRFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 30;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_ARROWS;
 		config.durability = 50_000;
 		config.reloadSound = "hbm:weapon.osiprReload";
@@ -59,7 +59,7 @@ public class GunOSIPRFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 0;
 		config.reloadType = GunConfiguration.RELOAD_NONE;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.firingSound = "hbm:weapon.singFlyby";
 		
 		config.config = new ArrayList<Integer>();

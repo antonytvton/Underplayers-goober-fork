@@ -34,7 +34,7 @@ public class Gun22LRFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 32;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_CROSS;
 		config.durability = 3000;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;

@@ -38,7 +38,7 @@ public class Gun75BoltFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 30;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.NONE;
 		config.durability = 10000;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;

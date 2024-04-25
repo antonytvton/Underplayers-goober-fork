@@ -104,7 +104,7 @@ public class ItemSyringe extends Item {
 
 		if(this == ModItems.syringe_metal_stimpak && !VersatileConfig.hasPotionSickness(player)) {
 			if(!world.isRemote) {
-				player.heal(5);
+				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 5 * 20, 4));
 
 				stack.stackSize--;
 				world.playSoundAtEntity(player, "hbm:item.syringe", 1.0F, 1.0F);
@@ -123,8 +123,8 @@ public class ItemSyringe extends Item {
 
 		if(this == ModItems.syringe_metal_medx && !VersatileConfig.hasPotionSickness(player)) {
 			if(!world.isRemote) {
-				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 4 * 60 * 20, 2));
-
+				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 60 * 20, 0));
+				player.addPotionEffect(new PotionEffect(Potion.hunger.id, 30 * 20, 2));
 				stack.stackSize--;
 				world.playSoundAtEntity(player, "hbm:item.syringe", 1.0F, 1.0F);
 
@@ -142,9 +142,11 @@ public class ItemSyringe extends Item {
 
 		if(this == ModItems.syringe_metal_psycho && !VersatileConfig.hasPotionSickness(player)) {
 			if(!world.isRemote) {
-				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 2 * 60 * 20, 0));
-				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 2 * 60 * 20, 0));
-
+				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 10 * 20, 4));
+				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 10 * 20, 4));
+				player.addPotionEffect(new PotionEffect(HbmPotion.lead.id, 9999, 999));
+				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 10 * 20, 4));
+				
 				stack.stackSize--;
 				world.playSoundAtEntity(player, "hbm:item.syringe", 1.0F, 1.0F);
 

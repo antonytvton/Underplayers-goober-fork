@@ -34,7 +34,7 @@ public class Gun50AEFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 7;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_CLASSIC;
 		config.reloadSound = GunConfiguration.RSOUND_REVOLVER;
 		config.firingSound = "hbm:weapon.deagleShoot";

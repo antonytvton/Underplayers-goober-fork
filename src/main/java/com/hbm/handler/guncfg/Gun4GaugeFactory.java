@@ -60,7 +60,7 @@ public class Gun4GaugeFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 4;
 		config.reloadType = GunConfiguration.RELOAD_SINGLE;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.hasSights = true;
 		config.absoluteFOV = true;
 		config.zoomFOV = 0.5F;

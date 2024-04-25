@@ -40,7 +40,7 @@ public class GunFatmanFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 1;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_CIRCUMFLEX;
 		config.firingSound = "hbm:weapon.fatmanShoot";
 		config.reloadSound = GunConfiguration.RSOUND_FATMAN;
@@ -105,7 +105,7 @@ public class GunFatmanFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 8;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.L_CIRCUMFLEX;
 		config.firingSound = "hbm:weapon.fatmanShoot";
 		config.reloadSound = GunConfiguration.RSOUND_FATMAN;

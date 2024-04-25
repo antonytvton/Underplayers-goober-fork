@@ -48,7 +48,7 @@ public class Gun762mmFactory {
 		config.firingDuration = 0;
 		config.ammoCap = 50;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.crosshair = Crosshair.NONE;
 		config.durability = 15 * 50 * 10; //15 * capacity * default wear
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
@@ -91,7 +91,7 @@ public class Gun762mmFactory {
 		config.ammoCap = 30;
 		config.durability = 30000;
 		config.reloadType = 1;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.hasSights = true;
 		config.crosshair = Crosshair.CROSS;
 		config.reloadSound = "hbm:weapon.DMRMagInPB3";
@@ -147,7 +147,7 @@ public class Gun762mmFactory {
 		config.firingMode = GunConfiguration.FIRE_AUTO;
 		config.reloadType = GunConfiguration.RELOAD_NONE;
 		config.ammoCap = 0;
-		config.allowsInfinity = true;
+		config.allowsInfinity = false;
 		config.hasSights = true;
 		config.crosshair = Crosshair.L_BOX;
 		config.firingSound = "hbm:weapon.LMGShootPB3";
