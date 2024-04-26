@@ -51,18 +51,17 @@ public class MKUCraftingHandler implements IRecipe {
 		lastSeed = world.getSeed();
 		
 		List<ItemStack> list = Arrays.asList(new ItemStack[] {
-				new ItemStack(ModItems.powder_iodine),
-				new ItemStack(ModItems.powder_fire),
-				new ItemStack(ModItems.dust),
-				new ItemStack(ModItems.ingot_mercury),
-				new ItemStack(ModItems.morning_glory),
 				new ItemStack(ModItems.syringe_metal_empty),
 				null,
+				new ItemStack(ModItems.ingot_mercury),
 				null,
-				null
+				new ItemStack(ModItems.syringe_metal_empty),
+				null,
+				new ItemStack(ModItems.dust),
+				new ItemStack(ModItems.dust),
+				new ItemStack(ModItems.ingot_mercury)
 		});
 		
-		Collections.shuffle(list, rand);
 		
 		MKURecipe = list.toArray(new ItemStack[9]);
 	}
