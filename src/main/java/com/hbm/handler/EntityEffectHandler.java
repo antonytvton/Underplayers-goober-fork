@@ -342,7 +342,7 @@ public class EntityEffectHandler {
 					} else {
 						
 						if(stack.hasTagCompound() && stack.stackTagCompound.getBoolean("ntmContagion")) {
-							if(!ArmorUtil.checkForHaz2(player) || !ArmorRegistry.hasProtection(player, 3, HazardClass.BACTERIA)) //liable to change to hazmat 1 at bob's pleasure
+							if(!ArmorUtil.checkForHaz2(player) || !ArmorRegistry.hasProtection(player, 3, HazardClass.BACTERIA)) //liable to change to hazmat 1 at bob's pleasure, Hello underplayer here I changed it to hazmat 1
 								HbmLivingProps.setContagion(player, 3 * hour);
 						}
 					}
@@ -364,7 +364,7 @@ public class EntityEffectHandler {
 						if(ent instanceof EntityLivingBase) {
 							EntityLivingBase living = (EntityLivingBase) ent;
 							if(HbmLivingProps.getContagion(living) <= 0) {
-								if(!ArmorUtil.checkForHaz2(living) || !ArmorRegistry.hasProtection(living, 3, HazardClass.BACTERIA)) //liable to change to hazmat 1 at bob's pleasure
+								if(!ArmorUtil.checkForHazmat(living) || !ArmorRegistry.hasProtection(living, 3, HazardClass.BACTERIA)) //liable to change to hazmat 1 at bob's pleasure// no fuck you
 									HbmLivingProps.setContagion(living, 3 * hour);
 							}
 						}
@@ -401,7 +401,7 @@ public class EntityEffectHandler {
 					entity.attackEntityFrom(ModDamageSource.mku, 2F);
 				}
 				
-				if(contagion < 30 * minute && (contagion + entity.getEntityId()) % 200 < 20 && canVomit(entity)) {
+				if(contagion < 120 * minute && (contagion + entity.getEntityId()) % 200 < 20 && canVomit(entity)) {
 					NBTTagCompound nbt = new NBTTagCompound();
 					nbt.setString("type", "vomit");
 					nbt.setString("mode", "blood");
