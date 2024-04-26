@@ -229,7 +229,7 @@ public class AnvilRecipes {
 		constructionRecipes.add(new AnvilConstructionRecipe(
 				new AStack[] {
 						new OreDictStack(CU.shell(), 6),
-						new OreDictStack(IRON.plateWelded(), 6),
+						new OreDictStack(IRON.plateCast(), 6),
 						new ComparableStack(ModItems.circuit_aluminium, 4)
 				}, new AnvilOutput(new ItemStack(ModBlocks.machine_assembler))).setTier(2));
 

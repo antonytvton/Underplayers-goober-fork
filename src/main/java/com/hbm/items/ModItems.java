@@ -328,6 +328,7 @@ public class ModItems {
 	public static Item plate_advanced_alloy;
 	public static Item plate_combine_steel;
 	public static Item plate_mixed;
+	public static Item bundle_iron;
 	public static Item plate_paa;
 	public static Item pipes_steel;
 	public static Item drill_titanium;
@@ -2588,6 +2589,7 @@ public class ModItems {
 		ingot_magnetized_tungsten = new Item().setUnlocalizedName("ingot_magnetized_tungsten").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":ingot_magnetized_tungsten");
 		ingot_combine_steel = new ItemCustomLore().setUnlocalizedName("ingot_combine_steel").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":ingot_combine_steel");
 		plate_mixed = new Item().setUnlocalizedName("plate_mixed").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":plate_mixed");
+		bundle_iron = new Item().setUnlocalizedName("bundle_iron").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":bundle_iron");
 		plate_paa = new ItemCustomLore().setRarity(EnumRarity.uncommon).setUnlocalizedName("plate_paa").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":plate_paa");
 		pipes_steel = new Item().setUnlocalizedName("pipes_steel").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":pipes_steel");
 		drill_titanium = new Item().setUnlocalizedName("drill_titanium").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":drill_titanium");
@@ -6049,6 +6051,7 @@ public class ModItems {
 		GameRegistry.registerItem(plate_schrabidium, plate_schrabidium.getUnlocalizedName());
 		GameRegistry.registerItem(plate_combine_steel, plate_combine_steel.getUnlocalizedName());
 		GameRegistry.registerItem(plate_mixed, plate_mixed.getUnlocalizedName());
+		GameRegistry.registerItem(bundle_iron, bundle_iron.getUnlocalizedName());
 		GameRegistry.registerItem(plate_saturnite, plate_saturnite.getUnlocalizedName());
 		GameRegistry.registerItem(plate_paa, plate_paa.getUnlocalizedName());
 		GameRegistry.registerItem(plate_polymer, plate_polymer.getUnlocalizedName());
