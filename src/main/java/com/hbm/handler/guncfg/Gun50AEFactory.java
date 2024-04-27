@@ -70,8 +70,8 @@ public class Gun50AEFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50ae.stackFromEnum(Ammo50AE.STOCK));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 28;
-		bullet.dmgMax = 32;
+		bullet.dmgMin = 13;
+		bullet.dmgMax = 18;
 		
 		bullet.spentCasing = CASING50AE.clone().register("50AEStock");
 		
@@ -84,8 +84,8 @@ public class Gun50AEFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50ae.stackFromEnum(Ammo50AE.AP));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 30;
-		bullet.dmgMax = 36;
+		bullet.dmgMin = 15;
+		bullet.dmgMax = 19;
 		bullet.leadChance = 10;
 		bullet.wear = 15;
 		
@@ -100,8 +100,8 @@ public class Gun50AEFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50ae.stackFromEnum(Ammo50AE.DU));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 38;
-		bullet.dmgMax = 46;
+		bullet.dmgMin = 18;
+		bullet.dmgMax = 27;
 		bullet.leadChance = 50;
 		bullet.wear = 25;
 		
@@ -116,8 +116,8 @@ public class Gun50AEFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50ae.stackFromEnum(Ammo50AE.STAR));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 52;
-		bullet.dmgMax = 60;
+		bullet.dmgMin = 22;
+		bullet.dmgMax = 30;
 		bullet.leadChance = 100;
 		bullet.wear = 25;
 		

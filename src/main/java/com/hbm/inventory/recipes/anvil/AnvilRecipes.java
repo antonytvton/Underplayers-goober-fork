@@ -551,6 +551,19 @@ public class AnvilRecipes {
 						new OreDictStack(PU239.billet(), 3)
 				}, new AnvilOutput(new ItemStack(ModItems.missile_doomsday))).setTier(5));
 		
+		constructionRecipes.add(new AnvilConstructionRecipe(
+				new AStack[] {
+						new ComparableStack(ModItems.casing_50, 8),
+						new OreDictStack(P_WHITE.ingot(), 1),
+						new OreDictStack(ZR.ingot(), 1),
+						new OreDictStack(ANY_SMOKELESS.dust(), 12),
+						new OreDictStack(W.bolt(), 8),
+						new ComparableStack(ModItems.ball_tnt, 8)
+				}, new AnvilOutput(ModItems.ammo_50bmg.stackFromEnum(8, Ammo50BMG.PHOSPHORUS))).setTier(2));
+		
+		
+		//{ModItems.ammo_50bmg.stackFromEnum(16, Ammo50BMG.STOCK),		P_WHITE.ingot(),				ModItems.ammo_50bmg.stackFromEnum(16, Ammo50BMG.PHOSPHORUS),			2},
+
 		constructionRecipes.add(new AnvilConstructionRecipe(new ComparableStack(ModItems.ingot_u233, 1), new AnvilOutput(new ItemStack(ModItems.plate_fuel_u233))).setTier(4));
 		constructionRecipes.add(new AnvilConstructionRecipe(new ComparableStack(ModItems.ingot_u235, 1), new AnvilOutput(new ItemStack(ModItems.plate_fuel_u235))).setTier(4));
 		constructionRecipes.add(new AnvilConstructionRecipe(new ComparableStack(ModItems.ingot_mox_fuel, 1), new AnvilOutput(new ItemStack(ModItems.plate_fuel_mox))).setTier(4));
@@ -584,6 +597,7 @@ public class AnvilRecipes {
 		pullFromAssembler(new ComparableStack(ModItems.pellet_canister), 1);
 
 		constructionRecipes.add(new AnvilConstructionRecipe( new AStack[]{
+				new ComparableStack(ModItems.powder_chlorophyte, 1),
 				new ComparableStack(ModItems.powder_chlorophyte, 1),
 				new OreDictStack(PB.nugget(), 12),},
 				new AnvilOutput(new ItemStack(ModItems.pellet_chlorophyte, 2))).setTier(1));
@@ -632,7 +646,6 @@ public class AnvilRecipes {
 			{ModItems.ammo_22lr.stackFromEnum(32, Ammo22LR.STOCK),	ModItems.pellet_chlorophyte,			ModItems.ammo_22lr.stackFromEnum(32, Ammo22LR.CHLOROPHYTE),		3},
 
 			{ModItems.ammo_50bmg.stackFromEnum(16, Ammo50BMG.STOCK),		P_RED.dust(),					ModItems.ammo_50bmg.stackFromEnum(16, Ammo50BMG.INCENDIARY),			2},
-			{ModItems.ammo_50bmg.stackFromEnum(16, Ammo50BMG.STOCK),		P_WHITE.ingot(),				ModItems.ammo_50bmg.stackFromEnum(16, Ammo50BMG.PHOSPHORUS),			2},
 			{ModItems.ammo_50bmg.stackFromEnum(16, Ammo50BMG.STOCK),		ModItems.ingot_semtex,			ModItems.ammo_50bmg.stackFromEnum(16, Ammo50BMG.EXPLOSIVE),				2},
 			{ModItems.ammo_50bmg.stackFromEnum(16, Ammo50BMG.STOCK),		DURA.ingot(),					ModItems.ammo_50bmg.stackFromEnum(16, Ammo50BMG.AP),					2},
 			{ModItems.ammo_50bmg.stackFromEnum(16, Ammo50BMG.STOCK),		U238.ingot(),					ModItems.ammo_50bmg.stackFromEnum(16, Ammo50BMG.DU),					2},

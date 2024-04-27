@@ -317,8 +317,8 @@ public class GunEnergyFactory {
 		bullet.wear = 25;
 		bullet.bulletsMin = 1;
 		bullet.bulletsMax = 1;
-		bullet.dmgMin = 65;
-		bullet.dmgMax = 80;
+		bullet.dmgMin = 45;
+		bullet.dmgMax = 60;
 		bullet.gravity = 0D;
 		bullet.maxAge = 50;
 		bullet.doesPenetrate = true;

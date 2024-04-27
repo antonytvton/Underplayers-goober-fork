@@ -101,14 +101,14 @@ public class Gun50BMGFactory {
 		
 		GunConfiguration config = new GunConfiguration();
 		
-		config.rateOfFire = 1;
+		config.rateOfFire = 2;
 		config.roundsPerCycle = 1;
 		config.gunMode = GunConfiguration.MODE_NORMAL;
 		config.firingMode = GunConfiguration.FIRE_AUTO;
 		config.reloadDuration = 20;
 		config.firingDuration = 0;
 		config.reloadSoundEnd = false;
-		config.ammoCap = 50;
+		config.ammoCap = 30;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
 		config.allowsInfinity = false;
 		config.crosshair = Crosshair.NONE;
@@ -120,21 +120,24 @@ public class Gun50BMGFactory {
 		config.manufacturer = EnumGunManufacturer.ARMALITE;
 		
 		config.config = new ArrayList<Integer>();
-		config.config.add(BulletConfigSyncingUtil.BMG50_FLECHETTE_AM);
-		config.config.add(BulletConfigSyncingUtil.BMG50_FLECHETTE_PO);
-		config.config.add(BulletConfigSyncingUtil.BMG50_FLECHETTE_NORMAL);
-		config.config.add(BulletConfigSyncingUtil.BMG50_NORMAL);
-		config.config.add(BulletConfigSyncingUtil.BMG50_INCENDIARY);
-		config.config.add(BulletConfigSyncingUtil.BMG50_PHOSPHORUS);
-		config.config.add(BulletConfigSyncingUtil.BMG50_EXPLOSIVE);
-		config.config.add(BulletConfigSyncingUtil.BMG50_AP);
-		config.config.add(BulletConfigSyncingUtil.BMG50_DU);
-		config.config.add(BulletConfigSyncingUtil.BMG50_STAR);
-		config.config.add(BulletConfigSyncingUtil.CHL_BMG50);
-		config.config.add(BulletConfigSyncingUtil.BMG50_SLEEK);
+		config.config.add(BulletConfigSyncingUtil.R556_NORMAL);
+		config.config.add(BulletConfigSyncingUtil.R556_GOLD);
+		config.config.add(BulletConfigSyncingUtil.R556_PHOSPHORUS);
+		config.config.add(BulletConfigSyncingUtil.R556_AP);
+		config.config.add(BulletConfigSyncingUtil.R556_DU);
+		config.config.add(BulletConfigSyncingUtil.R556_STAR);
+		config.config.add(BulletConfigSyncingUtil.R556_SLEEK);
+		config.config.add(BulletConfigSyncingUtil.R556_TRACER);
+		config.config.add(BulletConfigSyncingUtil.R556_FLECHETTE);
+		config.config.add(BulletConfigSyncingUtil.R556_FLECHETTE_INCENDIARY);
+		config.config.add(BulletConfigSyncingUtil.R556_FLECHETTE_PHOSPHORUS);
+		config.config.add(BulletConfigSyncingUtil.R556_FLECHETTE_DU);
+		config.config.add(BulletConfigSyncingUtil.R556_FLECHETTE_SLEEK);
+		config.config.add(BulletConfigSyncingUtil.R556_K);
+
 		
 		config.ejector = EJECTOR_BMG;
-
+		
 		config.animations.put(AnimType.CYCLE, new BusAnimation()
 				.addBus("RECOIL", new BusAnimationSequence()
 						.addKeyframePosition(1, 0, 0, 25)
@@ -170,16 +173,27 @@ public class Gun50BMGFactory {
 
 	public static GunConfiguration getM2Config() {
 		GunConfiguration config = getAR15Config();
-		
+		config.config.add(BulletConfigSyncingUtil.BMG50_FLECHETTE_AM);
+		config.config.add(BulletConfigSyncingUtil.BMG50_FLECHETTE_PO);
+		config.config.add(BulletConfigSyncingUtil.BMG50_FLECHETTE_NORMAL);
+		config.config.add(BulletConfigSyncingUtil.BMG50_NORMAL);
+		config.config.add(BulletConfigSyncingUtil.BMG50_INCENDIARY);
+		config.config.add(BulletConfigSyncingUtil.BMG50_PHOSPHORUS);
+		config.config.add(BulletConfigSyncingUtil.BMG50_EXPLOSIVE);
+		config.config.add(BulletConfigSyncingUtil.BMG50_AP);
+		config.config.add(BulletConfigSyncingUtil.BMG50_DU);
+		config.config.add(BulletConfigSyncingUtil.BMG50_STAR);
+		config.config.add(BulletConfigSyncingUtil.CHL_BMG50);
+		config.config.add(BulletConfigSyncingUtil.BMG50_SLEEK);
 		config.rateOfFire = 3;
 		config.durability *= 10;
 		config.ammoCap = 0;
 		config.crosshair = Crosshair.L_BOX;
 		config.reloadType = GunConfiguration.RELOAD_NONE;
 		config.hasSights = true;
-		config.zoomFOV = 0.66F;
+		config.zoomFOV = 0.5F;
 		config.allowsInfinity = false;
-		config.durability = 10_000;
+		config.durability = 2_000;
 		config.firingSound = "hbm:turret.chekhov_fire";
 		config.equipSound = "hbm:turret.howard_reload";
 		
@@ -187,6 +201,7 @@ public class Gun50BMGFactory {
 		config.manufacturer = EnumGunManufacturer.COLT;
 		config.comment.add("\"A single man can do unbelievable things...");
 		config.comment.add("A single man with a .50 cal machine gun can do even more.\"");
+		config.comment.add("A single man with a .50 cal machine gun will die from over encumbrance without power armor.\"");
 		
 		config.animations.put(AnimType.CYCLE, new BusAnimation()
 				.addBus("RECOIL", new BusAnimationSequence()
@@ -246,15 +261,15 @@ public class Gun50BMGFactory {
 		return config;
 	}
 
-	static float inaccuracy = 2.5F;
+	static float inaccuracy = 6;
 	public static BulletConfiguration get50BMGConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50bmg.stackFromEnum(Ammo50BMG.STOCK));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 15;
-		bullet.dmgMax = 20;
+		bullet.dmgMin = 20;
+		bullet.dmgMax = 25;
 		
 		bullet.spentCasing = CASING50BMG.clone().register("50BMGStock");
 		
@@ -267,8 +282,8 @@ public class Gun50BMGFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50bmg.stackFromEnum(Ammo50BMG.INCENDIARY));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 12;
-		bullet.dmgMax = 20;
+		bullet.dmgMin = 22;
+		bullet.dmgMax = 30;
 		bullet.wear = 15;
 		bullet.incendiary = 5;
 		
@@ -283,11 +298,12 @@ public class Gun50BMGFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50bmg.stackFromEnum(Ammo50BMG.PHOSPHORUS));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 12;
-		bullet.dmgMax = 20;
-		bullet.wear = 15;
+		bullet.dmgMin = 30;
+		bullet.dmgMax = 40;
+		bullet.wear = 20;
 		bullet.incendiary = 5;
-		bullet.doesPenetrate = false;
+		bullet.explosive = 2;
+		bullet.doesPenetrate = true;
 		
 		PotionEffect eff = new PotionEffect(HbmPotion.phosphorus.id, 20 * 20, 0, true);
 		eff.getCurativeItems().clear();
@@ -316,8 +332,8 @@ public class Gun50BMGFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50bmg.stackFromEnum(Ammo50BMG.EXPLOSIVE));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 10;
-		bullet.dmgMax = 12;
+		bullet.dmgMin = 20;
+		bullet.dmgMax = 25;
 		bullet.wear = 25;
 		bullet.explosive = 1;
 		
@@ -332,7 +348,7 @@ public class Gun50BMGFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50bmg.stackFromEnum(Ammo50BMG.AP));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 20;
+		bullet.dmgMin = 25;
 		bullet.dmgMax = 35;
 		bullet.wear = 15;
 		bullet.leadChance = 10;
@@ -348,8 +364,8 @@ public class Gun50BMGFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50bmg.stackFromEnum(Ammo50BMG.DU));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 45;
-		bullet.dmgMax = 50;
+		bullet.dmgMin = 35;
+		bullet.dmgMax = 40;
 		bullet.wear = 25;
 		bullet.leadChance = 50;
 		
@@ -364,8 +380,8 @@ public class Gun50BMGFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50bmg.stackFromEnum(Ammo50BMG.STAR));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 56;
-		bullet.dmgMax = 67;
+		bullet.dmgMin = 40;
+		bullet.dmgMax = 50;
 		bullet.wear = 25;
 		bullet.leadChance = 100;
 		
@@ -424,8 +440,8 @@ public class Gun50BMGFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_50bmg.stackFromEnum(Ammo50BMG.FLECHETTE));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 50;
-		bullet.dmgMax = 54;
+		bullet.dmgMin = 30;
+		bullet.dmgMax = 40;
 		bullet.style = bullet.STYLE_FLECHETTE;
 		BulletConfigFactory.makeFlechette(bullet);
 		
@@ -440,8 +456,8 @@ public class Gun50BMGFactory {
 
 		bullet.ammo = new ComparableStack(ModItems.ammo_50bmg.stackFromEnum(Ammo50BMG.FLECHETTE_AM));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 60;
-		bullet.dmgMax = 64;
+		bullet.dmgMin = 35;
+		bullet.dmgMax = 45;
 		bullet.style = bullet.STYLE_FLECHETTE;
 		BulletConfigFactory.makeFlechette(bullet);
 		

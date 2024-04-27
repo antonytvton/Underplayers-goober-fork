@@ -40,7 +40,7 @@ public class Gun762mmFactory {
 		
 		GunConfiguration config = new GunConfiguration();
 		
-		config.rateOfFire = 1;
+		config.rateOfFire = 2;
 		config.roundsPerCycle = 1;
 		config.gunMode = GunConfiguration.MODE_NORMAL;
 		config.firingMode = GunConfiguration.FIRE_AUTO;
@@ -49,8 +49,8 @@ public class Gun762mmFactory {
 		config.ammoCap = 50;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
 		config.allowsInfinity = false;
-		config.crosshair = Crosshair.NONE;
-		config.durability = 15 * 50 * 10; //15 * capacity * default wear
+		config.crosshair = Crosshair.CROSS;
+		config.durability = 20 * 100; //15 * capacity * default wear
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
 		config.firingSound = "hbm:weapon.calShoot";
 		config.reloadSoundEnd = false;
@@ -288,8 +288,8 @@ public class Gun762mmFactory {
 		final BulletConfiguration bullet = Gun556mmFactory.get556Config().clone();
 
 		bullet.ammo = new ComparableStack(ModItems.ammo_762.stackFromEnum(Ammo762NATO.STOCK));
-		bullet.dmgMax = 20;
-		bullet.dmgMin = 24;
+		bullet.dmgMax = 16;
+		bullet.dmgMin = 14;
 		bullet.velocity *= 2.5;
 		bullet.maxAge *= 2;
 		bullet.spread /= 2;
@@ -303,8 +303,8 @@ public class Gun762mmFactory {
 		final BulletConfiguration bullet = get762NATOConfig();
 
 		bullet.ammo = new ComparableStack(ModItems.ammo_762.stackFromEnum(Ammo762NATO.AP));
-		bullet.dmgMax = 24;
-		bullet.dmgMin = 28;
+		bullet.dmgMax = 18;
+		bullet.dmgMin = 15;
 		
 		bullet.spentCasing = CASING762NATO.clone().register("762NATOAP");
 
@@ -315,8 +315,8 @@ public class Gun762mmFactory {
 		final BulletConfiguration bullet = get762NATOConfig();
 
 		bullet.ammo = new ComparableStack(ModItems.ammo_762.stackFromEnum(Ammo762NATO.DU));
-		bullet.dmgMax = 36;
-		bullet.dmgMin = 40;
+		bullet.dmgMax = 20;
+		bullet.dmgMin = 15;
 		
 		bullet.spentCasing = CASING762NATO.clone().register("762NATODU");
 

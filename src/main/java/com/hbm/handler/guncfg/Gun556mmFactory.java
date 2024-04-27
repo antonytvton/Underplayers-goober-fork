@@ -145,8 +145,8 @@ public class Gun556mmFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_556.stackFromEnum(Ammo556mm.STOCK));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 16;
-		bullet.dmgMax = 20;
+		bullet.dmgMin = 10;
+		bullet.dmgMax = 16;
 		
 		bullet.spentCasing = CASING556.clone().register("556Stock");
 		
@@ -158,8 +158,8 @@ public class Gun556mmFactory {
 		BulletConfiguration bullet = get556Config();
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_556.stackFromEnum(Ammo556mm.GOLD));
-		bullet.dmgMin = 250;
-		bullet.dmgMax = 320;
+		bullet.dmgMin = 20;
+		bullet.dmgMax = 20;
 		bullet.spread = 0.0F;
 		
 		bullet.spentCasing = null;
@@ -202,8 +202,8 @@ public class Gun556mmFactory {
 		BulletConfiguration bullet = get556Config();
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_556.stackFromEnum(Ammo556mm.AP));
-		bullet.dmgMin = 20;
-		bullet.dmgMax = 26;
+		bullet.dmgMin = 14;
+		bullet.dmgMax = 16;
 		bullet.wear = 15;
 		bullet.leadChance = 10;
 		
@@ -217,8 +217,8 @@ public class Gun556mmFactory {
 		BulletConfiguration bullet = get556Config();
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_556.stackFromEnum(Ammo556mm.DU));
-		bullet.dmgMin = 24;
-		bullet.dmgMax = 32;
+		bullet.dmgMin = 15;
+		bullet.dmgMax = 18;
 		bullet.wear = 25;
 		bullet.leadChance = 50;
 		
@@ -232,8 +232,8 @@ public class Gun556mmFactory {
 		BulletConfiguration bullet = get556Config();
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_556.stackFromEnum(Ammo556mm.STAR));
-		bullet.dmgMin = 30;
-		bullet.dmgMax = 36;
+		bullet.dmgMin = 19;
+		bullet.dmgMax = 20;
 		bullet.wear = 25;
 		bullet.leadChance = 100;
 		
@@ -247,8 +247,8 @@ public class Gun556mmFactory {
 		BulletConfiguration bullet = get556Config();
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_556.stackFromEnum(Ammo556mm.SLEEK));
-		bullet.dmgMin = 45;
-		bullet.dmgMax = 50;
+		bullet.dmgMin = 13;
+		bullet.dmgMax = 16;
 		bullet.wear = 10;
 		bullet.leadChance = 100;
 		bullet.doesPenetrate = false;
@@ -302,8 +302,8 @@ public class Gun556mmFactory {
 		BulletConfiguration bullet = get556Config();
 
 		bullet.ammo = new ComparableStack(ModItems.ammo_556.stackFromEnum(Ammo556mm.FLECHETTE));
-		bullet.dmgMin = 26;
-		bullet.dmgMax = 32;
+		bullet.dmgMin = 13;
+		bullet.dmgMax = 17;
 		bullet.HBRC = 2;
 		bullet.LBRC = 95;
 		bullet.wear = 15;
@@ -362,8 +362,8 @@ public class Gun556mmFactory {
 		BulletConfiguration bullet = get556FlechetteConfig();
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_556.stackFromEnum(Ammo556mm.FLECHETTE_DU));
-		bullet.dmgMin = 46;
-		bullet.dmgMax = 52;
+		bullet.dmgMin = 20;
+		bullet.dmgMax = 30;
 		bullet.wear = 25;
 		bullet.leadChance = 50;
 		bullet.doesPenetrate = true;
@@ -378,8 +378,8 @@ public class Gun556mmFactory {
 		BulletConfiguration bullet = get556FlechetteConfig();
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_556.stackFromEnum(Ammo556mm.FLECHETTE_SLEEK));
-		bullet.dmgMin = 45;
-		bullet.dmgMax = 50;
+		bullet.dmgMin = 14;
+		bullet.dmgMax = 19;
 		bullet.wear = 10;
 		bullet.leadChance = 50;
 		bullet.doesPenetrate = false;

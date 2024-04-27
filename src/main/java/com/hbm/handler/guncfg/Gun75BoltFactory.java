@@ -86,8 +86,8 @@ public class Gun75BoltFactory {
 		bullet.ammo = new ComparableStack(ModItems.ammo_75bolt.stackFromEnum(Ammo75Bolt.STOCK));
 		bullet.ammoCount = 30;
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 74;
-		bullet.dmgMax = 82;
+		bullet.dmgMin = 45;
+		bullet.dmgMax = 55;
 		bullet.doesRicochet = false;
 		bullet.explosive = 0.25F;
 		
@@ -120,8 +120,8 @@ public class Gun75BoltFactory {
 		bullet.ammo = new ComparableStack(ModItems.ammo_75bolt.stackFromEnum(Ammo75Bolt.INCENDIARY));
 		bullet.ammoCount = 30;
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 72;
-		bullet.dmgMax = 76;
+		bullet.dmgMin = 45;
+		bullet.dmgMax = 55;
 		bullet.doesRicochet = false;
 		bullet.explosive = 0.25F;
 
@@ -154,8 +154,8 @@ public class Gun75BoltFactory {
 		bullet.ammo = new ComparableStack(ModItems.ammo_75bolt.stackFromEnum(Ammo75Bolt.HE));
 		bullet.ammoCount = 30;
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 94;
-		bullet.dmgMax = 100;
+		bullet.dmgMin = 55;
+		bullet.dmgMax = 65;
 		bullet.doesRicochet = false;
 		bullet.explosive = 2.5F;
 		bullet.blockDamage = false;

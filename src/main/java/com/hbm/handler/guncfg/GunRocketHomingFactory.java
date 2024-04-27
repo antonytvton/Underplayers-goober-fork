@@ -91,8 +91,8 @@ GunConfiguration config = new GunConfiguration();
 		BulletConfiguration bullet = BulletConfigFactory.standardRocketConfig();
 
 		bullet.ammo = new ComparableStack(ModItems.ammo_stinger_rocket.stackFromEnum(AmmoStinger.STOCK));
-		bullet.dmgMin = 20;
-		bullet.dmgMax = 25;
+		bullet.dmgMin = 35;
+		bullet.dmgMax = 40;
 		bullet.explosive = 4F;
 		bullet.trail = 0;
 
@@ -123,8 +123,8 @@ GunConfiguration config = new GunConfiguration();
 		BulletConfiguration bullet = BulletConfigFactory.standardRocketConfig();
 
 		bullet.ammo = new ComparableStack(ModItems.ammo_stinger_rocket.stackFromEnum(AmmoStinger.HE));
-		bullet.dmgMin = 30;
-		bullet.dmgMax = 35;
+		bullet.dmgMin = 40;
+		bullet.dmgMax = 45;
 		bullet.explosive = 8F;
 		bullet.trail = 0;
 		bullet.wear = 15;
@@ -156,8 +156,8 @@ GunConfiguration config = new GunConfiguration();
 		BulletConfiguration bullet = BulletConfigFactory.standardRocketConfig();
 
 		bullet.ammo = new ComparableStack(ModItems.ammo_stinger_rocket.stackFromEnum(AmmoStinger.INCENDIARY));
-		bullet.dmgMin = 15;
-		bullet.dmgMax = 20;
+		bullet.dmgMin = 30;
+		bullet.dmgMax = 35;
 		bullet.explosive = 4F;
 		bullet.trail = 0;
 		bullet.wear = 12;

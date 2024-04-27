@@ -135,8 +135,8 @@ public class Gun45ACPFactory {
 
 		bullet.ammo = new ComparableStack(ModItems.ammo_45.stackFromEnum(Ammo45ACP.STOCK));
 		bullet.spread *= inaccuracy;
-		bullet.dmgMax = 12;
-		bullet.dmgMin = 16;
+		bullet.dmgMax = 6;
+		bullet.dmgMin = 10;
 		
 		bullet.spentCasing = CASING45;
 
@@ -147,8 +147,8 @@ public class Gun45ACPFactory {
 		BulletConfiguration bullet = get45AutoConfig();
 
 		bullet.ammo = new ComparableStack(ModItems.ammo_45.stackFromEnum(Ammo45ACP.AP));
-		bullet.dmgMax = 18;
-		bullet.dmgMin = 26;
+		bullet.dmgMax = 9;
+		bullet.dmgMin = 11;
 		bullet.wear = 15;
 		bullet.leadChance = 10;
 		
@@ -161,8 +161,8 @@ public class Gun45ACPFactory {
 		BulletConfiguration bullet = get45AutoConfig();
 
 		bullet.ammo = new ComparableStack(ModItems.ammo_45.stackFromEnum(Ammo45ACP.DU));
-		bullet.dmgMax = 30;
-		bullet.dmgMin = 44;
+		bullet.dmgMax = 12;
+		bullet.dmgMin = 16;
 		bullet.wear = 25;
 		bullet.leadChance = 50;
 		

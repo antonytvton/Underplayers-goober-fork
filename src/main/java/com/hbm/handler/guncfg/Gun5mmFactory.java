@@ -26,7 +26,7 @@ public class Gun5mmFactory {
 		
 		GunConfiguration config = new GunConfiguration();
 		
-		config.rateOfFire = 1;
+		config.rateOfFire = 2;
 		config.roundsPerCycle = 5;
 		config.gunMode = GunConfiguration.MODE_NORMAL;
 		config.firingMode = GunConfiguration.FIRE_AUTO;
@@ -89,7 +89,8 @@ public class Gun5mmFactory {
 		bullet.spread *= inaccuracy;
 		bullet.dmgMin = 12;
 		bullet.dmgMax = 14;
-		
+		bullet.vPFX = "fireworks";
+
 		bullet.spentCasing = CASING5MM.clone().register("5mmStock");
 		
 		return bullet;
@@ -105,7 +106,8 @@ public class Gun5mmFactory {
 		bullet.dmgMax = 32;
 		bullet.explosive = 1F;
 		bullet.wear = 25;
-		
+		bullet.vPFX = "fireworks";
+
 		bullet.spentCasing = CASING5MM.clone().register("5mmExp");
 		
 		return bullet;
@@ -121,7 +123,8 @@ public class Gun5mmFactory {
 		bullet.dmgMax = 40;
 		bullet.wear = 25;
 		bullet.leadChance = 50;
-		
+		bullet.vPFX = "fireworks";
+
 		bullet.spentCasing = CASING5MM.clone().register("5mmDU");
 		
 		return bullet;
@@ -137,7 +140,8 @@ public class Gun5mmFactory {
 		bullet.dmgMax = 50;
 		bullet.wear = 25;
 		bullet.leadChance = 100;
-		
+		bullet.vPFX = "fireworks";
+
 		bullet.spentCasing = CASING5MM.clone().register("5mmStar");
 		
 		return bullet;

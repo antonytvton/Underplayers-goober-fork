@@ -455,7 +455,7 @@ public class ItemAmmoEnums {
 	public enum Ammo50BMG implements IAmmoItemEnum {
 		STOCK("ammo_50bmg"),
 		INCENDIARY("ammo_50bmg_incendiary", HbmCollection.IncendiaryType),
-		PHOSPHORUS("ammo_50bmg_phosphorus", HbmCollection.PhosphorusType),
+		PHOSPHORUS("ammo_50bmg_phosphorus", HbmCollection.MultiType),
 		EXPLOSIVE("ammo_50bmg_explosive", HbmCollection.ExplosiveType),
 		AP("ammo_50bmg_ap", HbmCollection.APType),
 		DU("ammo_50bmg_du", HbmCollection.DUType),
