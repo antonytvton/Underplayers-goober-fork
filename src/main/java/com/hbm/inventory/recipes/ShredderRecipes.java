@@ -239,8 +239,13 @@ public class ShredderRecipes extends SerializableRecipe {
 		}
 		
 		for(int i = 0; i < 5; i++) ShredderRecipes.setRecipe(new ItemStack(Items.skull, 1, i), new ItemStack(ModItems.biomass, 4));
+		//fancy titanium procesing
+		List<ItemStack> titanium = OreDictionary.getOres("oretitanium");
 
+		ShredderRecipes.setRecipe(ModBlocks.ore_titanium, new ItemStack(ModItems.powder_rutile, 1)); 
+		
 		/* Crystal processing */
+
 		ShredderRecipes.setRecipe(ModItems.ingot_schraranium, new ItemStack(ModItems.nugget_schrabidium, 2));
 		ShredderRecipes.setRecipe(ModItems.crystal_coal, new ItemStack(ModItems.powder_coal, 3));
 		ShredderRecipes.setRecipe(ModItems.crystal_iron, new ItemStack(ModItems.powder_iron, 3));
