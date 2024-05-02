@@ -356,9 +356,8 @@ public class AnvilRecipes {
 
 		constructionRecipes.add(new AnvilConstructionRecipe(
 				new AStack[] {
-						new ComparableStack(ModItems.ingot_firebrick, 20),
-						new OreDictStack(CU.ingot(), 8),
-						new OreDictStack(STEEL.plate(), 8)
+						new ComparableStack(ModItems.ingot_firebrick, 16),
+						new OreDictStack(IRON.plateCast(), 8),
 				}, new AnvilOutput(new ItemStack(ModBlocks.machine_crucible))).setTier(2));
 
 		constructionRecipes.add(new AnvilConstructionRecipe(

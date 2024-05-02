@@ -1105,7 +1105,7 @@ item.powder_poison.name=Poison Powder
 item.pellet_gas.name=Poison Gas Cartridge
 item.magnetron.name=Magnetron
 item.powder_thermite.name=Thermite
-
+item.powder_rutile.name=Rutile Powder
 item.nuke_starter_kit.name=Atomic Science Starter Kit
 item.nuke_commercially_kit.name=Atomic Science Kit for Commercial Uses
 item.nuke_advanced_kit.name=Atomic Science Advanced Kit

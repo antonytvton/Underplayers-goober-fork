@@ -302,7 +302,7 @@ public class Gun50BMGFactory {
 		bullet.dmgMax = 40;
 		bullet.wear = 20;
 		bullet.incendiary = 5;
-		bullet.explosive = 2;
+		bullet.explosive = 1;
 		bullet.doesPenetrate = true;
 		
 		PotionEffect eff = new PotionEffect(HbmPotion.phosphorus.id, 20 * 20, 0, true);
