@@ -408,6 +408,11 @@ public class ChemplantRecipes extends SerializableRecipe {
 				.outputItems(new ItemStack(ModItems.sulfur, 4),
 						new ItemStack(ModItems.niter, 3))
 				.outputFluids(new FluidStack(Fluids.SALIENT, 250)));
+		
+		recipes.add(new ChemRecipe(104, "Titanium_Chlorination", 60)
+				.inputFluids(new FluidStack(Fluids.TiCl4, 1000))
+				.outputItems(new ItemStack(ModItems.crystal_titanium, 1))
+				.outputFluids(new FluidStack(Fluids.CHLORINE, 750)));
 
 	}
 

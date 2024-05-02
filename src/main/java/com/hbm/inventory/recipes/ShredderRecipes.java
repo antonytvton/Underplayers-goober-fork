@@ -62,7 +62,11 @@ public class ShredderRecipes extends SerializableRecipe {
 			generateRecipes("gem", name, matches, 1);
 			generateRecipes("crystal", name, matches, 1);
 			//2 ingot units, any
-			if(name.contains("Titanium")) continue;//exclude titanium from this
+			if(name.contains("Titanium")) {
+				for(ItemStack stack : matches) { 
+					putIfValid(stack, new ItemStack(ModItems.powder_rutile), name);
+				}
+				continue;}
 			generateRecipes("ore", name, matches, 2);
 			
 			if(name.length() > 5 && name.substring(0, 5).equals("block")) {
@@ -94,7 +98,7 @@ public class ShredderRecipes extends SerializableRecipe {
 	}
 	
 	@Untested
-	private static void generateRecipes(String prefix, String name, List<ItemStack> matches, int outCount) {
+	private static void generateRecipes(String prefix, String name, List<ItemStack> matches, int outCount) {//Probably a me problem but documentation would be nice
 		
 		int len = prefix.length();
 		
@@ -240,9 +244,6 @@ public class ShredderRecipes extends SerializableRecipe {
 		
 		for(int i = 0; i < 5; i++) ShredderRecipes.setRecipe(new ItemStack(Items.skull, 1, i), new ItemStack(ModItems.biomass, 4));
 		//fancy titanium procesing
-		List<ItemStack> titanium = OreDictionary.getOres("oretitanium");
-
-		ShredderRecipes.setRecipe(ModBlocks.ore_titanium, new ItemStack(ModItems.powder_rutile, 1)); 
 		
 		/* Crystal processing */
 

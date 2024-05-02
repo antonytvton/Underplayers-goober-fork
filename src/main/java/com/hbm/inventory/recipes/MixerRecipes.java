@@ -33,6 +33,7 @@ public class MixerRecipes extends SerializableRecipe {
 	
 	@Override
 	public void registerDefaults() {
+		register(Fluids.TiCl4, new MixerRecipe(2_000, 50).setStack1(new FluidStack(Fluids.CHLORINE, 1_500)).setSolid(new ComparableStack(ModItems.powder_rutile)));//hellp
 		register(Fluids.COOLANT, new MixerRecipe(2_000, 50).setStack1(new FluidStack(Fluids.WATER, 1_800)).setSolid(new OreDictStack(KNO.dust())));
 		register(Fluids.CRYOGEL, new MixerRecipe(2_000, 50).setStack1(new FluidStack(Fluids.COOLANT, 1_800)).setSolid(new ComparableStack(ModItems.powder_ice)));
 		register(Fluids.NITAN, new MixerRecipe(1_000, 50).setStack1(new FluidStack(Fluids.KEROSENE, 600)).setStack2(new FluidStack(Fluids.MERCURY, 200)).setSolid(new ComparableStack(ModItems.powder_nitan_mix)));

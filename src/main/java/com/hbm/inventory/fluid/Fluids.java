@@ -77,6 +77,7 @@ public class Fluids {
 	public static FluidType BIOGAS;
 	public static FluidType BIOFUEL;
 	public static FluidType NITAN;
+	public static FluidType TiCl4;
 	public static FluidType UF6;
 	public static FluidType PUF6;
 	public static FluidType SAS3;
@@ -368,6 +369,7 @@ public class Fluids {
 		HOTCRACKOIL_DS =		new FluidType("HOTCRACKOIL_DS",		0x3A1A28, 2, 3, 0, EnumSymbol.NONE).setTemp(350).addTraits(LIQUID, VISCOUS, P_OIL);
 		NAPHTHA_DS =			new FluidType("NAPHTHA_DS",			0x63614E, 2, 1, 0, EnumSymbol.NONE).addContainers(new CD_Canister(0x5F6D44)).addTraits(LIQUID, VISCOUS, P_FUEL);
 		LIGHTOIL_DS =			new FluidType(138, "LIGHTOIL_DS",	0x63543E, 1, 2, 0, EnumSymbol.NONE).addContainers(new CD_Canister(0xB46B52)).addTraits(LIQUID, P_FUEL);
+		TiCl4 =					new FluidType("TiCl4",				0xbfd37c, 2, 0, 0, EnumSymbol.NONE).addTraits(LIQUID);
 		
 		// ^ ^ ^ ^ ^ ^ ^ ^
 		//ADD NEW FLUIDS HERE
@@ -506,6 +508,7 @@ public class Fluids {
 		metaOrder.add(CALCIUM_SOLUTION);
 		//solutions and working fluids
 		metaOrder.add(FRACKSOL);
+		metaOrder.add(TiCl4);
 		//the fun guys
 		metaOrder.add(PHOSGENE);
 		metaOrder.add(MUSTARDGAS);

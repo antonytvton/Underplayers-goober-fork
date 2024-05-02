@@ -47,8 +47,8 @@ public class CrystallizerRecipes extends SerializableRecipe {
 	@Override
 	public void registerDefaults() {
 
-		final int baseTime = 600;
-		final int utilityTime = 100;
+		final int baseTime = 40;
+		final int utilityTime = 20;
 		final int mixingTime = 20;
 		FluidStack sulfur = new FluidStack(Fluids.SULFURIC_ACID, 500);
 
@@ -58,21 +58,14 @@ public class CrystallizerRecipes extends SerializableRecipe {
 		registerRecipe(REDSTONE.ore(),	new CrystallizerRecipe(ModItems.crystal_redstone, baseTime));
 		registerRecipe(LAPIS.ore(),		new CrystallizerRecipe(ModItems.crystal_lapis, baseTime));
 		registerRecipe(DIAMOND.ore(),	new CrystallizerRecipe(ModItems.crystal_diamond, baseTime));
-		registerRecipe(U.ore(),			new CrystallizerRecipe(ModItems.crystal_uranium, baseTime), sulfur);
-		registerRecipe(TH232.ore(),		new CrystallizerRecipe(ModItems.crystal_thorium, baseTime), sulfur);
-		registerRecipe(PU.ore(),		new CrystallizerRecipe(ModItems.crystal_plutonium, baseTime), sulfur);
-		registerRecipe(TI.ore(),		new CrystallizerRecipe(ModItems.crystal_titanium, baseTime), sulfur);
 		registerRecipe(S.ore(),			new CrystallizerRecipe(ModItems.crystal_sulfur, baseTime));
 		registerRecipe(KNO.ore(),		new CrystallizerRecipe(ModItems.crystal_niter, baseTime));
 		registerRecipe(CU.ore(),		new CrystallizerRecipe(ModItems.crystal_copper, baseTime));
-		registerRecipe(W.ore(),			new CrystallizerRecipe(ModItems.crystal_tungsten, baseTime), sulfur);
 		registerRecipe(AL.ore(),		new CrystallizerRecipe(ModItems.crystal_aluminium, baseTime));
 		registerRecipe(F.ore(),			new CrystallizerRecipe(ModItems.crystal_fluorite, baseTime));
 		registerRecipe(BE.ore(),		new CrystallizerRecipe(ModItems.crystal_beryllium, baseTime));
 		registerRecipe(PB.ore(),		new CrystallizerRecipe(ModItems.crystal_lead, baseTime));
-		registerRecipe(SA326.ore(),		new CrystallizerRecipe(ModItems.crystal_schrabidium, baseTime), sulfur);
 		registerRecipe(LI.ore(),		new CrystallizerRecipe(ModItems.crystal_lithium, baseTime), sulfur);
-		registerRecipe(STAR.ore(),		new CrystallizerRecipe(ModItems.crystal_starmetal, baseTime), sulfur);
 		registerRecipe(CO.ore(),		new CrystallizerRecipe(ModItems.crystal_cobalt, baseTime), sulfur);
 		
 		registerRecipe("oreRareEarth",	new CrystallizerRecipe(ModItems.crystal_rare, baseTime), sulfur);
