@@ -52,8 +52,9 @@ public class GUIScreenBobmazon extends GuiScreen {
     	if(currentPage > getPageCount())
     		currentPage = getPageCount();
     	
-    	if(this.player.getHeldItem() != null && this.player.getHeldItem().getItem() == ModItems.bobmazon_hidden && player.getDisplayName().equals("SolsticeUnlimitd"))
-    		this.mc.thePlayer.closeScreen();
+    	if(this.player.getHeldItem() != null && this.player.getHeldItem().getItem() == ModItems.bobmazon_hidden)
+    		if(!player.getDisplayName().equals("UnderPlayer123"))
+    			this.mc.thePlayer.closeScreen();
     }
     
     public void drawScreen(int mouseX, int mouseY, float f)

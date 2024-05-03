@@ -665,6 +665,7 @@ chem.VIT_LIQUID=Liquid Nuclear Waste Vitrification
 chem.XENON=Linde Xenon Cycle
 chem.XENON_OXY=Boosted Linde Xenon Cycle
 chem.YELLOWCAKE=Yellowcake Production
+chem.Titanium_Chlorination=Titanium Chlorination
 
 commands.satellite.no_satellite=No satellite using this frequency found!
 commands.satellite.not_a_satellite=The held item is not a satellite!
@@ -1476,7 +1477,7 @@ hbmfluid.woodoil=Wood Oil
 hbmfluid.xenon=Xenon Gas
 hbmfluid.xpjuice=Experience Juice
 hbmfluid.xylene=BTX
-hbmfluid.TiCl4=TiCl4
+hbmfluid.ticl4=Titanium Tetrachloride
 
 
 
@@ -1490,7 +1491,6 @@ hbmpseudofluid.nuf6=Natural UF6
 hbmpseudofluid.pf6=Plutonium Hexafluoride
 hbmpseudofluid.mud_heavy=Heavy Sludge Fraction
 hbmpseudofluid.mud=Poisonous Sludge Gas
-
 hbmmat.actinium227=Actinium-227
 hbmmat.advancedalloy=Advanced Alloy
 hbmmat.aluminum=Aluminium
@@ -1711,8 +1711,8 @@ item.ammo_5mm_chlorophyte.name=5mm Round (Chlorophyte)
 item.ammo_5mm_du.name=5mm Round (DU)
 item.ammo_5mm_explosive.name=5mm Round (Explosive)
 item.ammo_5mm_star.name=5mm Round (Starmetal)
-item.ammo_75bolt.name=.75 Bolt Magazine (30rnd)
-item.ammo_75bolt_incendiary.name=.75 Incendiary Bolt Magazine (30rnd)
+item.ammo_75bolt.name=.75 Bolt Armor-Piercing Magazine (30rnd)
+item.ammo_75bolt_incendiary.name=.75 Bolt Multi-Purpose Magazine (30rnd)
 item.ammo_75bolt_he.name=.75 Bolt High-Explosive Magazine (30rnd)
 item.ammo_762.name=7.62mm Round
 item.ammo_762_ap.name=7.62mm Round (AP)

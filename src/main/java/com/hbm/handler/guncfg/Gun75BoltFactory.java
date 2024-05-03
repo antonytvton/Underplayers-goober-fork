@@ -39,7 +39,7 @@ public class Gun75BoltFactory {
 		config.ammoCap = 30;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
 		config.allowsInfinity = false;
-		config.crosshair = Crosshair.NONE;
+		config.crosshair = Crosshair.CROSS;
 		config.durability = 10000;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
 		config.firingSound = "hbm:weapon.hksShoot";
@@ -86,29 +86,10 @@ public class Gun75BoltFactory {
 		bullet.ammo = new ComparableStack(ModItems.ammo_75bolt.stackFromEnum(Ammo75Bolt.STOCK));
 		bullet.ammoCount = 30;
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 45;
-		bullet.dmgMax = 55;
+		bullet.dmgMin = 65;
+		bullet.dmgMax = 75;
 		bullet.doesRicochet = false;
-		bullet.explosive = 0.25F;
-		
-		bullet.bntHurt = (bulletnt, hit) -> {
-
-			if(bulletnt.worldObj.isRemote)
-				return;
-
-			if(hit instanceof EntityLivingBase) {
-				EntityLivingBase living = (EntityLivingBase) hit;
-				float f = living.getHealth();
-
-				if(f > 0) {
-					f = Math.max(0, f - 2);
-					living.setHealth(f);
-
-					if(f == 0)
-						living.onDeath(ModDamageSource.lead);
-				}
-			}
-		};
+		bullet.explosive = 0F;
 		
 		return bullet;
 	}
@@ -123,7 +104,7 @@ public class Gun75BoltFactory {
 		bullet.dmgMin = 45;
 		bullet.dmgMax = 55;
 		bullet.doesRicochet = false;
-		bullet.explosive = 0.25F;
+		bullet.explosive = 2.0F;
 
 		bullet.incendiary = 5;
 		bullet.doesPenetrate = false;
@@ -154,10 +135,10 @@ public class Gun75BoltFactory {
 		bullet.ammo = new ComparableStack(ModItems.ammo_75bolt.stackFromEnum(Ammo75Bolt.HE));
 		bullet.ammoCount = 30;
 		bullet.spread *= inaccuracy;
-		bullet.dmgMin = 55;
-		bullet.dmgMax = 65;
+		bullet.dmgMin = 30;
+		bullet.dmgMax = 40;
 		bullet.doesRicochet = false;
-		bullet.explosive = 2.5F;
+		bullet.explosive = 4.5F;
 		bullet.blockDamage = false;
 		
 		return bullet;

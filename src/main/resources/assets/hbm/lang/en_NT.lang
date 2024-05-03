@@ -134,6 +134,7 @@ chem.DYN_EUPH=Euphemium Dynosynthesis
 chem.DYN_DNT=Dineutronium Dynosynthesis
 chem.CORDITE=Cordite Production
 chem.KEVLAR=Kevlar Compound Production
+chem.Titanium_Chlorination=Titanium Chlorination
 
 item.record.lc.desc=Valve - Diabolic Adrenaline Guitar/Lambda Core
 item.record.ss.desc=Valve - Sector Sweep
