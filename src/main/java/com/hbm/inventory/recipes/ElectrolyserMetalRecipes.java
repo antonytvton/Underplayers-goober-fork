@@ -34,7 +34,7 @@ public class ElectrolyserMetalRecipes extends SerializableRecipe {
 
 		recipes.put(new ComparableStack(ModItems.crystal_iron), new ElectrolysisMetalRecipe(
 				new MaterialStack(Mats.MAT_IRON, MaterialShapes.INGOT.q(6)),
-				new MaterialStack(Mats.MAT_TITANIUM, MaterialShapes.INGOT.q(2)),
+				new MaterialStack(Mats.MAT_IRON, MaterialShapes.INGOT.q(2)),
 				new ItemStack(ModItems.powder_lithium_tiny, 3)));
 		
 		recipes.put(new ComparableStack(ModItems.crystal_gold), new ElectrolysisMetalRecipe(
