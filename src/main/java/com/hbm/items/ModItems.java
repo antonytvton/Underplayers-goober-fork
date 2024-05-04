@@ -1232,6 +1232,7 @@ public class ModItems {
 	public static Item powder_ice;
 	public static Item powder_poison;
 	public static Item powder_thermite;
+	public static Item powder_apt;
 	public static Item powder_rutile;
 	public static Item pellet_gas;
 	public static Item magnetron;
@@ -3870,6 +3871,7 @@ public class ModItems {
 		powder_ice = new ItemCustomLore().setUnlocalizedName("powder_ice").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":powder_ice");
 		powder_poison = new ItemCustomLore().setUnlocalizedName("powder_poison").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":powder_poison");
 		powder_thermite = new ItemCustomLore().setUnlocalizedName("powder_thermite").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":powder_thermite");
+		powder_apt = new ItemCustomLore().setUnlocalizedName("powder_apt").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":powder_apt");
 		powder_rutile = new ItemCustomLore().setUnlocalizedName("powder_rutile").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":powder_rutile");
 		cordite = new Item().setUnlocalizedName("cordite").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":cordite");
 		ballistite = new Item().setUnlocalizedName("ballistite").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":ballistite");
@@ -5907,6 +5909,7 @@ public class ModItems {
 		GameRegistry.registerItem(powder_ice, powder_ice.getUnlocalizedName());
 		GameRegistry.registerItem(powder_poison, powder_poison.getUnlocalizedName());
 		GameRegistry.registerItem(powder_thermite, powder_thermite.getUnlocalizedName());
+		GameRegistry.registerItem(powder_apt, powder_apt.getUnlocalizedName());
 		GameRegistry.registerItem(powder_rutile, powder_rutile.getUnlocalizedName());
 		GameRegistry.registerItem(powder_power, powder_power.getUnlocalizedName());
 		GameRegistry.registerItem(cordite, cordite.getUnlocalizedName());
