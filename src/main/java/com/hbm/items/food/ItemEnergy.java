@@ -67,113 +67,91 @@ public class ItemEnergy extends Item {
 			VersatileConfig.applyPotionSickness(player, 5);
 
 			if(this == ModItems.can_smart) {
-				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 30 * 20, 1));
-				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 30 * 20, 2));
-				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 30 * 20, 0));
+				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 60 * 20, 1));
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 50.0F);
 			}
 			if(this == ModItems.can_creature) {
-				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 30 * 20, 0));
-				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 30 * 20, 2));
-				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 30 * 20, 1));
+				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 45 * 20, 2));
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 50.0F);
 			}
 			if(this == ModItems.can_redbomb) {
-				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 30 * 20, 0));
-				player.addPotionEffect(new PotionEffect(Potion.field_76444_x.id, 30 * 20, 2));
+				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 30 * 20, 1));
 				player.addPotionEffect(new PotionEffect(Potion.jump.id, 30 * 20, 1));
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 75.0F);
 			}
 			if(this == ModItems.can_mrsugar) {
-				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 30 * 20, 0));
-				player.addPotionEffect(new PotionEffect(Potion.digSpeed.id, 30 * 20, 1));
-				player.addPotionEffect(new PotionEffect(Potion.jump.id, 30 * 20, 2));
+				player.addPotionEffect(new PotionEffect(Potion.digSpeed.id, 10 * 60 * 20, 2));
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 75.0F);
 			}
 			if(this == ModItems.can_overcharge) {
-				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 30 * 20, 1));
-				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 30 * 20, 2));
-				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 30 * 20, 0));
+				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 60 * 20, 3));
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 150.0F);
 			}
 			if(this == ModItems.can_luna) {
-				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 30 * 20, 1));
-				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 30 * 20, 2));
-				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 30 * 20, 1));
-				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 30 * 20, 2));
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 150.0F);
+				player.addPotionEffect(new PotionEffect(Potion.jump.id, 60 * 20, 4));
 			}
 			if(this == ModItems.can_bepis) {
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 50.0F);
 				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 30 * 20, 3));
 				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 30 * 20, 3));
 			}
 			if(this == ModItems.can_breen) {
-				player.addPotionEffect(new PotionEffect(Potion.confusion.id, 30 * 20, 0));
+				player.addPotionEffect(new PotionEffect(Potion.confusion.id, 60 * 60 * 20, 0));
 			}
 			if(this == ModItems.can_mug) {
-				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 3 * 60 * 20, 2));
-				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 60 * 20, 2));
+				player.heal(3F);
 			}
 			if(this == ModItems.chocolate_milk) {
 				ExplosionLarge.explode(world, player.posX, player.posY, player.posZ, 50, true, false, false);
 			}
 			if(this == ModItems.bottle_nuka) {
-				player.heal(4F);
-				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 30 * 20, 1));
+				player.heal(6F);
 				player.addPotionEffect(new PotionEffect(Potion.digSpeed.id, 30 * 20, 1));
-				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 5.0F);
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 100.0F);
 			}
 			if(this == ModItems.bottle_cherry) {
-				player.heal(6F);
-				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 30 * 20, 0));
-				player.addPotionEffect(new PotionEffect(Potion.jump.id, 30 * 20, 2));
-				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 5.0F);
+				player.heal(8F);
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 150.0F);
+
 			}
 			if(this == ModItems.bottle_quantum) {
-				player.heal(10F);
-				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 30 * 20, 1));
-				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 30 * 20, 2));
-				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 30 * 20, 1));
-				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 15.0F);
+				player.heal(8F);
+				player.addPotionEffect(new PotionEffect(Potion.field_76444_x.id, 60 * 20, 3));						//field_76444_x means absorbsion(extra hp)
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 333.0F);
 			}
 			if(this == ModItems.bottle2_korl) {
-				player.heal(6);
-				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 30 * 20, 1));
-				player.addPotionEffect(new PotionEffect(Potion.digSpeed.id, 30 * 20, 2));
-				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 30 * 20, 2));
+				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 60 * 20, 1));
+				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 60 * 20, 1));
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 50.0F);
+
 			}
 			if(this == ModItems.bottle2_fritz) {
-				player.heal(6);
-				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 30 * 20, 1));
-				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 30 * 20, 2));
-				player.addPotionEffect(new PotionEffect(Potion.jump.id, 30 * 20, 2));
+				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 60 * 20, 0));
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 75.0F);
+
 			}
 			if(this == ModItems.bottle2_korl_special) {
-				player.heal(16);
-				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 120 * 20, 1));
-				player.addPotionEffect(new PotionEffect(Potion.digSpeed.id, 120 * 20, 2));
-				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 120 * 20, 2));
+				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 45 * 20, 2));
+				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 45 * 20, 2));
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 75.0F);
+
 			}
 			if(this == ModItems.bottle2_fritz_special) {
-				player.heal(16);
-				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 120 * 20, 1));
-				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 120 * 20, 2));
-				player.addPotionEffect(new PotionEffect(Potion.jump.id, 120 * 20, 2));
+				player.addPotionEffect(new PotionEffect(Potion.regeneration.id,  90 * 20, 0));
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 150.0F);
+
 			}
 			if(this == ModItems.bottle_sparkle) {
-				player.heal(10F);
-				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 120 * 20, 1));
-				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 120 * 20, 2));
-				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 120 * 20, 2));
-				player.addPotionEffect(new PotionEffect(Potion.digSpeed.id, 120 * 20, 1));
-				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 5.0F);
+				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 120 * 20, 0));
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 75.0F);
 			}
 			if(this == ModItems.bottle_rad) {
-				player.heal(10F);
-				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 120 * 20, 1));
-				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 120 * 20, 2));
-				player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 120 * 20, 0));
-				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 120 * 20, 4));
-				player.addPotionEffect(new PotionEffect(Potion.digSpeed.id, 120 * 20, 1));
-				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 15.0F);
+				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 45 * 20, 1));
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 150.0F);
 			}
 			if(this == ModItems.coffee) {
-				player.heal(10);
-				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 60 * 20, 2));
+				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 5 * 60 * 20, 2));
 			}
 			if(this == ModItems.coffee_radium) {
 				player.heal(10);

@@ -29,7 +29,7 @@ public class Gun75BoltFactory {
 		
 		GunConfiguration config = new GunConfiguration();
 		
-		config.rateOfFire = 2;
+		config.rateOfFire = 3;
 		config.roundsPerCycle = 1;
 		config.gunMode = GunConfiguration.MODE_NORMAL;
 		config.firingMode = GunConfiguration.FIRE_AUTO;
@@ -42,7 +42,7 @@ public class Gun75BoltFactory {
 		config.crosshair = Crosshair.CROSS;
 		config.durability = 10000;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
-		config.firingSound = "hbm:weapon.hksShoot";
+		config.firingSound = "hbm:weapon.boltShoot";
 		config.reloadSoundEnd = false;
 		config.showAmmo = false;
 		

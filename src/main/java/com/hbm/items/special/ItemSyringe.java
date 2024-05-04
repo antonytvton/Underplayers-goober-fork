@@ -11,6 +11,9 @@ import com.hbm.items.ModItems;
 import com.hbm.items.weapon.ItemGunBase;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.potion.HbmPotion;
+import com.hbm.util.ContaminationUtil;
+import com.hbm.util.ContaminationUtil.ContaminationType;
+import com.hbm.util.ContaminationUtil.HazardType;
 
 import api.hbm.fluid.IFillableItem;
 import cpw.mods.fml.relauncher.Side;
@@ -104,7 +107,8 @@ public class ItemSyringe extends Item {
 
 		if(this == ModItems.syringe_metal_stimpak && !VersatileConfig.hasPotionSickness(player)) {
 			if(!world.isRemote) {
-				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 5 * 20, 4));
+				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 7 * 20, 2));
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 100.0F);
 
 				stack.stackSize--;
 				world.playSoundAtEntity(player, "hbm:item.syringe", 1.0F, 1.0F);
@@ -123,8 +127,10 @@ public class ItemSyringe extends Item {
 
 		if(this == ModItems.syringe_metal_medx && !VersatileConfig.hasPotionSickness(player)) {
 			if(!world.isRemote) {
-				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 60 * 20, 0));
-				player.addPotionEffect(new PotionEffect(Potion.hunger.id, 30 * 20, 2));
+				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 60 * 20, 1));
+				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 60 * 20, 0));
+
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 150.0F);
 				stack.stackSize--;
 				world.playSoundAtEntity(player, "hbm:item.syringe", 1.0F, 1.0F);
 
@@ -144,8 +150,8 @@ public class ItemSyringe extends Item {
 			if(!world.isRemote) {
 				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 10 * 20, 4));
 				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 10 * 20, 4));
-				player.addPotionEffect(new PotionEffect(HbmPotion.lead.id, 9999, 999));
 				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 10 * 20, 4));
+				HbmLivingProps.setDigamma(player, 5);
 				
 				stack.stackSize--;
 				world.playSoundAtEntity(player, "hbm:item.syringe", 1.0F, 1.0F);
@@ -165,8 +171,7 @@ public class ItemSyringe extends Item {
 		if(this == ModItems.syringe_metal_super && !VersatileConfig.hasPotionSickness(player)) {
 			if(!world.isRemote) {
 				player.heal(25);
-				player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 10 * 20, 0));
-
+				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 500.0F);
 				stack.stackSize--;
 				world.playSoundAtEntity(player, "hbm:item.syringe", 1.0F, 1.0F);
 
@@ -204,7 +209,7 @@ public class ItemSyringe extends Item {
 
 		if(this == ModItems.radaway) {
 			if(!world.isRemote) {
-				player.addPotionEffect(new PotionEffect(HbmPotion.radaway.id, 14, 9));
+				player.addPotionEffect(new PotionEffect(HbmPotion.radaway.id, 9, 14));
 
 				stack.stackSize--;
 				world.playSoundAtEntity(player, "hbm:item.radaway", 1.0F, 1.0F);
@@ -231,7 +236,7 @@ public class ItemSyringe extends Item {
 
 		if(this == ModItems.radaway_flush) {
 			if(!world.isRemote) {
-				player.addPotionEffect(new PotionEffect(HbmPotion.radaway.id, 50, 19));
+				player.addPotionEffect(new PotionEffect(HbmPotion.radaway.id, 24, 39));
 
 				stack.stackSize--;
 				world.playSoundAtEntity(player, "hbm:item.radaway", 1.0F, 1.0F);
@@ -564,7 +569,7 @@ public class ItemSyringe extends Item {
 			list.add("Strength I for 2 minutes");
 		}
 		if(this == ModItems.syringe_metal_stimpak) {
-			list.add("Heals 2.5 hearts");
+			list.add("Heals hearts?");
 		}
 		if(this == ModItems.syringe_metal_super) {
 			list.add("Heals 25 hearts");
