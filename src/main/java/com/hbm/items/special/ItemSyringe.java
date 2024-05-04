@@ -107,9 +107,9 @@ public class ItemSyringe extends Item {
 
 		if(this == ModItems.syringe_metal_stimpak && !VersatileConfig.hasPotionSickness(player)) {
 			if(!world.isRemote) {
-				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 7 * 20, 2));
+				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 6 * 20, 2));
 				ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 100.0F);
-
+				player.heal(4);
 				stack.stackSize--;
 				world.playSoundAtEntity(player, "hbm:item.syringe", 1.0F, 1.0F);
 

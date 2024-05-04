@@ -46,6 +46,7 @@ public class Gun75BoltFactory {
 		config.reloadSoundEnd = false;
 		config.showAmmo = false;
 		
+		
 		config.animations.put(AnimType.CYCLE, new BusAnimation()
 				.addBus("RECOIL", new BusAnimationSequence()
 						.addKeyframePosition(1, 0, 0, 25)
@@ -90,6 +91,7 @@ public class Gun75BoltFactory {
 		bullet.dmgMax = 75;
 		bullet.doesRicochet = false;
 		bullet.explosive = 0F;
+
 		
 		return bullet;
 	}
@@ -104,7 +106,9 @@ public class Gun75BoltFactory {
 		bullet.dmgMin = 45;
 		bullet.dmgMax = 55;
 		bullet.doesRicochet = false;
-		bullet.explosive = 2.0F;
+		bullet.explosive = 1.5F;
+		bullet.blockDamage = true;
+
 
 		bullet.incendiary = 5;
 		bullet.doesPenetrate = false;
@@ -140,6 +144,7 @@ public class Gun75BoltFactory {
 		bullet.doesRicochet = false;
 		bullet.explosive = 4.5F;
 		bullet.blockDamage = false;
+
 		
 		return bullet;
 	}
