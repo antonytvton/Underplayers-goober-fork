@@ -202,6 +202,7 @@ public class ItemAmmoArty extends Item {
 	
 	public static void standardExplosion(EntityArtilleryShell shell, MovingObjectPosition mop, float size, float rangeMod, boolean breaksBlocks) {
 		shell.worldObj.playSoundEffect(shell.posX, shell.posY, shell.posZ, "hbm:weapon.explosionMedium", 20.0F, 0.9F + rand.nextFloat() * 0.2F);
+		ExplosionLarge.spawnParticles(shell.worldObj, shell.posX, shell.posY, shell.posZ, ExplosionLarge.cloudFunction(15));
 		Vec3 vec = Vec3.createVectorHelper(shell.motionX, shell.motionY, shell.motionZ).normalize();
 		ExplosionVNT xnt = new ExplosionVNT(shell.worldObj, mop.hitVec.xCoord - vec.xCoord, mop.hitVec.yCoord - vec.yCoord, mop.hitVec.zCoord - vec.zCoord, size);
 		if(breaksBlocks) {
@@ -246,9 +247,9 @@ public class ItemAmmoArty extends Item {
 	
 	private void init() {
 		/* STANDARD SHELLS */
-		this.itemTypes[NORMAL] = new ArtilleryShell("ammo_arty", SpentCasing.COLOR_CASE_16INCH) { public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { standardExplosion(shell, mop, 10F, 3F, false); }};
-		this.itemTypes[CLASSIC] = new ArtilleryShell("ammo_arty_classic", SpentCasing.COLOR_CASE_16INCH) { public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { standardExplosion(shell, mop, 15F, 5F, false); }};
-		this.itemTypes[EXPLOSIVE] = new ArtilleryShell("ammo_arty_he", SpentCasing.COLOR_CASE_16INCH) { public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { standardExplosion(shell, mop, 15F, 3F, true); }};
+		this.itemTypes[NORMAL] = new ArtilleryShell("ammo_arty", SpentCasing.COLOR_CASE_16INCH) { public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { standardExplosion(shell, mop, 4.5F, 1.5F, true); }};
+		this.itemTypes[CLASSIC] = new ArtilleryShell("ammo_arty_classic", SpentCasing.COLOR_CASE_16INCH) { public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { standardExplosion(shell, mop, 5.5F, 2F, false); }};
+		this.itemTypes[EXPLOSIVE] = new ArtilleryShell("ammo_arty_he", SpentCasing.COLOR_CASE_16INCH) { public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { standardExplosion(shell, mop, 5.5F, 0.5F, true); }};
 
 		/* MINI NUKE */
 		this.itemTypes[MINI_NUKE] = new ArtilleryShell("ammo_arty_mini_nuke", SpentCasing.COLOR_CASE_16INCH_NUKE) {
@@ -271,7 +272,7 @@ public class ItemAmmoArty extends Item {
 		/* PHOSPHORUS */
 		this.itemTypes[PHOSPHORUS] = new ArtilleryShell("ammo_arty_phosphorus", SpentCasing.COLOR_CASE_16INCH_PHOS) {
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) {
-				standardExplosion(shell, mop, 10F, 3F, false);
+				standardExplosion(shell, mop, 4F, 1F, false);
 				//shell.worldObj.playSoundEffect(shell.posX, shell.posY, shell.posZ, "hbm:weapon.explosionMedium", 20.0F, 0.9F + shell.worldObj.rand.nextFloat() * 0.2F);
 				ExplosionLarge.spawnShrapnels(shell.worldObj, (int) mop.hitVec.xCoord, (int) mop.hitVec.yCoord, (int) mop.hitVec.zCoord, 15);
 				ExplosionChaos.burn(shell.worldObj, (int) mop.hitVec.xCoord, (int) mop.hitVec.yCoord, (int) mop.hitVec.zCoord, 12);
@@ -314,7 +315,7 @@ public class ItemAmmoArty extends Item {
 				EntityMist mist = new EntityMist(shell.worldObj);
 				mist.setType(Fluids.CHLORINE);
 				mist.setPosition(mop.hitVec.xCoord - vec.xCoord, mop.hitVec.yCoord - vec.yCoord - 3, mop.hitVec.zCoord - vec.zCoord);
-				mist.setArea(15, 7.5F);
+				mist.setArea(40, 15F);
 				shell.worldObj.spawnEntityInWorld(mist);
 				PollutionHandler.incrementPollution(shell.worldObj, mop.blockX, mop.blockY, mop.blockZ, PollutionType.HEAVYMETAL, 5F);
 			}
@@ -334,7 +335,7 @@ public class ItemAmmoArty extends Item {
 						z += rand.nextGaussian() * 15;
 					}
 					mist.setPosition(x, mop.hitVec.yCoord - vec.yCoord - 5, z);
-					mist.setArea(15, 10);
+					mist.setArea(40, 15F);
 					shell.worldObj.spawnEntityInWorld(mist);
 				}
 				PollutionHandler.incrementPollution(shell.worldObj, mop.blockX, mop.blockY, mop.blockZ, PollutionType.HEAVYMETAL, 10F);
@@ -356,7 +357,7 @@ public class ItemAmmoArty extends Item {
 						z += rand.nextGaussian() * 25;
 					}
 					mist.setPosition(x, mop.hitVec.yCoord - vec.yCoord - 5, z);
-					mist.setArea(20, 10);
+					mist.setArea(40, 15F);
 					shell.worldObj.spawnEntityInWorld(mist);
 				}
 				PollutionHandler.incrementPollution(shell.worldObj, mop.blockX, mop.blockY, mop.blockZ, PollutionType.HEAVYMETAL, 15F);

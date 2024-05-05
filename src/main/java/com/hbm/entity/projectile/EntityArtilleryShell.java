@@ -1,6 +1,7 @@
 package com.hbm.entity.projectile;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.List;
 
 import com.hbm.entity.logic.IChunkLoader;
@@ -18,6 +19,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.world.IWorldAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
@@ -118,7 +120,7 @@ public class EntityArtilleryShell extends EntityThrowableNT implements IChunkLoa
 				double deltaZ = this.posZ - this.targetZ;
 				double dist = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
 				
-				if(speed * 18 > dist) {
+				if(speed * 30 > dist) {
 					worldObj.playSoundEffect(this.targetX, this.targetY, this.targetZ, "hbm:turret.mortarWhistle", 15.0F, 0.9F + rand.nextFloat() * 0.2F);
 					this.didWhistle = true;
 				}
@@ -142,7 +144,12 @@ public class EntityArtilleryShell extends EntityThrowableNT implements IChunkLoa
 			}
 			
 			if(Vec3.createVectorHelper(this.syncPosX - this.posX, this.syncPosY - this.posY, this.syncPosZ - this.posZ).lengthVector() < 0.2) {
-				worldObj.spawnParticle("smoke", posX, posY + 0.5, posZ, 0.0, 0.1, 0.0);
+		        Random rand = new Random();
+		        for (int i = 0; i < 10; ++i)
+		        {
+		        	worldObj.spawnParticle("smoke", posX, posY + 0.5, posZ, rand.nextInt(10)/75, rand.nextInt(10)/25, rand.nextInt(10)/75);
+		        }
+				
 			}
 		}
 	}
