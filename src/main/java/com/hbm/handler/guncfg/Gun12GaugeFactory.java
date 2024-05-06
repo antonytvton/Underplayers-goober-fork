@@ -265,7 +265,7 @@ public class Gun12GaugeFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_12gauge.stackFromEnum(Ammo12Gauge.STOCK));
 		bullet.dmgMin = 5;
-		bullet.dmgMax = 7;
+		bullet.dmgMax = 8;
 		
 		bullet.spentCasing = CASING12GAUGE.clone().register("12GaStock").setColor(0x2847FF, SpentCasing.COLOR_CASE_12GA);
 		
@@ -279,7 +279,7 @@ public class Gun12GaugeFactory {
 		bullet.ammo = new ComparableStack(ModItems.ammo_12gauge.stackFromEnum(Ammo12Gauge.INCENDIARY));
 		bullet.wear = 15;
 		bullet.dmgMin = 5;
-		bullet.dmgMax = 7;
+		bullet.dmgMax = 8;
 		bullet.incendiary = 5;
 		
 		bullet.spentCasing = CASING12GAUGE.clone().register("12GaInc").setColor(0xFF6329, SpentCasing.COLOR_CASE_12GA).setupSmoke(1F, 0.5D, 60, 40);
@@ -293,8 +293,8 @@ public class Gun12GaugeFactory {
 
 		bullet.ammo = new ComparableStack(ModItems.ammo_12gauge.stackFromEnum(Ammo12Gauge.SHRAPNEL));
 		bullet.wear = 15;
-		bullet.dmgMin = 10;
-		bullet.dmgMax = 17;
+		bullet.dmgMin = 1;
+		bullet.dmgMax = 20;
 		bullet.ricochetAngle = 15;
 		bullet.HBRC = 80;
 		bullet.LBRC = 95;
@@ -310,8 +310,8 @@ public class Gun12GaugeFactory {
 		
 		bullet.ammo = new ComparableStack(ModItems.ammo_12gauge.stackFromEnum(Ammo12Gauge.DU));
 		bullet.wear = 20;
-		bullet.dmgMin = 18;
-		bullet.dmgMax = 22;
+		bullet.dmgMin = 10;
+		bullet.dmgMax = 20;
 		bullet.doesPenetrate = true;
 		bullet.leadChance = 50;
 		

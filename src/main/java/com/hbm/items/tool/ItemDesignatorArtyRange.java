@@ -1,6 +1,7 @@
 package com.hbm.items.tool;
 
 import java.util.List;
+import java.util.Random;
 
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.lib.Library;
@@ -74,13 +75,13 @@ public class ItemDesignatorArtyRange extends Item {
 		int x = pos.blockX;
 		int y = pos.blockY;
 		int z = pos.blockZ;
-
+        Random rand = new Random();
 		if(!world.isRemote) {
 			TileEntity te = world.getTileEntity(stack.stackTagCompound.getInteger("x"), stack.stackTagCompound.getInteger("y"), stack.stackTagCompound.getInteger("z"));
 			
 			if(te instanceof TileEntityTurretBaseArtillery) {
 				TileEntityTurretBaseArtillery arty = (TileEntityTurretBaseArtillery) te;
-				arty.enqueueTarget(x + 0.5, y + 0.5, z + 0.5);
+				arty.enqueueTarget(x + rand.nextInt(50) - 25, y + 0.5, z + rand.nextInt(50) - 25);
 				world.playSoundAtEntity(player, "hbm:item.techBoop", 1.0F, 1.0F);
 			}
 		}
