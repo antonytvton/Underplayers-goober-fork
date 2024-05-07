@@ -24,6 +24,7 @@ public class HbmKeybinds {
 	public static KeyBinding reloadKey = new KeyBinding(category + ".reload", Keyboard.KEY_R, category);
 	public static KeyBinding dashKey = new KeyBinding(category + ".dash", Keyboard.KEY_LSHIFT, category);
 	public static KeyBinding trainKey = new KeyBinding(category + ".trainInv", Keyboard.KEY_R, category);
+	public static KeyBinding slideKey = new KeyBinding(category + ".slide", Keyboard.KEY_LCONTROL, category);
 
 	public static KeyBinding craneUpKey = new KeyBinding(category + ".craneMoveUp", Keyboard.KEY_UP, category);
 	public static KeyBinding craneDownKey = new KeyBinding(category + ".craneMoveDown", Keyboard.KEY_DOWN, category);
@@ -38,6 +39,8 @@ public class HbmKeybinds {
 		ClientRegistry.registerKeyBinding(reloadKey);
 		ClientRegistry.registerKeyBinding(dashKey);
 		ClientRegistry.registerKeyBinding(trainKey);
+		ClientRegistry.registerKeyBinding(slideKey);
+
 
 		ClientRegistry.registerKeyBinding(craneUpKey);
 		ClientRegistry.registerKeyBinding(craneDownKey);
@@ -67,6 +70,7 @@ public class HbmKeybinds {
 
 	public static enum EnumKeybind {
 		JETPACK,
+		SLIDE,
 		TOGGLE_JETPACK,
 		TOGGLE_HEAD,
 		RELOAD,

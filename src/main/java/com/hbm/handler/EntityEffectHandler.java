@@ -641,6 +641,8 @@ public class EntityEffectHandler {
 			int dashCount = armorDashCount + armorModDashCount;
 			
 			boolean dashActivated = props.getKeyPressed(EnumKeybind.DASH);
+			boolean slideActivated = props.getKeyPressed(EnumKeybind.SLIDE);
+
 			
 			if(dashCount * 30 < props.getStamina())
 				props.setStamina(dashCount * 30);
@@ -675,8 +677,15 @@ public class EntityEffectHandler {
 						props.setDashCooldown(HbmPlayerProps.dashCooldownLength);
 						stamina -= perDash;
 					}
-				} else {	
-					props.setDashCooldown(props.getDashCooldown() - 1);
+				}	
+				props.setDashCooldown(props.getDashCooldown() - 1);
+				if(slideActivated) {
+					Vec3 lookingIn = player.getLookVec();
+					Vec3 strafeVec = player.getLookVec();
+					strafeVec.rotateAroundY((float)Math.PI * 0.5F);
+					MainRegistry.logger.entry("hey it decided to regerister a dash");
+					player.setVelocity((lookingIn.xCoord + strafeVec.xCoord )*0.5, 0, (lookingIn.zCoord + strafeVec.zCoord )*0.5);
+					
 				}
 						
 				if(stamina < props.getDashCount() * perDash) {
