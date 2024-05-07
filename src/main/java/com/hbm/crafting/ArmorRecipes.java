@@ -68,17 +68,17 @@ public class ArmorRecipes {
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.t45_helmet, 1), new Object[] { "PPC", "PBP", "I I", 'P', ModItems.plate_armor_titanium, 'C', ModItems.circuit_targeting_tier1, 'I', ANY_RUBBER.ingot(), 'B', ModItems.gas_mask_filter });
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.t45_plate, 1), new Object[] { "IPI", "TFT", "PPP", 'P', ModItems.plate_armor_titanium, 'I', ANY_RUBBER.ingot(), 'T', DictFrame.fromOne(ModItems.part_generic, EnumPartType.PISTON_PNEUMATIC), 'F', ModItems.fusion_core});
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.t45_legs, 1), new Object[] { "TPT", "PIP", "PIP", 'P', ModItems.plate_armor_titanium, 'I', ANY_RUBBER.ingot(), 'T', DictFrame.fromOne(ModItems.part_generic, EnumPartType.PISTON_PNEUMATIC)});
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.t45_boots, 1), new Object[] { "I I", "P P","P P",'P', ModItems.plate_armor_ajr, 'I', ANY_RUBBER.ingot()});
+		CraftingManager.addRecipeAuto(new ItemStack(ModItems.t45_boots, 1), new Object[] { "I I", "P P","P P",'P', ModItems.plate_armor_titanium, 'I', ANY_RUBBER.ingot()});
 		
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.ajr_helmet, 1), new Object[] { "PPC", "PBP", "I I", 'P', ModItems.plate_armor_ajr, 'C', ModItems.circuit_targeting_tier2, 'I', ANY_PLASTIC.ingot(), 'B', ModItems.gas_mask_filter_mono });
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.ajr_plate, 1), new Object[] { "IPI", "TFT", "PPP", 'P', ModItems.plate_armor_ajr, 'I', ANY_PLASTIC.ingot(), 'T', DictFrame.fromOne(ModItems.part_generic, EnumPartType.PISTON_HYDRAULIC), 'F', ModItems.fusion_core});
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.ajr_legs, 1), new Object[] { "TPT", "PIP", "PIP", 'P', ModItems.plate_armor_ajr, 'I', ANY_PLASTIC.ingot(), 'T', DictFrame.fromOne(ModItems.part_generic, EnumPartType.PISTON_HYDRAULIC)});
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.ajr_boots, 1), new Object[] { "I I", "P P","P P",'P', ModItems.plate_armor_ajr, 'I', ANY_PLASTIC.ingot()});
 		
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.ajro_helmet, 1), new Object[] { ModItems.ajr_helmet, STEEL.plateWelded(), STEEL.plateWelded(), STEEL.plateWelded(), STEEL.plateWelded()});
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.ajro_plate, 1), new Object[] { ModItems.ajr_plate, STEEL.plateWelded(), STEEL.plateWelded(), STEEL.plateWelded(), STEEL.plateWelded()});
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.ajro_legs, 1), new Object[] { ModItems.ajr_legs, STEEL.plateWelded(), STEEL.plateWelded(), STEEL.plateWelded(), STEEL.plateWelded()});
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.ajro_boots, 1), new Object[] { ModItems.ajr_boots, STEEL.plateWelded(), STEEL.plateWelded(), STEEL.plateWelded(), STEEL.plateWelded()});
+		CraftingManager.addRecipeAuto(new ItemStack(ModItems.ajro_helmet, 1), new Object[] { " A ", "ABA", " A ", 'B', ModItems.ajr_helmet, 'A', TI.plateWelded()});
+		CraftingManager.addRecipeAuto(new ItemStack(ModItems.ajro_plate, 1), new Object[] { " A ", "ABA", " A ", 'B', ModItems.ajr_plate, 'A', TI.plateWelded()});
+		CraftingManager.addRecipeAuto(new ItemStack(ModItems.ajro_legs, 1), new Object[] { " A ", "ABA", " A ", 'B', ModItems.ajr_legs, 'A', TI.plateWelded()});
+		CraftingManager.addRecipeAuto(new ItemStack(ModItems.ajro_boots, 1), new Object[] { " A ", "ABA", " A ", 'B', ModItems.ajr_boots, 'A', TI.plateWelded()});
 		
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.bj_helmet, 1), new Object[] { "SBS", " C ", " I ", 'S', Items.string, 'B', new ItemStack(Blocks.wool, 1, 15), 'C', ModItems.circuit_targeting_tier4, 'I', STAR.ingot() });
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.bj_plate, 1), new Object[] { "N N", "MSM", "NCN", 'N', ModItems.plate_armor_lunar, 'M', ModItems.motor_desh, 'S', ModItems.starmetal_plate, 'C', ModItems.circuit_targeting_tier5 });
@@ -86,7 +86,7 @@ public class ArmorRecipes {
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.bj_legs, 1), new Object[] { "MBM", "NSN", "N N", 'N', ModItems.plate_armor_lunar, 'M', ModItems.motor_desh, 'S', ModItems.starmetal_legs, 'B', ModBlocks.block_starmetal });
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.bj_boots, 1), new Object[] { "N N", "BSB", 'N', ModItems.plate_armor_lunar, 'S', ModItems.starmetal_boots, 'B', ModBlocks.block_starmetal });
 		
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.hev_helmet, 1), new Object[] { "PPC", "PBP", "I I", 'P', ModItems.plate_armor_hev, 'C', ModItems.circuit_targeting_tier2, 'I', ANY_PLASTIC.ingot(), 'B', ModItems.gas_mask_filter_mono });
+		CraftingManager.addRecipeAuto(new ItemStack(ModItems.hev_helmet, 1), new Object[] { "PPC", "PBP", "I I", 'P', ModItems.plate_armor_hev, 'C', ModItems.circuit_targeting_tier2, 'I', ANY_PLASTIC.ingot(), 'B', ModItems.gas_mask_filter_combo });
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.hev_plate, 1), new Object[] { "IPI", "TFT", "PPP", 'P', ModItems.plate_armor_hev, 'I', ANY_PLASTIC.ingot(), 'T', DictFrame.fromOne(ModItems.part_generic, EnumPartType.PISTON_HYDRAULIC), 'F', ModItems.hev_battery});
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.hev_legs, 1), new Object[] { "TPT", "PIP", "PIP", 'P', ModItems.plate_armor_hev, 'I', ANY_PLASTIC.ingot(), 'T', DictFrame.fromOne(ModItems.part_generic, EnumPartType.PISTON_HYDRAULIC)});
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.hev_boots, 1), new Object[] { "I I", "P P","P P",'P', ModItems.plate_armor_hev, 'I', ANY_PLASTIC.ingot()});
@@ -99,11 +99,13 @@ public class ArmorRecipes {
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.dns_helmet, 1), new Object[] { "PCP", "PBP", "PSP", 'P', ModItems.plate_armor_dnt, 'S', ModItems.ingot_chainsteel, 'B', ModItems.bj_helmet, 'C', ModItems.circuit_targeting_tier6 });
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.dns_plate, 1), new Object[] { "PCP", "PBP", "PSP", 'P', ModItems.plate_armor_dnt, 'S', ModItems.ingot_chainsteel, 'B', ModItems.bj_plate_jetpack, 'C', ModItems.singularity_spark });
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.dns_legs, 1), new Object[] { "PCP", "PBP", "PSP", 'P', ModItems.plate_armor_dnt, 'S', ModItems.ingot_chainsteel, 'B', ModItems.bj_legs, 'C', ModItems.coin_worm });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.dns_boots, 1), new Object[] { "PCP", "PBP", "PSP", 'P', ModItems.plate_armor_dnt, 'S', ModItems.ingot_chainsteel, 'B', ModItems.bj_boots, 'C', ModItems.demon_core_closed });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.rpa_helmet, 1), new Object[] { "KPK", "PLP", " F ", 'L', DictFrame.fromOne(ModItems.parts_legendary, EnumLegendaryType.TIER2), 'K', ModItems.plate_kevlar, 'P', ModItems.plate_armor_ajr, 'F', ModItems.gas_mask_filter_combo });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.rpa_plate, 1), new Object[] { "P P", "MLM", "PKP", 'L', DictFrame.fromOne(ModItems.parts_legendary, EnumLegendaryType.TIER2), 'K', ModItems.plate_kevlar, 'P', ModItems.plate_armor_ajr, 'M', ModItems.motor_desh });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.rpa_legs, 1), new Object[] { "MPM", "KLK", "P P", 'L', DictFrame.fromOne(ModItems.parts_legendary, EnumLegendaryType.TIER2), 'K', ModItems.plate_kevlar, 'P', ModItems.plate_armor_ajr, 'M', ModItems.motor_desh });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.rpa_boots, 1), new Object[] { "KLK", "P P", 'L', DictFrame.fromOne(ModItems.parts_legendary, EnumLegendaryType.TIER2), 'K', ModItems.plate_kevlar, 'P', ModItems.plate_armor_ajr });
+		CraftingManager.addRecipeAuto(new ItemStack(ModItems.dns_boots, 1), new Object[] { "PPC", "PBP", "I I", 'P', ModItems.plate_armor_ajr, 'C', ModItems.circuit_targeting_tier2, 'I', ANY_PLASTIC.ingot(), 'B', ModItems.gas_mask_filter_mono });
+		
+		CraftingManager.addRecipeAuto(new ItemStack(ModItems.rpa_helmet, 1), new Object[] { "PPC", "PBP", "I I", 'P', DESH.plateCast(), 'C', ModItems.circuit_targeting_tier3, 'I', ModItems.ingot_pc, 'B', ModItems.gas_mask_filter_combo });
+		CraftingManager.addRecipeAuto(new ItemStack(ModItems.rpa_plate, 1), new Object[] { "IPI", "TFT", "PPP", 'P', DESH.plateCast(), 'I', ModItems.ingot_pc, 'T', DictFrame.fromOne(ModItems.part_generic, EnumPartType.PISTON_ELECTRIC), 'F', ModItems.fusion_core});
+		CraftingManager.addRecipeAuto(new ItemStack(ModItems.rpa_legs, 1), new Object[] { "TPT", "PIP", "PIP", 'P', DESH.plateCast(), 'I', ModItems.ingot_pc, 'T', DictFrame.fromOne(ModItems.part_generic, EnumPartType.PISTON_ELECTRIC)});
+		CraftingManager.addRecipeAuto(new ItemStack(ModItems.rpa_boots, 1), new Object[] { "I I", "P P","P P",'P', DESH.plateCast(), 'I', ModItems.ingot_pc});
+		
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.steamsuit_helmet, 1), new Object[] { "DCD", "CXC", " F ", 'D', DESH.ingot(), 'C', CU.plate(), 'X', ModItems.steel_helmet, 'F', ModItems.gas_mask_filter });
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.steamsuit_plate, 1), new Object[] { "C C", "DXD", "CFC", 'D', DESH.ingot(), 'C', CU.plate(), 'X', ModItems.steel_plate, 'F', ModItems.tank_steel });
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.steamsuit_legs, 1), new Object[] { "CCC", "DXD", "C C", 'D', DESH.ingot(), 'C', CU.plate(), 'X', ModItems.steel_legs });
