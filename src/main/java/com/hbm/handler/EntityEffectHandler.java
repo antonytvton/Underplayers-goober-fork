@@ -667,7 +667,7 @@ public class EntityEffectHandler {
 						if(forward == 0 && strafe == 0)
 							forward = 1;
 
-						player.addVelocity(lookingIn.xCoord * forward + strafeVec.xCoord * strafe, 0, lookingIn.zCoord * forward + strafeVec.zCoord * strafe);
+						player.addVelocity((lookingIn.xCoord * forward + strafeVec.xCoord * strafe)*2, 0, (lookingIn.zCoord * forward + strafeVec.zCoord * strafe)*2);
 						player.motionY = 0;
 						player.fallDistance = 0F;
 						player.playSound("hbm:player.dash", 1.0F, 1.0F);

@@ -4693,6 +4693,7 @@ public class ModItems {
 				.addEffect(new PotionEffect(Potion.jump.id, 20, 6))
 				.addEffect(new PotionEffect(Potion.moveSpeed.id, 20, 6))
 				.addEffect(new PotionEffect(Potion.nightVision.id, 15 * 20, 0))
+				.addEffect(new PotionEffect(Potion.damageBoost.id, 20, 4))
 				.setDashCount(3)
 				.setUnlocalizedName("bismuth_helmet").setTextureName(RefStrings.MODID + ":bismuth_helmet");
 		bismuth_plate = new ArmorBismuth(MainRegistry.aMatBismuth, 1, RefStrings.MODID + ":textures/armor/starmetal_2.png").cloneStats((ArmorFSB) bismuth_helmet).setMod(0.45F).setUnlocalizedName("bismuth_plate").setTextureName(RefStrings.MODID + ":bismuth_plate");
@@ -4713,7 +4714,6 @@ public class ModItems {
 		cmb_helmet = new ArmorFSB(MainRegistry.aMatCMB, 0, RefStrings.MODID + ":textures/armor/cmb_1.png").setCap(2F).setThreshold(2F).setMod(0.45F)
 				.addEffect(new PotionEffect(Potion.moveSlowdown.id, 20, 0))
 				.addEffect(new PotionEffect(Potion.digSpeed.id, 20, 2))
-				.addEffect(new PotionEffect(Potion.damageBoost.id, 20, 4))
 				.setFireproof(true).setUnlocalizedName("cmb_helmet").setTextureName(RefStrings.MODID + ":cmb_helmet");
 		cmb_plate = new ArmorFSB(MainRegistry.aMatCMB, 1, RefStrings.MODID + ":textures/armor/cmb_1.png").cloneStats((ArmorFSB) cmb_helmet).setUnlocalizedName("cmb_plate").setTextureName(RefStrings.MODID + ":cmb_plate");
 		cmb_legs = new ArmorFSB(MainRegistry.aMatCMB, 2, RefStrings.MODID + ":textures/armor/cmb_2.png").cloneStats((ArmorFSB) cmb_helmet).setUnlocalizedName("cmb_legs").setTextureName(RefStrings.MODID + ":cmb_legs");
@@ -4937,6 +4937,7 @@ public class ModItems {
 				.setHasGeigerSound(true)
 				.enableThermalSight(true)
 				.setHasHardLanding(true)
+				.addEffect(new PotionEffect(Potion.damageBoost.id, 20, 4))
 				.setStep("hbm:step.metal")
 				.setJump("hbm:step.iron_jump")
 				.setFall("hbm:step.iron_land")
