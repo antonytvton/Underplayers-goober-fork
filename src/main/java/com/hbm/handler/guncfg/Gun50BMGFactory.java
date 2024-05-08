@@ -111,7 +111,7 @@ public class Gun50BMGFactory {
 		config.ammoCap = 30;
 		config.reloadType = GunConfiguration.RELOAD_FULL;
 		config.allowsInfinity = false;
-		config.crosshair = Crosshair.NONE;
+		config.crosshair = Crosshair.CIRCLE;
 		config.durability = 100_000;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
 		config.firingSound = "hbm:turret.howard_fire";

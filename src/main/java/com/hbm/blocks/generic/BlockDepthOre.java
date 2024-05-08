@@ -16,10 +16,10 @@ public class BlockDepthOre extends BlockDepth {
 			return ModItems.crystal_iron;
 		}
 		if(this == ModBlocks.cluster_depth_titanium) {
-			return ModItems.crystal_titanium;
+			return ModItems.powder_rutile;
 		}
 		if(this == ModBlocks.cluster_depth_tungsten) {
-			return ModItems.crystal_tungsten;
+			return ModItems.powder_apt;
 		}
 		if(this == ModBlocks.ore_depth_cinnebar) {
 			return ModItems.cinnebar;

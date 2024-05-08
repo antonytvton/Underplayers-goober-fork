@@ -62,11 +62,19 @@ public class ShredderRecipes extends SerializableRecipe {
 			generateRecipes("gem", name, matches, 1);
 			generateRecipes("crystal", name, matches, 1);
 			//2 ingot units, any
-			if(name.contains("Titanium")) {
+			if(name.contains("oreTitanium")) {
 				for(ItemStack stack : matches) { 
 					putIfValid(stack, new ItemStack(ModItems.powder_rutile), name);
 				}
-				continue;}
+			}
+			if(name.contains("oreTungsten")) {
+				for(ItemStack stack : matches) { 
+					putIfValid(stack, new ItemStack(ModItems.powder_apt), name);
+				}
+			}
+			if(name.contains("oreTungsten") || name.contains("oreTitanium")){
+				continue;
+			}
 			generateRecipes("ore", name, matches, 2);
 			
 			if(name.length() > 5 && name.substring(0, 5).equals("block")) {
@@ -260,7 +268,6 @@ public class ShredderRecipes extends SerializableRecipe {
 		ShredderRecipes.setRecipe(ModItems.crystal_sulfur, new ItemStack(ModItems.sulfur, 8));
 		ShredderRecipes.setRecipe(ModItems.crystal_niter, new ItemStack(ModItems.niter, 8));
 		ShredderRecipes.setRecipe(ModItems.crystal_copper, new ItemStack(ModItems.powder_copper, 3));
-		ShredderRecipes.setRecipe(ModItems.crystal_tungsten, new ItemStack(ModItems.powder_tungsten, 3));
 		ShredderRecipes.setRecipe(ModItems.crystal_aluminium, new ItemStack(ModItems.powder_aluminium, 3));
 		ShredderRecipes.setRecipe(ModItems.crystal_fluorite, new ItemStack(ModItems.fluorite, 8));
 		ShredderRecipes.setRecipe(ModItems.crystal_beryllium, new ItemStack(ModItems.powder_beryllium, 3));
@@ -276,7 +283,6 @@ public class ShredderRecipes extends SerializableRecipe {
 
 		/* Misc recycling */
 		ShredderRecipes.setRecipe(ModBlocks.steel_poles, new ItemStack(ModItems.powder_steel_tiny, 3));
-		ShredderRecipes.setRecipe(ModBlocks.pole_top, new ItemStack(ModItems.powder_tungsten, 4));
 		ShredderRecipes.setRecipe(ModBlocks.tape_recorder, new ItemStack(ModItems.powder_steel, 1));
 		ShredderRecipes.setRecipe(ModBlocks.pole_satellite_receiver, new ItemStack(ModItems.powder_steel, 5));
 		ShredderRecipes.setRecipe(ModBlocks.steel_roof, new ItemStack(ModItems.powder_steel_tiny, 13));
@@ -294,7 +300,6 @@ public class ShredderRecipes extends SerializableRecipe {
 		ShredderRecipes.setRecipe(ModItems.coil_magnetized_tungsten, new ItemStack(ModItems.powder_magnetized_tungsten, 1));
 		ShredderRecipes.setRecipe(ModBlocks.crate_iron, new ItemStack(ModItems.powder_iron, 8));
 		ShredderRecipes.setRecipe(ModBlocks.crate_steel, new ItemStack(ModItems.powder_steel, 8));
-		ShredderRecipes.setRecipe(ModBlocks.crate_tungsten, new ItemStack(ModItems.powder_tungsten, 36));
 		ShredderRecipes.setRecipe(Blocks.anvil, new ItemStack(ModItems.powder_iron, 31));
 		ShredderRecipes.setRecipe(ModBlocks.chain, new ItemStack(ModItems.powder_steel_tiny, 1));
 		ShredderRecipes.setRecipe(ModBlocks.steel_grate, new ItemStack(ModItems.powder_steel_tiny, 3));
