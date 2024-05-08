@@ -33,6 +33,7 @@ import com.hbm.util.ContaminationUtil.ContaminationType;
 import com.hbm.util.ContaminationUtil.HazardType;
 import com.hbm.world.biome.BiomeGenCraterBase;
 
+import akka.actor.FSM.Event;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -47,6 +48,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -673,19 +675,34 @@ public class EntityEffectHandler {
 						player.motionY = 0;
 						player.fallDistance = 0F;
 						player.playSound("hbm:player.dash", 1.0F, 1.0F);
-						
 						props.setDashCooldown(HbmPlayerProps.dashCooldownLength);
 						stamina -= perDash;
 					}
 				}	
 				props.setDashCooldown(props.getDashCooldown() - 1);
 				if(slideActivated) {
-					Vec3 lookingIn = player.getLookVec();
-					Vec3 strafeVec = player.getLookVec();
-					strafeVec.rotateAroundY((float)Math.PI * 0.5F);
-					MainRegistry.logger.entry("hey it decided to regerister a dash");
-					player.setVelocity((lookingIn.xCoord + strafeVec.xCoord )*0.5, 0, (lookingIn.zCoord + strafeVec.zCoord )*0.5);
-					
+					if(player.motionY < 0.1 & player.motionY > -0.1) {
+						Vec3 lookingIn = player.getLookVec();
+						Vec3 strafeVec = player.getLookVec();
+						strafeVec.rotateAroundY((float)Math.PI * 0.5F);
+						if(lookingIn.xCoord > 0){
+							if(lookingIn.zCoord > 0){
+								player.setVelocity((Math.max(lookingIn.xCoord/2, player.motionX)), player.motionY, Math.max(lookingIn.zCoord/2, player.motionZ));
+							}else {
+								player.setVelocity((Math.max(lookingIn.xCoord/2, player.motionX)), player.motionY, Math.min(lookingIn.zCoord/2, player.motionZ));
+							}
+						}else {
+							if(lookingIn.zCoord > 0){
+								player.setVelocity((Math.min(lookingIn.xCoord/2, player.motionX)), player.motionY, Math.max(lookingIn.zCoord/2, player.motionZ));
+							}else {
+								player.setVelocity((Math.min(lookingIn.xCoord/2, player.motionX)), player.motionY, Math.min(lookingIn.zCoord/2, player.motionZ));
+							}
+						}//shut up i know this sucks ass
+					}
+					else {
+						player.setVelocity(0, -1 ,0);
+						player.fallDistance = 0F;
+					}
 				}
 						
 				if(stamina < props.getDashCount() * perDash) {
