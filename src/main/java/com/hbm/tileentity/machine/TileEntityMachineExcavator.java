@@ -82,7 +82,7 @@ public class TileEntityMachineExcavator extends TileEntityMachineBase implements
 	public float prevCrusherRotation = 0F;
 	public int chuteTimer = 0;
 	
-	public double speed = 1.0D;
+	public double speed = 16.0D;
 	public final long baseConsumption = 10_000L;
 	public long consumption = baseConsumption;
 	

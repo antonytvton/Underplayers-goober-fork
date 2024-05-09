@@ -68,10 +68,29 @@ public class BedrockOre {
 	}
 
 	public static void generate(World world, int x, int z, ItemStack stack, FluidStack acid, int color, int tier, Block depthRock) {
+		int diameter = 12;
+		String name = stack.getDisplayName();
 		
-		for(int ix = x - 16; ix <= x + 16; ix++) {
-			for(int iz = z - 16; iz <= z + 16; iz++) {
-				
+		if(name.equals("Iron Bedrock Ore")){
+			diameter = 48;
+		if(name.equals("Copper Bedrock Ore")){
+			diameter = 48;
+		if(name.equals("Titanium Bedrock Ore")){
+			diameter = 24;}
+		if(name.equals("Tungsten Bedrock Ore")){
+			diameter = 24;
+			System.out.println("hello");}
+		if(name.equals("Coal")){
+			diameter = 64;
+		}
+
+
+
+		for(int ix = x - diameter; ix <= x + diameter; ix++) {
+			for(int iz = z - diameter; iz <= z + diameter; iz++) {
+				if((((x-ix-diameter/2)*(x-ix-diameter/2))+((z-iz-diameter/2)*(z-iz-diameter/2)))>(diameter*diameter/4)) {//Parentheses hell. what it does it checks if the IX IZ pair are within a 12 block radius of 
+					continue;
+				}
 				Block b = world.getBlock(ix, 0, iz);
 				if(b.isReplaceableOreGen(world, ix, 0, iz, Blocks.bedrock)) {
 					if(((ix == x && iz == z) || world.rand.nextBoolean()) || world.rand.nextBoolean()) {

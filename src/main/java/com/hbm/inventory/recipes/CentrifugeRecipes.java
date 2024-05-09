@@ -450,21 +450,15 @@ public class CentrifugeRecipes extends SerializableRecipe {
 			
 			recipes.put(new ComparableStack(ModItems.ore_bedrock, 1, i), new ItemStack[] {
 					new ItemStack(ModItems.ore_centrifuged, 1, i),
-					new ItemStack(ModItems.ore_centrifuged, 1, i),
-					new ItemStack(ModItems.ore_centrifuged, 1, i),
-					new ItemStack(ModItems.ore_centrifuged, 1, i) });
+					new ItemStack(ModItems.ore_centrifuged, 1, i)});
 			
 			recipes.put(new ComparableStack(ModItems.ore_cleaned, 1, i), new ItemStack[] {
 					new ItemStack(ModItems.ore_separated, 1, i),
-					new ItemStack(ModItems.ore_separated, 1, i),
-					new ItemStack(ModItems.ore_separated, 1, i),
-					new ItemStack(ModItems.ore_separated, 1, i) });
+					new ItemStack(ModItems.ore_separated, 1, i)});
 			
 			recipes.put(new ComparableStack(ModItems.ore_purified, 1, i), new ItemStack[] {
 					new ItemStack(ModItems.ore_enriched, 1, i),
-					new ItemStack(ModItems.ore_enriched, 1, i),
-					new ItemStack(ModItems.ore_enriched, 1, i),
-					new ItemStack(ModItems.ore_enriched, 1, i) });
+					new ItemStack(ModItems.ore_enriched, 1, i)});
 			
 			EnumByproduct tier1 = ore.byproducts[0];
 			ItemStack by1 = tier1 == null ? new ItemStack(ModItems.dust) : DictFrame.fromOne(ModItems.ore_byproduct, tier1, 1);
