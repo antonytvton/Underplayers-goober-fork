@@ -153,7 +153,7 @@ public class HbmWorldGen implements IWorldGenerator {
 			DungeonToolbox.generateOre(world, rand, i, j, WorldConfig.malachiteSpawn, 16, 6, 40, ModBlocks.stone_resource, EnumStoneType.MALACHITE.ordinal());
 			DungeonToolbox.generateOre(world, rand, i, j, WorldConfig.limestoneSpawn, 12, 25, 30, ModBlocks.stone_resource, EnumStoneType.LIMESTONE.ordinal());
 			
-			if(rand.nextInt(16) == 0) {
+			if(rand.nextInt(32) == 0) {
 				@SuppressWarnings("unchecked")
 				WeightedRandomGeneric<BedrockOreDefinition> item = (WeightedRandomGeneric<BedrockOreDefinition>) WeightedRandom.getRandomItem(rand, BedrockOre.weightedOres);
 				BedrockOreDefinition def = item.get();
@@ -393,7 +393,7 @@ public class HbmWorldGen implements IWorldGenerator {
 				int y = world.getHeightValue(x, z);
 
 				if(world.getBlock(x, y - 1, z).canPlaceTorchOnTop(world, x, y - 1, z)) {
-					world.setBlock(x, y, z, ModBlocks.mine_ap);
+					world.setBlock(x, y, z, ModBlocks.mine_he);
 					TileEntityLandmine landmine = (TileEntityLandmine) world.getTileEntity(x, y, z);
 					landmine.waitingForPlayer = true;
 
@@ -625,10 +625,10 @@ public class HbmWorldGen implements IWorldGenerator {
 
 		if(WorldConfig.oilSpawn > 0 && rand.nextInt(WorldConfig.oilSpawn) == 0) {
 			int randPosX = i + rand.nextInt(16);
-			int randPosY = rand.nextInt(25);
+			int randPosY = 16 - rand.nextInt(12);
 			int randPosZ = j + rand.nextInt(16);
 
-			OilBubble.spawnOil(world, randPosX, randPosY, randPosZ, 10 + rand.nextInt(7));
+			OilBubble.spawnOil(world, randPosX, randPosY, randPosZ, 32 + rand.nextInt(8));
 		}
 
 		if(WorldConfig.bedrockOilSpawn > 0 && rand.nextInt(WorldConfig.bedrockOilSpawn) == 0) {
