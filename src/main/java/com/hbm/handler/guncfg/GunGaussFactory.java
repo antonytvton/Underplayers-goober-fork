@@ -77,8 +77,11 @@ public class GunGaussFactory {
 		bullet.dmgMin = 14;
 		bullet.dmgMax = 16;
 		bullet.style = bullet.STYLE_TAU;
-		bullet.LBRC = 80;
 		bullet.HBRC = 5;
+		bullet.bounceMod = 0.9;
+		bullet.ricochetAngle = 360;
+		bullet.LBRC = 100;
+		bullet.HBRC = 100;
 		bullet.vPFX = "fireworks";
 		return bullet;
 	}
@@ -88,6 +91,7 @@ public class GunGaussFactory {
 		BulletConfiguration bullet = getGaussConfig();
 		bullet.dmgMin = 25;
 		bullet.dmgMax = 28;
+		bullet.isSpectral = true;
 		bullet.doesPenetrate = true;
 		
 		return bullet;
