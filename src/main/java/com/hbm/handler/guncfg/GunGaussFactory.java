@@ -74,8 +74,8 @@ public class GunGaussFactory {
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
 		bullet.ammo = new ComparableStack(ModItems.gun_xvl1456_ammo);
-		bullet.dmgMin = 18;
-		bullet.dmgMax = 27;
+		bullet.dmgMin = 14;
+		bullet.dmgMax = 16;
 		bullet.style = bullet.STYLE_TAU;
 		bullet.trail = bullet.BOLT_NIGHTMARE;
 		bullet.LBRC = 80;
@@ -87,8 +87,9 @@ public class GunGaussFactory {
 	public static BulletConfiguration getAltConfig() {
 		
 		BulletConfiguration bullet = getGaussConfig();
-		
-		bullet.trail = 1;
+		bullet.dmgMin = 25;
+		bullet.dmgMax = 28;
+		bullet.doesPenetrate = true;
 		
 		return bullet;
 	}
