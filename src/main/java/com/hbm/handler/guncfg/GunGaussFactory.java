@@ -77,7 +77,6 @@ public class GunGaussFactory {
 		bullet.dmgMin = 14;
 		bullet.dmgMax = 16;
 		bullet.style = bullet.STYLE_TAU;
-		bullet.trail = bullet.BOLT_NIGHTMARE;
 		bullet.LBRC = 80;
 		bullet.HBRC = 5;
 		bullet.vPFX = "fireworks";
