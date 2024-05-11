@@ -77,12 +77,10 @@ public class GunGaussFactory {
 		bullet.dmgMin = 14;
 		bullet.dmgMax = 16;
 		bullet.style = bullet.STYLE_TAU;
-		bullet.HBRC = 5;
 		bullet.bounceMod = 0.9;
-		bullet.ricochetAngle = 360;
-		bullet.LBRC = 100;
+		bullet.ricochetAngle = 30;
+		bullet.LBRC = 0;
 		bullet.HBRC = 100;
-		bullet.vPFX = "fireworks";
 		return bullet;
 	}
 	
@@ -93,6 +91,11 @@ public class GunGaussFactory {
 		bullet.dmgMax = 28;
 		bullet.isSpectral = true;
 		bullet.doesPenetrate = true;
+		bullet.bounceMod = 0.9;
+		bullet.ricochetAngle = 0;
+		bullet.LBRC = 0;
+		bullet.HBRC = 0;
+		bullet.headshotMult = 1.5F;
 		
 		return bullet;
 	}
