@@ -78,8 +78,8 @@ public class GunGaussFactory {
 		bullet.dmgMax = 16;
 		bullet.style = bullet.STYLE_TAU;
 		bullet.bounceMod = 0.9;
-		bullet.ricochetAngle = 30;
-		bullet.LBRC = 0;
+		bullet.ricochetAngle = 60;
+		bullet.LBRC = 50;
 		bullet.HBRC = 100;
 		return bullet;
 	}
