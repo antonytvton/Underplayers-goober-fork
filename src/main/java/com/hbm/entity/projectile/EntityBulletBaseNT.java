@@ -267,8 +267,7 @@ public class EntityBulletBaseNT extends EntityThrowableInterp implements IBullet
 		
 		if(mop.typeOfHit == mop.typeOfHit.BLOCK) {
 			
-			boolean hRic = rand.nextInt(100) < config.HBRC;
-			boolean doesRic = config.doesRicochet && hRic;
+			boolean doesRic = config.doesRicochet;
 
 			if(!config.isSpectral && !doesRic) {
 				this.setPosition(mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord);
@@ -293,10 +292,9 @@ public class EntityBulletBaseNT extends EntityThrowableInterp implements IBullet
 					Vec3 vel = Vec3.createVectorHelper(motionX, motionY, motionZ);
 					vel.normalize();
 
-					boolean lRic = rand.nextInt(100) < config.LBRC;
 					double angle = Math.abs(BobMathUtil.getCrossAngle(vel, face) - 90);
-
-					if(hRic || (angle <= config.ricochetAngle && lRic)) {
+					double anglepercent = (1-(angle)/(config.ricochetAngle));
+					if((angle <= config.ricochetAngle) & (rand.nextInt(100) <= (config.HBRC*anglepercent+config.LBRC*(100-anglepercent)))) {
 						switch(mop.sideHit) {
 						case 0:
 						case 1: motionY *= -1; break;
