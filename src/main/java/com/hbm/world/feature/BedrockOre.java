@@ -31,11 +31,10 @@ public class BedrockOre {
 	
 	public static void init() {
 		registerBedrockOre(weightedOres, new BedrockOreDefinition(EnumBedrockOre.IRON,													1),													WorldConfig.bedrockIronSpawn);
-		registerBedrockOre(weightedOres, new BedrockOreDefinition(EnumBedrockOre.COPPER,												1),													WorldConfig.bedrockCopperSpawn);
+		registerBedrockOre(weightedOres, new BedrockOreDefinition(EnumBedrockOre.MALACHITE,												1),													WorldConfig.bedrockCopperSpawn);
 		registerBedrockOre(weightedOres, new BedrockOreDefinition(EnumBedrockOre.BORAX,													3,	new FluidStack(Fluids.SULFURIC_ACID, 500)),		WorldConfig.bedrockBoraxSpawn);
 		registerBedrockOre(weightedOres, new BedrockOreDefinition(EnumBedrockOre.CHLOROCALCITE,											3,	new FluidStack(Fluids.SULFURIC_ACID, 500)),		WorldConfig.bedrockChlorocalciteSpawn);
 		registerBedrockOre(weightedOres, new BedrockOreDefinition(EnumBedrockOre.ASBESTOS,												2),													WorldConfig.bedrockAsbestosSpawn);
-		registerBedrockOre(weightedOres, new BedrockOreDefinition(EnumBedrockOre.NIOBIUM,												2,	new FluidStack(Fluids.ACID, 500)),				WorldConfig.bedrockNiobiumSpawn);
 		registerBedrockOre(weightedOres, new BedrockOreDefinition(EnumBedrockOre.NEODYMIUM,												3,	new FluidStack(Fluids.ACID, 500)),				WorldConfig.bedrockNeodymiumSpawn);
 		registerBedrockOre(weightedOres, new BedrockOreDefinition(EnumBedrockOre.TITANIUM,												2,	new FluidStack(Fluids.SULFURIC_ACID, 500)),		WorldConfig.bedrockTitaniumSpawn);
 		registerBedrockOre(weightedOres, new BedrockOreDefinition(EnumBedrockOre.TUNGSTEN,												2,	new FluidStack(Fluids.ACID, 500)),				WorldConfig.bedrockTungstenSpawn);
@@ -72,17 +71,15 @@ public class BedrockOre {
 		String name = stack.getDisplayName();
 		
 		if(name.equals("Iron Bedrock Ore")){
-			diameter = 48;}
+			diameter = 32;}
 		if(name.equals("Copper Bedrock Ore")){
-			diameter = 48;}
+			diameter = 32;}
 		if(name.equals("Titanium Bedrock Ore")){
 			diameter = 24;}
 		if(name.equals("Tungsten Bedrock Ore")){
 			diameter = 24;}
 		if(name.equals("Coal")){
-			diameter = 64;}
-
-
+			diameter = 48;}
 
 		for(int ix = x - diameter; ix <= x + diameter; ix++) {
 			for(int iz = z - diameter; iz <= z + diameter; iz++) {

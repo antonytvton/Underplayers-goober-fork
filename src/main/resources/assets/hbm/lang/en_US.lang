@@ -667,6 +667,11 @@ chem.XENON=Linde Xenon Cycle
 chem.XENON_OXY=Boosted Linde Xenon Cycle
 chem.YELLOWCAKE=Yellowcake Production
 chem.Titanium_Chlorination=Titanium Chlorination
+chem.LEADSLURRY=Lead Acid Leaching
+chem.IRONSlURRY=Iron Acid Leaching
+chem.COPPERSLURRY=Copper Acid Leaching
+chem.TUNGSTENSLURRY=Tungsten Acid Activation
+
 
 commands.satellite.no_satellite=No satellite using this frequency found!
 commands.satellite.not_a_satellite=The held item is not a satellite!
@@ -1479,11 +1484,9 @@ hbmfluid.xenon=Xenon Gas
 hbmfluid.xpjuice=Experience Juice
 hbmfluid.xylene=BTX
 hbmfluid.ticl4=Titanium Tetrachloride
-
-
-
-
-
+hbmfluid.copper_slurry=Copper Slurry
+hbmfluid.iron_slurry=Iron Slurry
+hbmfluid.lead_slurry=Lead Slurry
 hbmpseudofluid.none=Empty
 hbmpseudofluid.heuf6=Highly Enriched UF6
 hbmpseudofluid.meuf6=Medium Enriched UF6
@@ -3632,6 +3635,14 @@ item.polaroid.name=The Polaroid
 item.pollution_detector.name=Pollution Detector
 item.powder_actinium.name=Actinium Powder
 item.powder_rutile.name=Rutile Powder
+item.powder_hematite.name=Hematite Powder
+item.powder_malachite.name=Malachite Powder
+item.powder_galena.name=Galena Powder
+item.powder_wolframite.name=Wolframite Powder
+item.tungsten_tailings.name=Tungsten Tailings
+item.iron_tailings.name=Iron Tailings
+item.copper_tailings.name=Copper Tailings
+item.lead_tailings.name=Lead Tailings
 item.powder_actinium_tiny.name=Tiny Pile of Actinium Powder
 item.powder_advanced_alloy.name=Advanced Alloy Powder
 item.powder_aluminium.name=Aluminium Powder

@@ -78,6 +78,9 @@ public class Fluids {
 	public static FluidType BIOFUEL;
 	public static FluidType NITAN;
 	public static FluidType TiCl4;
+	public static FluidType IRON_SLURRY;
+	public static FluidType LEAD_SLURRY;
+	public static FluidType COPPER_SLURRY;
 	public static FluidType UF6;
 	public static FluidType PUF6;
 	public static FluidType SAS3;
@@ -369,7 +372,10 @@ public class Fluids {
 		HOTCRACKOIL_DS =		new FluidType("HOTCRACKOIL_DS",		0x3A1A28, 2, 3, 0, EnumSymbol.NONE).setTemp(350).addTraits(LIQUID, VISCOUS, P_OIL);
 		NAPHTHA_DS =			new FluidType("NAPHTHA_DS",			0x63614E, 2, 1, 0, EnumSymbol.NONE).addContainers(new CD_Canister(0x5F6D44)).addTraits(LIQUID, VISCOUS, P_FUEL);
 		LIGHTOIL_DS =			new FluidType("LIGHTOIL_DS",		0x63543E, 1, 2, 0, EnumSymbol.NONE).addContainers(new CD_Canister(0xB46B52)).addTraits(LIQUID, P_FUEL);
-		TiCl4 =					new FluidType(139, "TiCl4",			0xbfd37c, 2, 0, 0, EnumSymbol.NONE).addTraits(LIQUID);
+		TiCl4 =					new FluidType("TiCl4",				0xbfd37c, 2, 0, 0, EnumSymbol.NONE).addTraits(LIQUID);
+		IRON_SLURRY =			new FluidType("IRON_SLURRY",		0x182326, 2, 0, 0, EnumSymbol.NONE).addTraits(LIQUID);
+		LEAD_SLURRY =			new FluidType("LEAD_SLURRY",		0xfcfce0, 2, 0, 0, EnumSymbol.NONE).addTraits(LIQUID);
+		COPPER_SLURRY =			new FluidType(142, "COPPER_SLURRY",	0x055131, 2, 0, 0, EnumSymbol.NONE).addTraits(LIQUID);
 		
 		// ^ ^ ^ ^ ^ ^ ^ ^
 		//ADD NEW FLUIDS HERE
@@ -509,6 +515,9 @@ public class Fluids {
 		//solutions and working fluids
 		metaOrder.add(FRACKSOL);
 		metaOrder.add(TiCl4);
+		metaOrder.add(IRON_SLURRY);
+		metaOrder.add(LEAD_SLURRY);
+		metaOrder.add(COPPER_SLURRY);
 		//the fun guys
 		metaOrder.add(PHOSGENE);
 		metaOrder.add(MUSTARDGAS);

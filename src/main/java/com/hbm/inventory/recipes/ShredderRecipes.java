@@ -69,12 +69,27 @@ public class ShredderRecipes extends SerializableRecipe {
 			}
 			if(name.contains("oreTungsten")) {
 				for(ItemStack stack : matches) { 
-					putIfValid(stack, new ItemStack(ModItems.powder_apt), name);
+					putIfValid(stack, new ItemStack(ModItems.powder_wolframite), name);
 				}
 			}
-			if(name.contains("oreTungsten") || name.contains("oreTitanium")){
-				continue;
+			if(name.contains("oreIron") || name.contains("oreHematite")) {
+				for(ItemStack stack : matches) { 
+					putIfValid(stack, new ItemStack(ModItems.powder_hematite), name);
+				}
 			}
+			if(name.contains("oreLead")) {
+				for(ItemStack stack : matches) { 
+					putIfValid(stack, new ItemStack(ModItems.powder_galena), name);
+				}
+			}
+			if(name.contains("oreCopper") || name.contains("oreMalachite")) {
+				for(ItemStack stack : matches) { 
+					putIfValid(stack, new ItemStack(ModItems.powder_malachite), name);
+				}
+			}
+			if(name.contains("oreTungsten") || name.contains("oreTitanium")|| name.contains("oreIron")|| name.contains("oreLead")|| name.contains("oreCopper")){
+				continue;
+			}//defo a easyer way this is a stopgap solution that I will proably(not) fix in the future. 
 			generateRecipes("ore", name, matches, 2);
 			
 			if(name.length() > 5 && name.substring(0, 5).equals("block")) {

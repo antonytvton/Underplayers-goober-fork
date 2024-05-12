@@ -33,9 +33,10 @@ public class ElectrolyserMetalRecipes extends SerializableRecipe {
 	public void registerDefaults() {
 
 		recipes.put(new ComparableStack(ModItems.crystal_iron), new ElectrolysisMetalRecipe(
-				new MaterialStack(Mats.MAT_IRON, MaterialShapes.INGOT.q(6)),
-				new MaterialStack(Mats.MAT_IRON, MaterialShapes.INGOT.q(2)),
-				new ItemStack(ModItems.powder_lithium_tiny, 3)));
+				new MaterialStack(Mats.MAT_IRON, MaterialShapes.INGOT.q(4)),
+				new MaterialStack(Mats.MAT_IRON, MaterialShapes.INGOT.q(1)),
+				new ItemStack(ModItems.powder_cerium_tiny, 3),
+				new ItemStack(ModItems.powder_rutile, 1)));
 		
 		recipes.put(new ComparableStack(ModItems.crystal_gold), new ElectrolysisMetalRecipe(
 				new MaterialStack(Mats.MAT_GOLD, MaterialShapes.INGOT.q(6)),
@@ -59,20 +60,20 @@ public class ElectrolyserMetalRecipes extends SerializableRecipe {
 				new ItemStack(ModItems.powder_lithium_tiny, 3)));
 		
 		recipes.put(new ComparableStack(ModItems.crystal_titanium), new ElectrolysisMetalRecipe(
-				new MaterialStack(Mats.MAT_TITANIUM, MaterialShapes.INGOT.q(6)),
-				new MaterialStack(Mats.MAT_IRON, MaterialShapes.INGOT.q(2)),
-				new ItemStack(ModItems.powder_lithium_tiny, 3)));
+				new MaterialStack(Mats.MAT_TITANIUM, MaterialShapes.INGOT.q(1)),
+				new MaterialStack(Mats.MAT_TITANIUM, MaterialShapes.NUGGET.q(3)),
+				new ItemStack(ModItems.powder_neodymium_tiny, 2)));
 		
 		recipes.put(new ComparableStack(ModItems.crystal_copper), new ElectrolysisMetalRecipe(
-				new MaterialStack(Mats.MAT_COPPER, MaterialShapes.INGOT.q(6)),
-				new MaterialStack(Mats.MAT_LEAD, MaterialShapes.NUGGET.q(4)),
-				new ItemStack(ModItems.powder_lithium_tiny, 3),
-				new ItemStack(ModItems.sulfur, 2)));
+				new MaterialStack(Mats.MAT_COPPER, MaterialShapes.INGOT.q(4)),
+				new MaterialStack(Mats.MAT_COPPER, MaterialShapes.NUGGET.q(4)),
+				new ItemStack(ModItems.powder_lanthanium_tiny, 2),
+				new ItemStack(ModItems.powder_wolframite, 1)));
 		
 		recipes.put(new ComparableStack(ModItems.crystal_tungsten), new ElectrolysisMetalRecipe(
-				new MaterialStack(Mats.MAT_TUNGSTEN, MaterialShapes.INGOT.q(6)),
-				new MaterialStack(Mats.MAT_IRON, MaterialShapes.INGOT.q(2)),
-				new ItemStack(ModItems.powder_lithium_tiny, 3)));
+				new MaterialStack(Mats.MAT_TUNGSTEN, MaterialShapes.INGOT.q(1)),
+				new MaterialStack(Mats.MAT_TUNGSTEN, MaterialShapes.NUGGET.q(3)),
+				new ItemStack(ModItems.powder_niobium_tiny, 2)));
 		
 		recipes.put(new ComparableStack(ModItems.crystal_aluminium), new ElectrolysisMetalRecipe(
 				new MaterialStack(Mats.MAT_ALUMINIUM, MaterialShapes.INGOT.q(6)),
@@ -86,9 +87,10 @@ public class ElectrolyserMetalRecipes extends SerializableRecipe {
 				new ItemStack(ModItems.powder_quartz, 2)));
 		
 		recipes.put(new ComparableStack(ModItems.crystal_lead), new ElectrolysisMetalRecipe(
-				new MaterialStack(Mats.MAT_LEAD, MaterialShapes.INGOT.q(6)),
-				new MaterialStack(Mats.MAT_GOLD, MaterialShapes.INGOT.q(2)),
-				new ItemStack(ModItems.powder_lithium_tiny, 3)));
+				new MaterialStack(Mats.MAT_LEAD, MaterialShapes.INGOT.q(3)),
+				new MaterialStack(Mats.MAT_LEAD	, MaterialShapes.INGOT.q(2)),
+				new ItemStack(ModItems.powder_cerium_tiny, 2),
+				new ItemStack(ModItems.powder_wolframite, 1)));
 		
 		recipes.put(new ComparableStack(ModItems.crystal_schraranium), new ElectrolysisMetalRecipe(
 				new MaterialStack(Mats.MAT_SCHRABIDIUM, MaterialShapes.NUGGET.q(5)),

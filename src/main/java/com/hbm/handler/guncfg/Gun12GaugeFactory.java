@@ -295,8 +295,8 @@ public class Gun12GaugeFactory {
 		bullet.wear = 15;
 		bullet.dmgMin = 1;
 		bullet.dmgMax = 20;
-		bullet.ricochetAngle = 15;
-		bullet.HBRC = 80;
+		bullet.ricochetAngle = 90;
+		bullet.HBRC = 50;
 		bullet.LBRC = 95;
 		
 		bullet.spentCasing = CASING12GAUGE.clone().register("12GaShrap").setColor(0xF0E800, SpentCasing.COLOR_CASE_12GA);

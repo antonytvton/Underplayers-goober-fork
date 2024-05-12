@@ -364,9 +364,7 @@ public class ChemplantRecipes extends SerializableRecipe {
 				.inputFluids(new FluidStack(Fluids.XPJUICE, 500))
 				.outputFluids(new FluidStack(Fluids.ENDERJUICE, 100)));
 		recipes.add(new ChemRecipe(98, "SHELL_CHLORINE", 100)
-				.inputItems(
-						new ComparableStack(ModItems.ammo_arty, 1, 0),
-						new OreDictStack(ANY_PLASTIC.ingot(), 1))
+				.inputItems(new ComparableStack(ModItems.ammo_arty, 1, 0), new OreDictStack(ANY_PLASTIC.ingot(), 1))
 				.inputFluids(new FluidStack(Fluids.CHLORINE, 4000))
 				.outputItems(new ItemStack(ModItems.ammo_arty, 1, 9)));
 		recipes.add(new ChemRecipe(99, "SHELL_PHOSGENE", 100)
@@ -404,6 +402,35 @@ public class ChemplantRecipes extends SerializableRecipe {
 				.inputFluids(new FluidStack(Fluids.TiCl4, 6000))
 				.outputItems(new ItemStack(ModItems.crystal_titanium, 1))
 				.outputFluids(new FluidStack(Fluids.CHLORINE, 4500)));
+		
+		recipes.add(new ChemRecipe(105, "LEADSLURRY", 100)
+				.inputItems(new ComparableStack(ModItems.powder_galena, 2))
+				.inputFluids(new FluidStack(Fluids.SULFURIC_ACID, 500))
+				.outputItems(new ItemStack(ModItems.lead_tailings, 1))
+				.outputFluids(new FluidStack(Fluids.LEAD_SLURRY, 500)));
+		
+		recipes.add(new ChemRecipe(106, "IRONSlURRY", 100)
+				.inputItems(new ComparableStack(ModItems.powder_hematite, 2))
+				.inputFluids(new FluidStack(Fluids.ACID, 500))
+				.outputItems(new ItemStack(ModItems.iron_tailings, 1))
+				.outputFluids(new FluidStack(Fluids.IRON_SLURRY, 500)));
+		
+		recipes.add(new ChemRecipe(107, "COPPERSLURRY", 100)
+				.inputItems(new ComparableStack(ModItems.powder_malachite, 2))
+				.inputFluids(new FluidStack(Fluids.ACID, 500))
+				.outputItems(new ItemStack(ModItems.copper_tailings, 1))
+				.outputFluids(new FluidStack(Fluids.COPPER_SLURRY, 500)));
+		
+		recipes.add(new ChemRecipe(108, "TUNGSTENSLURRY", 100)
+				.inputItems(new ComparableStack(ModItems.powder_wolframite, 2))
+				.inputFluids(new FluidStack(Fluids.NITRIC_ACID, 500))
+				.outputItems(new ItemStack(ModItems.tungsten_tailings, 1))
+				.outputItems(new ItemStack(ModItems.powder_apt, 1)));
+		
+		recipes.add(new ChemRecipe(109, "ACIDTREATING", 100)
+				.inputItems(new ComparableStack(ModItems.powder_apt, 1))
+				.inputFluids(new FluidStack(Fluids.NITRIC_ACID, 500))
+				.outputItems(new ItemStack(ModItems.crystal_tungsten, 1)));
 
 	}
 
