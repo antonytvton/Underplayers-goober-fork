@@ -103,11 +103,10 @@ public class TileEntityMachineExcavator extends TileEntityMachineBase implements
 		
 		//needs to happen on client too for GUI rendering
 		UpgradeManager.eval(slots, 2, 3);
-		int speedLevel = Math.min(UpgradeManager.getLevel(UpgradeType.SPEED), 3);
-		int powerLevel = Math.min(UpgradeManager.getLevel(UpgradeType.POWER), 3);
+		int speedLevel = (UpgradeManager.getLevel(UpgradeType.POWER) + UpgradeManager.getLevel(UpgradeType.OVERDRIVE)* 2);
+		int powerLevel = (speedLevel - UpgradeManager.getLevel(UpgradeType.POWER)* 2 );
 		
-		consumption = baseConsumption * (1 + speedLevel);
-		consumption /= (1 + powerLevel);
+		consumption = (long) (baseConsumption * Math.pow(1.1, powerLevel));
 		
 		if(!worldObj.isRemote) {
 			
@@ -135,7 +134,7 @@ public class TileEntityMachineExcavator extends TileEntityMachineBase implements
 				this.power -= this.getPowerConsumption();
 				
 				this.speed = type.speed;
-				this.speed *= (1 + speedLevel / 2D);
+				this.speed = (double) (speed * Math.pow(1.1, speedLevel));
 				
 				int maxDepth = this.yCoord - 4;
 

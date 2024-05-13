@@ -237,22 +237,19 @@ public class TileEntityMachineCrystallizer extends TileEntityMachineBase impleme
 	
 	public short getDuration() {
 		CrystallizerRecipe result = CrystallizerRecipes.getOutput(slots[0], tank.getTankType());
-		int base = result != null ? result.duration : 600;
-		int speed = Math.min(UpgradeManager.getLevel(UpgradeType.SPEED), 3);
-		if(speed > 0) {
-			return (short) Math.ceil((base * Math.max(1F - 0.25F * speed, 0.25F)));
-		}
-		return (short) base;
-	}
+		int base = result != null ? result.duration : 100;
+		int speed = (UpgradeManager.getLevel(UpgradeType.SPEED)) + (UpgradeManager.getLevel(UpgradeType.OVERDRIVE)) *2;
+		return (short) (Math.pow(0.9, speed));	}
 	
 	public int getPowerRequired() {
-		int speed = Math.min(UpgradeManager.getLevel(UpgradeType.SPEED), 3);
+		int speed = UpgradeManager.getLevel(UpgradeType.SPEED);
 		return (int) (demand + Math.min(speed * 1000, 3000));
+		
+
 	}
 	
 	public float getCycleCount() {
-		int speed = UpgradeManager.getLevel(UpgradeType.OVERDRIVE);
-		return Math.min(1 + speed * 2, 7);
+		return 1;
 	}
 	
 	public long getPowerScaled(int i) {

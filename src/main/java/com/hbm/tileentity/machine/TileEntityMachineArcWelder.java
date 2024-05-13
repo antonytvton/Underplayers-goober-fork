@@ -80,12 +80,12 @@ public class TileEntityMachineArcWelder extends TileEntityMachineBase implements
 			long intendedMaxPower;
 			
 			UpgradeManager.eval(slots, 6, 7);
-			int redLevel = Math.min(UpgradeManager.getLevel(UpgradeType.SPEED), 3);
-			int blueLevel = Math.min(UpgradeManager.getLevel(UpgradeType.POWER), 3);
+			int redLevel = (UpgradeManager.getLevel(UpgradeType.SPEED));
+			int blueLevel = (UpgradeManager.getLevel(UpgradeType.POWER));
 			
 			if(recipe != null) {
-				this.processTime = recipe.duration - (recipe.duration * redLevel / 6) + (recipe.duration * blueLevel / 3);
-				this.consumption = recipe.consumption + (recipe.consumption * redLevel) - (recipe.consumption * blueLevel / 6);
+				this.processTime = (int) (recipe.duration * Math.pow(0.9, redLevel));
+				this.consumption = (int) (recipe.consumption * Math.pow(0.8, blueLevel));
 				intendedMaxPower = recipe.consumption * 20;
 				
 				if(canProcess(recipe)) {

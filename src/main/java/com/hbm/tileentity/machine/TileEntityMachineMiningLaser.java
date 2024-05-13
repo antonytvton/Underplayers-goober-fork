@@ -127,13 +127,11 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 			if(isOn) {
 				
 				UpgradeManager.eval(slots, 1, 8);
-				int cycles = 1 + UpgradeManager.getLevel(UpgradeType.OVERDRIVE);
-				int speed = 1 + Math.min(UpgradeManager.getLevel(UpgradeType.SPEED), 12);
-				int range = 1 + Math.min(UpgradeManager.getLevel(UpgradeType.EFFECT) * 2, 24);
+				int cycles = 1;
+				int speed = (int) (10 * Math.pow(1.1, UpgradeManager.getLevel(UpgradeType.SPEED) + (UpgradeManager.getLevel(UpgradeType.OVERDRIVE)*2))) ;
+				int range = 16 + Math.min(UpgradeManager.getLevel(UpgradeType.EFFECT) * 1, 24);
 				int fortune = Math.min(UpgradeManager.getLevel(UpgradeType.FORTUNE), 3);
-				int consumption = this.consumption
-						- (this.consumption * Math.min(UpgradeManager.getLevel(UpgradeType.POWER), 12) / 16)
-						+ (this.consumption * Math.min(UpgradeManager.getLevel(UpgradeType.SPEED), 12) / 16);
+				int consumption = (int) (this.consumption * Math.pow(1.1, UpgradeManager.getLevel(UpgradeType.SPEED) + UpgradeManager.getLevel(UpgradeType.OVERDRIVE)*2 - UpgradeManager.getLevel(UpgradeType.POWER)*2));
 				
 				for(int i = 0; i < cycles; i++) {
 					
@@ -729,7 +727,7 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 	public void provideInfo(UpgradeType type, int level, List<String> info, boolean extendedInfo) {
 		info.add(IUpgradeInfoProvider.getStandardLabel(ModBlocks.machine_mining_laser));
 		if(type == UpgradeType.SPEED) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey(this.KEY_DELAY, "-" + (100 - 100 / (level + 1)) + "%"));
+			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("10% per level"));
 			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey(this.KEY_CONSUMPTION, "+" + (100 * level / 16) + "%"));
 		}
 		if(type == UpgradeType.POWER) {
@@ -742,17 +740,17 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey(this.KEY_FORTUNE, "+" + level));
 		}
 		if(type == UpgradeType.OVERDRIVE) {
-			info.add((BobMathUtil.getBlink() ? EnumChatFormatting.RED : EnumChatFormatting.DARK_GRAY) + "YES");
+			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("Overdrive * 2"));
 		}
 	}
 
 	@Override
 	public int getMaxLevel(UpgradeType type) {
-		if(type == UpgradeType.SPEED) return 12;
-		if(type == UpgradeType.POWER) return 12;
-		if(type == UpgradeType.EFFECT) return 12;
+		if(type == UpgradeType.SPEED) return 999;
+		if(type == UpgradeType.POWER) return 999;
+		if(type == UpgradeType.EFFECT) return 999;
 		if(type == UpgradeType.FORTUNE) return 3;
-		if(type == UpgradeType.OVERDRIVE) return 9;
+		if(type == UpgradeType.OVERDRIVE) return 999;
 		return 0;
 	}
 }

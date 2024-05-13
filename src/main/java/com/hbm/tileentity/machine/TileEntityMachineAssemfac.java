@@ -78,16 +78,12 @@ public class TileEntityMachineAssemfac extends TileEntityMachineAssemblerBase im
 			
 			UpgradeManager.eval(slots, 1, 4);
 
-			int speedLevel = Math.min(UpgradeManager.getLevel(UpgradeType.SPEED), 6);
-			int powerLevel = Math.min(UpgradeManager.getLevel(UpgradeType.POWER), 3);
+			int speedLevel = (UpgradeManager.getLevel(UpgradeType.SPEED));
+			int powerLevel = (UpgradeManager.getLevel(UpgradeType.POWER));
 			int overLevel = UpgradeManager.getLevel(UpgradeType.OVERDRIVE);
 			
-			this.speed -= speedLevel * 15;
-			this.consumption += speedLevel * 300;
-			this.speed += powerLevel * 5;
-			this.consumption -= powerLevel * 30;
-			this.speed /= (overLevel + 1);
-			this.consumption *= (overLevel + 1);
+			this.speed = (int) (this.speed *(Math.pow(0.9, speedLevel+overLevel*2)));
+			this.consumption = (int) (this.consumption *(Math.pow(1.1, (speedLevel+overLevel*2)-powerLevel*2)));
 			
 			for(DirPos pos : getConPos()) {
 				this.sendFluid(steam, worldObj, pos.getX(), pos.getY(), pos.getZ(), pos.getDir());

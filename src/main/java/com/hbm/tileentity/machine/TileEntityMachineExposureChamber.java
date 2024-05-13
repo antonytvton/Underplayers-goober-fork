@@ -94,18 +94,11 @@ public class TileEntityMachineExposureChamber extends TileEntityMachineBase impl
 			}
 			
 			UpgradeManager.eval(slots, 6, 7);
-			int speedLevel = Math.min(UpgradeManager.getLevel(UpgradeType.SPEED), 3);
-			int powerLevel = Math.min(UpgradeManager.getLevel(UpgradeType.POWER), 3);
-			int overdriveLevel = Math.min(UpgradeManager.getLevel(UpgradeType.OVERDRIVE), 3);
-			
-			this.consumption = this.consumptionBase;
-			
-			this.processTime = this.processTimeBase - this.processTimeBase / 4 * speedLevel;
-			this.consumption *= (speedLevel / 2 + 1);
-			this.processTime *= (powerLevel / 2 + 1);
-			this.consumption /= (powerLevel + 1);
-			this.processTime /= (overdriveLevel + 1);
-			this.consumption *= (overdriveLevel * 2 + 1);
+			int speedLevel = UpgradeManager.getLevel(UpgradeType.SPEED)+UpgradeManager.getLevel(UpgradeType.OVERDRIVE)*2;
+			int powerLevel = speedLevel - UpgradeManager.getLevel(UpgradeType.POWER)*2;
+			int overdriveLevel = 1;			
+			this.processTime = (int) (this.processTimeBase * Math.pow(0.9, speedLevel));
+			this.consumption = (int) (this.consumptionBase * Math.pow(1.1, powerLevel));
 			
 			if(slots[1] == null && slots[0] != null && slots[3] != null && this.savedParticles <= 0) {
 				ExposureChamberRecipe recipe = this.getRecipe(slots[0], slots[3]);

@@ -94,16 +94,12 @@ public class TileEntityMachineAssembler extends TileEntityMachineAssemblerBase i
 			
 			UpgradeManager.eval(slots, 1, 3);
 
-			int speedLevel = Math.min(UpgradeManager.getLevel(UpgradeType.SPEED), 3);
-			int powerLevel = Math.min(UpgradeManager.getLevel(UpgradeType.POWER), 3);
+			int speedLevel = (UpgradeManager.getLevel(UpgradeType.SPEED));
+			int powerLevel = (UpgradeManager.getLevel(UpgradeType.POWER));
 			int overLevel = UpgradeManager.getLevel(UpgradeType.OVERDRIVE);
 			
-			speed -= speedLevel * 25;
-			consumption += speedLevel * 300;
-			speed += powerLevel * 5;
-			consumption -= powerLevel * 30;
-			speed /= (overLevel + 1);
-			consumption *= (overLevel + 1);
+			speed = (int) (speed *(Math.pow(0.9, speedLevel+overLevel*2)));
+			consumption = (int) (consumption *(Math.pow(1.1, (speedLevel+overLevel*2)-powerLevel*2)));
 
 			int rec = -1;
 			if(AssemblerRecipes.getOutputFromTempate(slots[4]) != null) {

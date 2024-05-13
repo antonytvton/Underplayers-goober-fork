@@ -72,15 +72,13 @@ public class TileEntityMachineMixer extends TileEntityMachineBase implements INB
 			tanks[2].setType(2, slots);
 			
 			UpgradeManager.eval(slots, 3, 4);
-			int speedLevel = Math.min(UpgradeManager.getLevel(UpgradeType.SPEED), 3);
-			int powerLevel = Math.min(UpgradeManager.getLevel(UpgradeType.POWER), 3);
-			int overLevel = UpgradeManager.getLevel(UpgradeType.OVERDRIVE);
+			int speedLevel = UpgradeManager.getLevel(UpgradeType.SPEED) + UpgradeManager.getLevel(UpgradeType.OVERDRIVE) * 2;
+			int powerLevel = speedLevel - UpgradeManager.getLevel(UpgradeType.POWER);
+			int overLevel = 1;
 			
 			this.consumption = 50;
 
-			this.consumption += speedLevel * 150;
-			this.consumption -= this.consumption * powerLevel * 0.25;
-			this.consumption *= (overLevel * 3 + 1);
+			this.consumption = (int) (this.consumption * Math.pow(0.8, powerLevel));
 			
 			for(DirPos pos : getConPos()) {
 				this.trySubscribe(worldObj, pos.getX(), pos.getY(), pos.getZ(), pos.getDir());
@@ -94,8 +92,7 @@ public class TileEntityMachineMixer extends TileEntityMachineBase implements INB
 				this.progress++;
 				this.power -= this.getConsumption();
 				
-				this.processTime -= this.processTime * speedLevel / 4;
-				this.processTime /= (overLevel + 1);
+				this.processTime = (int) (this.processTime * Math.pow(0.8, speedLevel));
 				
 				if(processTime <= 0) this.processTime = 1;
 				

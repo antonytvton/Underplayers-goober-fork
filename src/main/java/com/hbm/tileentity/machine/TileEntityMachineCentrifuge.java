@@ -39,7 +39,7 @@ public class TileEntityMachineCentrifuge extends TileEntityMachineBase implement
 	public long power;
 	public boolean isProgressing;
 	public static final int maxPower = 100000;
-	public static final int processingSpeed = 200;
+	public static final int processingSpeed = 500;
 	private int audioDuration = 0;
 	
 	private AudioWrapper audio;
@@ -162,16 +162,11 @@ public class TileEntityMachineCentrifuge extends TileEntityMachineBase implement
 			power = Library.chargeTEFromItems(slots, 1, power, maxPower);
 			
 			int consumption = 200;
-			int speed = 1;
+			int speed = 10;
 			
 			UpgradeManager.eval(slots, 6, 7);
-			speed += Math.min(UpgradeManager.getLevel(UpgradeType.SPEED), 3);
-			consumption += Math.min(UpgradeManager.getLevel(UpgradeType.SPEED), 3) * 200;
-			
-			speed *= (1 + Math.min(UpgradeManager.getLevel(UpgradeType.OVERDRIVE), 3) * 5);
-			consumption += Math.min(UpgradeManager.getLevel(UpgradeType.OVERDRIVE), 3) * 10000;
-			
-			consumption /= (1 + Math.min(UpgradeManager.getLevel(UpgradeType.POWER), 3));
+			speed = (int) (speed * Math.pow(1.1, UpgradeManager.getLevel(UpgradeType.SPEED) + UpgradeManager.getLevel(UpgradeType.OVERDRIVE)*2));
+			consumption = (int) (consumption * Math.pow(1.1, (UpgradeManager.getLevel(UpgradeType.SPEED) + UpgradeManager.getLevel(UpgradeType.OVERDRIVE)*2))-(UpgradeManager.getLevel(UpgradeType.POWER)*2));
 
 			if(hasPower() && isProcessing()) {
 				this.power -= consumption;
@@ -330,22 +325,22 @@ public class TileEntityMachineCentrifuge extends TileEntityMachineBase implement
 	public void provideInfo(UpgradeType type, int level, List<String> info, boolean extendedInfo) {
 		info.add(IUpgradeInfoProvider.getStandardLabel(ModBlocks.machine_centrifuge));
 		if(type == UpgradeType.SPEED) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey(this.KEY_DELAY, "-" + (level * 100) + "%"));
-			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey(this.KEY_CONSUMPTION, "+" + (level * 100) + "%"));
+			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("10% speed increase per level(compounding)"));
+			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey("20% power increase per level(compounding)"));
 		}
 		if(type == UpgradeType.POWER) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey(this.KEY_CONSUMPTION, "-" + (100 - 100 / (level + 1)) + "%"));
+			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("20% power reduction per level(compounding)"));
 		}
 		if(type == UpgradeType.OVERDRIVE) {
-			info.add((BobMathUtil.getBlink() ? EnumChatFormatting.RED : EnumChatFormatting.DARK_GRAY) + "YES");
+			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("Speed upgrade * 2"));
 		}
 	}
 
 	@Override
 	public int getMaxLevel(UpgradeType type) {
-		if(type == UpgradeType.SPEED) return 3;
-		if(type == UpgradeType.POWER) return 3;
-		if(type == UpgradeType.OVERDRIVE) return 3;
+		if(type == UpgradeType.SPEED) return 999;
+		if(type == UpgradeType.POWER) return 999;
+		if(type == UpgradeType.OVERDRIVE) return 999;
 		return 0;
 	}
 
