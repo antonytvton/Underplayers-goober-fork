@@ -508,15 +508,15 @@ public class TileEntityElectrolyser extends TileEntityMachineBase implements IEn
 	public void provideInfo(UpgradeType type, int level, List<String> info, boolean extendedInfo) {
 		info.add(IUpgradeInfoProvider.getStandardLabel(ModBlocks.machine_electrolyser));
 		if(type == UpgradeType.SPEED) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("- 10% per level"));
-			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey("+ 20% per level"));
+			info.add(EnumChatFormatting.GREEN + ("- 10% per level"));
+			info.add(EnumChatFormatting.RED + ("+ 20% per level"));
 		}
 		if(type == UpgradeType.POWER) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("- 20% per level"));
+			info.add(EnumChatFormatting.GREEN + ("- 20% per level"));
 		}
 		if(type == UpgradeType.OVERDRIVE) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("- 20% per level"));
-			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey("+ 40% per level"));
+			info.add(EnumChatFormatting.GREEN + ("- 20% per level"));
+			info.add(EnumChatFormatting.RED + ("+ 40% per level"));
 		}
 	}
 
