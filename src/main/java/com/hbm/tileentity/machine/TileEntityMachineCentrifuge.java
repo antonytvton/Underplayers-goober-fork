@@ -325,14 +325,15 @@ public class TileEntityMachineCentrifuge extends TileEntityMachineBase implement
 	public void provideInfo(UpgradeType type, int level, List<String> info, boolean extendedInfo) {
 		info.add(IUpgradeInfoProvider.getStandardLabel(ModBlocks.machine_centrifuge));
 		if(type == UpgradeType.SPEED) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("10% speed increase per level(compounding)"));
-			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey("20% power increase per level(compounding)"));
+			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("- 10% per level"));
+			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey("+ 20% per level"));
 		}
 		if(type == UpgradeType.POWER) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("20% power reduction per level(compounding)"));
+			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("- 20% per level"));
 		}
 		if(type == UpgradeType.OVERDRIVE) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("Speed upgrade * 2"));
+			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("- 20% per level"));
+			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey("+ 40% per level"));
 		}
 	}
 

@@ -280,7 +280,7 @@ public class TileEntityMachineEPress extends TileEntityMachineBase implements IE
 
 	@Override
 	public int getMaxLevel(UpgradeType type) {
-		if(type == UpgradeType.SPEED) return 3;
+		if(type == UpgradeType.SPEED) return 999;
 		return 0;
 	}
 

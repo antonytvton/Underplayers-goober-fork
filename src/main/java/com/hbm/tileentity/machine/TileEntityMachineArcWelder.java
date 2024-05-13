@@ -358,12 +358,15 @@ public class TileEntityMachineArcWelder extends TileEntityMachineBase implements
 	public void provideInfo(UpgradeType type, int level, List<String> info, boolean extendedInfo) {
 		info.add(IUpgradeInfoProvider.getStandardLabel(ModBlocks.machine_arc_welder));
 		if(type == UpgradeType.SPEED) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey(this.KEY_DELAY, "-" + (level * 100 / 6) + "%"));
-			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey(this.KEY_CONSUMPTION, "+" + (level * 100) + "%"));
+			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("- 10% per level"));
+			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey("+ 20% per level"));
 		}
 		if(type == UpgradeType.POWER) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey(this.KEY_CONSUMPTION, "-" + (level * 100 / 6) + "%"));
-			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey(this.KEY_DELAY, "+" + (level * 100 / 3) + "%"));
+			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("- 20% per level"));
+		}
+		if(type == UpgradeType.OVERDRIVE) {
+			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("- 20% per level"));
+			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey("+ 40% per level"));
 		}
 	}
 

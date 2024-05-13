@@ -318,15 +318,15 @@ public class TileEntityMachineExposureChamber extends TileEntityMachineBase impl
 	public void provideInfo(UpgradeType type, int level, List<String> info, boolean extendedInfo) {
 		info.add(IUpgradeInfoProvider.getStandardLabel(ModBlocks.machine_exposure_chamber));
 		if(type == UpgradeType.SPEED) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey(this.KEY_DELAY, "-" + (level * 25) + "%"));
-			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey(this.KEY_CONSUMPTION, "+" + (level * 50) + "%"));
+			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("- 10% per level"));
+			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey("+ 20% per level"));
 		}
 		if(type == UpgradeType.POWER) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey(this.KEY_CONSUMPTION, "-" + (100 - 100 / (level + 1)) + "%"));
-			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey(this.KEY_DELAY, "+" + (level * 50) + "%"));
+			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("- 20% per level"));
 		}
 		if(type == UpgradeType.OVERDRIVE) {
-			info.add((BobMathUtil.getBlink() ? EnumChatFormatting.RED : EnumChatFormatting.DARK_GRAY) + "YES");
+			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("- 20% per level"));
+			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey("+ 40% per level"));
 		}
 	}
 

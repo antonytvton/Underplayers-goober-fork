@@ -727,21 +727,18 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 	public void provideInfo(UpgradeType type, int level, List<String> info, boolean extendedInfo) {
 		info.add(IUpgradeInfoProvider.getStandardLabel(ModBlocks.machine_mining_laser));
 		if(type == UpgradeType.SPEED) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("10% per level"));
-			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey(this.KEY_CONSUMPTION, "+" + (100 * level / 16) + "%"));
+			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("- 10% per level"));
+			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey("+ 20% per level"));
 		}
 		if(type == UpgradeType.POWER) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey(this.KEY_CONSUMPTION, "-" + (100 * level / 16) + "%"));
+			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("- 20% per level"));
 		}
-		if(type == UpgradeType.EFFECT) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey(this.KEY_RANGE, "+" + (2 * level) + "m"));
+		if(type == UpgradeType.OVERDRIVE) {
+			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("- 20% per level"));
+			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey("+ 40% per level"));
 		}
 		if(type == UpgradeType.FORTUNE) {
 			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey(this.KEY_FORTUNE, "+" + level));
-		}
-		if(type == UpgradeType.OVERDRIVE) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey("Overdrive * 2"));
-		}
 	}
 
 	@Override
