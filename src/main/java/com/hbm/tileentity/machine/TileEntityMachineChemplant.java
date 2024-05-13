@@ -588,15 +588,15 @@ public class TileEntityMachineChemplant extends TileEntityMachineBase implements
 	public void provideInfo(UpgradeType type, int level, List<String> info, boolean extendedInfo) {
 		info.add(IUpgradeInfoProvider.getStandardLabel(ModBlocks.machine_chemplant));
 		if(type == UpgradeType.SPEED) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey(this.KEY_DELAY, "-" + (level * 25) + "%"));
-			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey(this.KEY_CONSUMPTION, "+" + (level * 300) + "%"));
+			info.add(EnumChatFormatting.GREEN + ("- 10% delay per level"));
+			info.add(EnumChatFormatting.RED + ("+ 20% energy per level"));
 		}
 		if(type == UpgradeType.POWER) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey(this.KEY_CONSUMPTION, "-" + (level * 30) + "%"));
-			info.add(EnumChatFormatting.RED + I18nUtil.resolveKey(this.KEY_DELAY, "+" + (level * 5) + "%"));
+			info.add(EnumChatFormatting.GREEN + ("- 20% energy per level"));
 		}
 		if(type == UpgradeType.OVERDRIVE) {
-			info.add((BobMathUtil.getBlink() ? EnumChatFormatting.RED : EnumChatFormatting.DARK_GRAY) + "YES");
+			info.add(EnumChatFormatting.GREEN + ("- 20% delay per level"));
+			info.add(EnumChatFormatting.RED + ("+ 40% energy per level"));
 		}
 	}
 

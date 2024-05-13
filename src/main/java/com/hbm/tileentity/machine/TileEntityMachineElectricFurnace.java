@@ -281,12 +281,13 @@ public class TileEntityMachineElectricFurnace extends TileEntityMachineBase impl
 	public void provideInfo(UpgradeType type, int level, List<String> info, boolean extendedInfo) {
 		info.add(IUpgradeInfoProvider.getStandardLabel(ModBlocks.machine_electric_furnace_off));
 		if(type == UpgradeType.SPEED) {
-			info.add(EnumChatFormatting.GREEN + ("- 10% per level"));
-			info.add(EnumChatFormatting.RED + ("+ 20% per level"));
+			info.add(EnumChatFormatting.GREEN + ("- 10% delay per level"));
+			info.add(EnumChatFormatting.RED + ("+ 20% energy per level"));
 		}
 		if(type == UpgradeType.POWER) {
-			info.add(EnumChatFormatting.GREEN + ("- 20% per level"));
+			info.add(EnumChatFormatting.GREEN + ("- 20% energy per level"));
 		}
+
 	}
 
 	@Override

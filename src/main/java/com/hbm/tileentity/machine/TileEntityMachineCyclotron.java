@@ -597,14 +597,15 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 	public void provideInfo(UpgradeType type, int level, List<String> info, boolean extendedInfo) {
 		info.add(IUpgradeInfoProvider.getStandardLabel(ModBlocks.machine_cyclotron));
 		if(type == UpgradeType.SPEED) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey(this.KEY_DELAY, "-" + (100 - 100 / (level + 1)) + "%"));
+			info.add(EnumChatFormatting.GREEN + ("- 10% delay per level"));
+			info.add(EnumChatFormatting.RED + ("+ 20% energy per level"));
 		}
 		if(type == UpgradeType.POWER) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey(this.KEY_CONSUMPTION, "-" + (level * 10) + "%"));
+			info.add(EnumChatFormatting.GREEN + ("- 20% energy per level"));
 		}
-		if(type == UpgradeType.EFFECT) {
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey(this.KEY_COOLANT_CONSUMPTION, "-" + (100 - 100 / (level + 1)) + "%"));
-			info.add(EnumChatFormatting.GREEN + I18nUtil.resolveKey(this.KEY_OVERHEAT_CHANCE, "-" + (100 - 100 / (level + 1)) + "%"));
+		if(type == UpgradeType.OVERDRIVE) {
+			info.add(EnumChatFormatting.GREEN + ("- 20% delay per level"));
+			info.add(EnumChatFormatting.RED + ("+ 40% energy per level"));
 		}
 	}
 
