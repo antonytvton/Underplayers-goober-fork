@@ -300,6 +300,9 @@ public class AssemblerRecipes extends SerializableRecipe {
 		makeRecipe(new ComparableStack(ModItems.fusion_shield_tungsten, 1), new AStack[] {new OreDictStack(W.block(), 32), new OreDictStack(OreDictManager.getReflector(), 96)}, 600);
 		makeRecipe(new ComparableStack(ModItems.fusion_shield_desh, 1), new AStack[] {new OreDictStack(DESH.block(), 16), new OreDictStack(CO.block(), 16), new OreDictStack(BIGMT.plate(), 96)}, 600);
 		makeRecipe(new ComparableStack(ModItems.fusion_shield_chlorophyte, 1), new AStack[] {new OreDictStack(W.block(), 16), new OreDictStack(DURA.block(), 16), new OreDictStack(OreDictManager.getReflector(), 48), new ComparableStack(ModItems.powder_chlorophyte, 48)}, 600);
+		makeRecipe(new ComparableStack(ModItems.pile_rod_plutonium, 1), new AStack[] {new ComparableStack(ModItems.billet_uranium, 1), new ComparableStack(ModItems.billet_plutonium_fuel, 2), new OreDictStack(IRON.plate(), 2) }, 600);
+		makeRecipe(new ComparableStack(ModItems.pile_rod_pu239, 1), new AStack[] {new ComparableStack(ModItems.billet_uranium, 1), new ComparableStack(ModItems.billet_plutonium_fuel, 1), new OreDictStack(IRON.plate(), 2), new ComparableStack(ModItems.billet_pu239, 1) }, 600);
+
 		makeRecipe(new ComparableStack(ModBlocks.machine_fensu, 1), new AStack[] {
 				new ComparableStack(ModItems.ingot_electronium, 32),
 				new ComparableStack(ModBlocks.machine_dineutronium_battery, 16),

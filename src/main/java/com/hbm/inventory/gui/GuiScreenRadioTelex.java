@@ -120,7 +120,7 @@ public class GuiScreenRadioTelex extends GuiScreen {
 				int x = 11 + 7 * index;
 				char c = text.charAt(index);
 				x += (7 - this.fontRendererObj.getCharWidth(c)) / 2;
-				if(c == 'ยง' && text.length() > index + 1) {
+				if(c == 'ง' && text.length() > index + 1) {
 					format = "\u00a7" + text.charAt(index + 1);
 					x -= 3;
 				}
@@ -152,12 +152,12 @@ public class GuiScreenRadioTelex extends GuiScreen {
 				
 				char c = text.charAt(index);
 				x += (7 - this.fontRendererObj.getCharWidth(c)) / 2;
-				if(c == 'ยง' && text.length() > index + 1) {
+				if(c == 'ง' && text.length() > index + 1) {
 					format = "\u00a7" + text.charAt(index + 1);
 					c = ' ';
-				} else if(c == 'ยง') {
+				} else if(c == 'ง') {
 					c = ' ';
-				} else if(index > 0 && text.charAt(index - 1) == 'ยง') {
+				} else if(index > 0 && text.charAt(index - 1) == 'ง') {
 					c = ' ';
 					x -= 14;
 				}
@@ -209,7 +209,7 @@ public class GuiScreenRadioTelex extends GuiScreen {
 		// CLS
 		if(checkClick(x, y, 47, 85, 18, 18)) character = '\u007f'; // delete
 		// FMT
-		if(checkClick(x, y, 67, 85, 18, 18)) character = 'ยง'; // minecraft formatting character
+		if(checkClick(x, y, 67, 85, 18, 18)) character = 'ง'; // minecraft formatting character
 		// PSE
 		if(checkClick(x, y, 87, 85, 18, 18)) character = '\u0016'; // synchronous idle
 		

@@ -431,6 +431,12 @@ public class ChemplantRecipes extends SerializableRecipe {
 				.inputItems(new ComparableStack(ModItems.powder_apt, 1))
 				.inputFluids(new FluidStack(Fluids.NITRIC_ACID, 500))
 				.outputItems(new ItemStack(ModItems.crystal_tungsten, 1)));
+		recipes.add(new ChemRecipe(110, "PILEBRED", 100)
+				.inputItems(new ComparableStack(ModItems.pile_rod_pu239, 1))
+				.outputItems(new ItemStack(ModItems.plate_iron, 2), new ItemStack(ModItems.billet_plutonium_fuel, 2), new ItemStack(ModItems.billet_uranium, 1), new ItemStack(ModItems.billet_pu239, 1)));
+		recipes.add(new ChemRecipe(111, "PILEPLUTONIUM", 100)
+				.inputItems(new ComparableStack(ModItems.pile_rod_plutonium, 1))
+				.outputItems(new ItemStack(ModItems.plate_iron, 2), new ItemStack(ModItems.billet_plutonium_fuel, 2), new ItemStack(ModItems.billet_uranium, 1)));
 
 	}
 
