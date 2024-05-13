@@ -139,7 +139,7 @@ public class TileEntityElectrolyser extends TileEntityMachineBase implements IEn
 			processFluidTime = (int) (processFluidTimeBase * Math.pow(0.9, powerLevel));
 			processOreTime = (int) (processOreTimeBase  * Math.pow(0.9, powerLevel));
 			usageOre = (int) (usageOreBase - usageOreBase * Math.pow(0.8, powerLevel) * Math.pow(0.8, speedLevel));
-			usageFluid = (int) (usageFluidBase - usageFluidBase * Math.pow(0.8, powerLevel) * Math.pow(0.8, speedLevel);
+			usageFluid = (int) (usageFluidBase - usageFluidBase * Math.pow(0.8, powerLevel) * Math.pow(0.8, speedLevel));
 			
 			if(this.canProcessFluid()) {
 				this.progressFluid++;
