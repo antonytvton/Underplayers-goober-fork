@@ -20,12 +20,14 @@ public class ContainerMachineArcFurnace extends Container {
 
 		diFurnace = tedf;
 
-		this.addSlotToContainer(new Slot(tedf, 0, 56, 17));
-		this.addSlotToContainer(new SlotSmelting(invPlayer.player, tedf, 1, 116, 35));
-		this.addSlotToContainer(new Slot(tedf, 2, 38, 53));
-		this.addSlotToContainer(new Slot(tedf, 3, 56, 53));
-		this.addSlotToContainer(new Slot(tedf, 4, 74, 53));
-		this.addSlotToContainer(new Slot(tedf, 5, 8, 53));
+		this.addSlotToContainer(new Slot(tedf, 0, 38, 17));
+		this.addSlotToContainer(new Slot(tedf, 1, 74, 17));
+
+		this.addSlotToContainer(new SlotSmelting(invPlayer.player, tedf, 2, 116, 35));
+		this.addSlotToContainer(new Slot(tedf, 3, 38, 53));
+		this.addSlotToContainer(new Slot(tedf, 4, 56, 53));
+		this.addSlotToContainer(new Slot(tedf, 5, 74, 53));
+		this.addSlotToContainer(new Slot(tedf, 6, 8, 53));
 
 		for(int i = 0; i < 3; i++) {
 			for(int j = 0; j < 9; j++) {
