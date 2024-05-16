@@ -4,6 +4,8 @@ import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.machine.MachineArcFurnace;
 import com.hbm.inventory.container.ContainerMachineArcFurnace;
 import com.hbm.inventory.gui.GUIMachineArcFurnace;
+import com.hbm.inventory.recipes.ArcFurnaceRecipes;
+import com.hbm.inventory.recipes.BlastFurnaceRecipes;
 import com.hbm.items.ModItems;
 import com.hbm.lib.Library;
 import com.hbm.packet.AuxElectricityPacket;
@@ -44,12 +46,13 @@ public class TileEntityMachineArcFurnace extends TileEntityLoadedBase implements
 	//3: 2
 	//4: 3
 	//5: b
-	private static final int[] slots_io = new int[] {0, 1, 2, 3, 4, 5};
+	//6: i2
+	private static final int[] slots_io = new int[] {0, 1, 2, 3, 4, 5, 6};
 	
 	private String customName;
 	
 	public TileEntityMachineArcFurnace() {
-		slots = new ItemStack[6];
+		slots = new ItemStack[7];
 	}
 
 	@Override
@@ -126,7 +129,6 @@ public class TileEntityMachineArcFurnace extends TileEntityLoadedBase implements
 		
 		if(i == 0)
 			return FurnaceRecipes.smelting().getSmeltingResult(itemStack) != null;
-		
 		return false;
 	}
 	
@@ -251,10 +253,14 @@ public class TileEntityMachineArcFurnace extends TileEntityLoadedBase implements
 		{
 			return false;
 		}
-        ItemStack itemStack = FurnaceRecipes.smelting().getSmeltingResult(this.slots[0]);
-        
-		if(itemStack == null)
+		if(slots[6] == null)
 		{
+			return false;
+		}
+		ItemStack output = ArcFurnaceRecipes.getOutput(slots[0], slots[6]);
+		if(output == null)
+		{
+			System.out.println(output);
 			return false;
 		}
 		
@@ -263,41 +269,50 @@ public class TileEntityMachineArcFurnace extends TileEntityLoadedBase implements
 			return true;
 		}
 		
-		if(!slots[1].isItemEqual(itemStack)) {
+		if(!slots[1].isItemEqual(output)) {
 			return false;
 		}
 		
 		if(slots[1].stackSize < getInventoryStackLimit() && slots[1].stackSize < slots[1].getMaxStackSize()) {
 			return true;
 		}else{
-			return slots[1].stackSize < itemStack.getMaxStackSize();
+			return slots[1].stackSize < output.getMaxStackSize();
 		}
 	}
 	
 	private void processItem() {
 		if(canProcess()) {
-	        ItemStack itemStack = FurnaceRecipes.smelting().getSmeltingResult(this.slots[0]);
+			ItemStack output = ArcFurnaceRecipes.getOutput(slots[0], slots[6]);
 			
 			if(slots[1] == null)
 			{
-				slots[1] = itemStack.copy();
-			}else if(slots[1].isItemEqual(itemStack)) {
-				slots[1].stackSize += itemStack.stackSize;
+				slots[1] = output.copy();
+			}else if(slots[1].isItemEqual(output)) {
+				slots[1].stackSize += output.stackSize;
 			}
 			
-			for(int i = 0; i < 1; i++)
+			if(slots[0].stackSize <= 0)
 			{
-				if(slots[i].stackSize <= 0)
-				{
-					slots[i] = new ItemStack(slots[i].getItem().setFull3D());
-				}else{
-					slots[i].stackSize--;
-				}
-				if(slots[i].stackSize <= 0)
-				{
-					slots[i] = null;
-				}
+				slots[0] = new ItemStack(slots[0].getItem().setFull3D());
+			}else{
+				slots[0].stackSize--;
 			}
+			if(slots[0].stackSize <= 0)
+			{
+				slots[0] = null;
+			}
+
+			if(slots[6].stackSize <= 0)
+			{
+				slots[6] = new ItemStack(slots[6].getItem().setFull3D());
+			}else{
+				slots[6].stackSize--;
+			}
+			if(slots[6].stackSize <= 6)
+			{
+				slots[6] = null;
+			}
+			
 			
 			for(int i = 2; i < 5; i++) {
 				if(slots[i] != null && slots[i].getItem() == ModItems.arc_electrode) {
@@ -345,7 +360,7 @@ public class TileEntityMachineArcFurnace extends TileEntityLoadedBase implements
 			{
 				trigger = false;
 			}
-			
+				
 			if(trigger)
             {
                 flag1 = true;
