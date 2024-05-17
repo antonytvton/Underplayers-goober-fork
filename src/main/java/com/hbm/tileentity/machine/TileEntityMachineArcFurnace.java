@@ -127,8 +127,8 @@ public class TileEntityMachineArcFurnace extends TileEntityLoadedBase implements
 		if(i == 2 || i == 3 || i == 4)
 			return itemStack.getItem() == ModItems.arc_electrode || itemStack.getItem() == ModItems.arc_electrode_desh;
 		
-		if(i == 0)
-			return FurnaceRecipes.smelting().getSmeltingResult(itemStack) != null;
+		if(i == 0 || i ==6)
+			return true;
 		return false;
 	}
 	
@@ -260,7 +260,6 @@ public class TileEntityMachineArcFurnace extends TileEntityLoadedBase implements
 		ItemStack output = ArcFurnaceRecipes.getOutput(slots[0], slots[6]);
 		if(output == null)
 		{
-			System.out.println(output);
 			return false;
 		}
 		
@@ -292,7 +291,7 @@ public class TileEntityMachineArcFurnace extends TileEntityLoadedBase implements
 			}
 			
 			if(slots[0].stackSize <= 0)
-			{
+			{	
 				slots[0] = new ItemStack(slots[0].getItem().setFull3D());
 			}else{
 				slots[0].stackSize--;
@@ -303,12 +302,12 @@ public class TileEntityMachineArcFurnace extends TileEntityLoadedBase implements
 			}
 
 			if(slots[6].stackSize <= 0)
-			{
+			{	
 				slots[6] = new ItemStack(slots[6].getItem().setFull3D());
 			}else{
 				slots[6].stackSize--;
 			}
-			if(slots[6].stackSize <= 6)
+			if(slots[6].stackSize <= 0)
 			{
 				slots[6] = null;
 			}

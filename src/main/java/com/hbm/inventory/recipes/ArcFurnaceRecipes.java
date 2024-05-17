@@ -74,7 +74,7 @@ public class ArcFurnaceRecipes extends SerializableRecipe {
 
 		if(!IMCBlastFurnace.buffer.isEmpty()) {
 			ArcFurnaceRecipes.addAll(IMCBlastFurnace.buffer);
-			MainRegistry.logger.info("Fetched " + IMCBlastFurnace.buffer.size() + " IMC blast furnace recipes!");
+			MainRegistry.logger.info("Fetched " + IMCBlastFurnace.buffer.size() + " IMC arc furnace recipes!");
 			IMCBlastFurnace.buffer.clear();
 		}
 
