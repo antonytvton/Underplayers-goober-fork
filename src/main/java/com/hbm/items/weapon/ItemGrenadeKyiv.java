@@ -12,6 +12,6 @@ public class ItemGrenadeKyiv extends ItemGenericGrenade {
 
 	@Override
 	public void explode(Entity grenade, EntityLivingBase thrower, World world, double x, double y, double z) {
-		world.newExplosion(grenade, x, y, z, 5F, true, true);
+		world.newExplosion(grenade, x, y, z, 2F, true, false);
 	}
 }
