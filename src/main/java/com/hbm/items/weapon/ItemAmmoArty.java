@@ -11,7 +11,9 @@ import com.hbm.entity.logic.EntityNukeExplosionMK5;
 import com.hbm.entity.projectile.EntityArtilleryShell;
 import com.hbm.explosion.ExplosionChaos;
 import com.hbm.explosion.ExplosionLarge;
+import com.hbm.explosion.ExplosionNT;
 import com.hbm.explosion.ExplosionNukeSmall;
+import com.hbm.explosion.ExplosionNT.ExAttrib;
 import com.hbm.explosion.vanillant.ExplosionVNT;
 import com.hbm.explosion.vanillant.standard.BlockAllocatorStandard;
 import com.hbm.explosion.vanillant.standard.BlockMutatorDebris;
@@ -54,18 +56,21 @@ public class ItemAmmoArty extends Item {
 	public static Random rand = new Random();
 	public static ArtilleryShell[] itemTypes =	new ArtilleryShell[ /* >>> */ 12 /* <<< */ ];
 	/* item types */
-	public final int NORMAL = 0;
-	public final int CLASSIC = 1;
-	public final int EXPLOSIVE = 2;
-	public final int MINI_NUKE = 3;
-	public final int NUKE = 4;
+	public final int HE = 0;
+	public final int FRAG = 1;
+	public final int LASER = 2;
+	public final int HHE = 3;
+	public final int BUNKER = 4;
 	public final int PHOSPHORUS = 5;
-	public final int MINI_NUKE_MULTI = 6;
-	public final int PHOSPHORUS_MULTI = 7;
-	public final int CARGO = 8;
-	public final int CHLORINE = 9;
-	public final int PHOSGENE = 10;
-	public final int MUSTARD = 11;
+	public final int PHOSPHORUS_MULTI = 6;
+	public final int CHLORINE = 7;
+	public final int PHOSGENE = 8;
+	public final int MUSTARD = 9;
+	public final int NUKE = 10;
+	public final int MINI_NUKE = 11;
+	public final int MINI_NUKE_MULTI = 12;
+	public final int CARGO = 13;
+
 	/* non-item shell types */
 	
 	public ItemAmmoArty() {
@@ -77,18 +82,21 @@ public class ItemAmmoArty extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
-		list.add(new ItemStack(item, 1, NORMAL));
-		list.add(new ItemStack(item, 1, CLASSIC));
-		list.add(new ItemStack(item, 1, EXPLOSIVE));
+		list.add(new ItemStack(item, 1, HE));
+		list.add(new ItemStack(item, 1, FRAG));
+		list.add(new ItemStack(item, 1, LASER));
+		list.add(new ItemStack(item, 1, HHE));
+		list.add(new ItemStack(item, 1, BUNKER));
 		list.add(new ItemStack(item, 1, PHOSPHORUS));
 		list.add(new ItemStack(item, 1, PHOSPHORUS_MULTI));
-		list.add(new ItemStack(item, 1, MINI_NUKE));
-		list.add(new ItemStack(item, 1, MINI_NUKE_MULTI));
-		list.add(new ItemStack(item, 1, NUKE));
-		list.add(new ItemStack(item, 1, CARGO));
 		list.add(new ItemStack(item, 1, CHLORINE));
 		list.add(new ItemStack(item, 1, PHOSGENE));
 		list.add(new ItemStack(item, 1, MUSTARD));
+		list.add(new ItemStack(item, 1, NUKE));
+		list.add(new ItemStack(item, 1, MINI_NUKE));
+		list.add(new ItemStack(item, 1, MINI_NUKE_MULTI));
+		list.add(new ItemStack(item, 1, CARGO));
+
 	}
 
 	@Override
@@ -99,42 +107,58 @@ public class ItemAmmoArty extends Item {
 		String b = EnumChatFormatting.BLUE + "";
 		
 		switch(stack.getItemDamage()) {
-		case NORMAL:
-			list.add(y + "Strength: 10");
-			list.add(y + "Damage modifier: 3x");
-			list.add(b + "Does not destroy blocks");
+		case HE:
+			list.add(y + "Destroys blocks");
+			list.add(y + "Normal Player Dammage");
+			list.add(b + "For when you want to remove medium problems");
+			
 			break;
-		case CLASSIC:
-			list.add(y + "Strength: 15");
-			list.add(y + "Damage modifier: 5x");
-			list.add(b + "Does not destroy blocks");
+		case FRAG:
+			list.add(y + "Doesnt destroy blocks");
+			list.add(y + "Increased Player Dammage");
+			list.add(b + "AIRBURST");
 			break;
-		case EXPLOSIVE:
-			list.add(y + "Strength: 15");
-			list.add(y + "Damage modifier: 3x");
-			list.add(r + "Destroys blocks");
+		case LASER:
+			list.add(y + "Destroys blocks");
+			list.add(y + "Normal Player Dammage");
+			list.add(b + "G-hardened electronics are my best friend");
+			break;
+		case HHE:
+			list.add(y + "Destroys blocks extra well");
+			list.add(y + "Normal Player Dammage");
+			list.add(b + "For when you want to remove large problems");
+			break;
+		case BUNKER:
+			list.add(y + "Destroys concrete");
+			list.add(y + "Lower Player Dammage");
+			list.add(b + "For when you want to remove emplaced problems");
 			break;
 		case PHOSPHORUS:
-			list.add(y + "Strength: 10");
-			list.add(y + "Damage modifier: 3x");
-			list.add(r + "Phosphorus splash");
-			list.add(b + "Does not destroy blocks");
+			list.add(r + "Its not a war crime if you dont declare war");
 			break;
 		case PHOSPHORUS_MULTI:
-			list.add(r + "Splits x10");
+			list.add(r + "Just as our founding fathers would have intended");
 			break;
-		case MINI_NUKE:
-			list.add(y + "Strength: 20");
-			list.add(r + "Deals nuclear damage");
-			list.add(r + "Destroys blocks");
+		case CHLORINE:
+			list.add(r + "Pray the wind is traveling the right direction");
 			break;
-		case MINI_NUKE_MULTI:
-			list.add(r + "Splits x5");
+		case PHOSGENE:
+			list.add(r + "This ones food safe!");
+			break;
+		case MUSTARD:
+			list.add(r + "Ive run out of fun jokes");
 			break;
 		case NUKE:
 			list.add(r + "☠");
 			list.add(r + "(that is the best skull and crossbones");
 			list.add(r + "minecraft's unicode has to offer)");
+			break;
+		case MINI_NUKE:
+			list.add(r + "Nuke but smaller, kinda self explanatory");
+			break;
+			
+		case MINI_NUKE_MULTI:
+			list.add(r + "Nuke but smaller, but also more");
 			break;
 		case CARGO:
 			
@@ -200,13 +224,28 @@ public class ItemAmmoArty extends Item {
 		public void onUpdate(EntityArtilleryShell shell) { }
 	}
 	
-	public static void standardExplosion(EntityArtilleryShell shell, MovingObjectPosition mop, float size, float rangeMod, boolean breaksBlocks) {
+	public static void standardExplosion(EntityArtilleryShell shell, MovingObjectPosition mop, float size, float rangeMod, boolean breaksBlocks, boolean breaksConcrete, int innacuracy, int bunkerbusting) {
+		Random rand = new Random();
 		Vec3 vec = Vec3.createVectorHelper(shell.motionX, shell.motionY, shell.motionZ).normalize();
-		ExplosionVNT xnt = new ExplosionVNT(shell.worldObj, mop.hitVec.xCoord - vec.xCoord, mop.hitVec.yCoord - vec.yCoord, mop.hitVec.zCoord - vec.zCoord, size);
+		int offest = -rand.nextInt(2*innacuracy)+innacuracy;
+		int offest2 = -rand.nextInt(2*innacuracy)+innacuracy;
+		ExplosionVNT xnt = new ExplosionVNT(shell.worldObj, mop.hitVec.xCoord - vec.xCoord + offest, mop.hitVec.yCoord - vec.yCoord, mop.hitVec.zCoord + offest2, size);
 		if(breaksBlocks) {
-			xnt.setBlockAllocator(new BlockAllocatorStandard(48));
-			xnt.setBlockProcessor(new BlockProcessorStandard().setNoDrop().withBlockEffect(new BlockMutatorDebris(ModBlocks.block_slag, 1)));
+			
+			if (bunkerbusting > 0) {
+				for(int i = 0; i < 6; i++) {
+					ExplosionNT explosion = new ExplosionNT(shell.worldObj, shell, mop.blockX, mop.blockY - i, mop.blockZ, 3F);
+					explosion.addAllAttrib(ExAttrib.ERRODE);
+					explosion.explode(); //an explosion exploded!
+				}
+			}
+			else {
+				xnt.setBlockAllocator(new BlockAllocatorStandard(48));
+				xnt.setBlockProcessor(new BlockProcessorStandard().setNoDrop().withBlockEffect(new BlockMutatorDebris(ModBlocks.block_slag, 1)));
+			}
+			
 		}
+		ExplosionCreator.composeEffect(shell.worldObj, mop.blockX + 0.5+offest, mop.blockY, mop.blockZ + 0.5+offest2, 10, 2F, 0.5F, 25F, 5, 0, 20, 0.75F, 1F, -2F, 150);
 		xnt.setEntityProcessor(new EntityProcessorCross(7.5D).withRangeMod(rangeMod));
 		xnt.setPlayerProcessor(new PlayerProcessorStandard());
 		//xnt.setSFX(new ExplosionEffectStandard());
@@ -245,9 +284,26 @@ public class ItemAmmoArty extends Item {
 	
 	private void init() {
 		/* STANDARD SHELLS */
-		this.itemTypes[NORMAL] = new ArtilleryShell("ammo_arty", SpentCasing.COLOR_CASE_16INCH) { public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { standardExplosion(shell, mop, 10F, 3F, false); ExplosionCreator.composeEffect(shell.worldObj, mop.blockX + 0.5, mop.blockY + 0.5, mop.blockZ + 0.5, 10, 2F, 0.5F, 25F, 5, 0, 20, 0.75F, 1F, -2F, 150); }};
-		this.itemTypes[CLASSIC] = new ArtilleryShell("ammo_arty_classic", SpentCasing.COLOR_CASE_16INCH) { public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { standardExplosion(shell, mop, 15F, 5F, false); ExplosionCreator.composeEffect(shell.worldObj, mop.blockX + 0.5, mop.blockY + 0.5, mop.blockZ + 0.5, 15, 5F, 1F, 45F, 10, 0, 50, 1F, 3F, -2F, 200); }};
-		this.itemTypes[EXPLOSIVE] = new ArtilleryShell("ammo_arty_he", SpentCasing.COLOR_CASE_16INCH) { public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { standardExplosion(shell, mop, 15F, 3F, true); ExplosionCreator.composeEffect(shell.worldObj, mop.blockX + 0.5, mop.blockY + 0.5, mop.blockZ + 0.5, 15, 5F, 1F, 45F, 10, 16, 50, 1F, 3F, -2F, 200); }};
+		this.itemTypes[HE] = new ArtilleryShell("ammo_arty_he", SpentCasing.COLOR_CASE_16INCH) { 
+			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
+				standardExplosion(shell, mop, 10F, 1F, true, false, 25, 0);}};
+				
+				
+		this.itemTypes[FRAG] = new ArtilleryShell("ammo_arty_frag", SpentCasing.COLOR_CASE_16INCH) { 
+			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
+				standardExplosion(shell, mop, 12F, 2F, false, false, 25, 0); }};
+				
+		this.itemTypes[LASER] = new ArtilleryShell("ammo_arty_laser", SpentCasing.COLOR_CASE_16INCH) { 
+			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
+				standardExplosion(shell, mop, 8F, 1F, true, false, 2, 0); }};
+				
+		this.itemTypes[HHE] = new ArtilleryShell("ammo_arty_higher_explosive", SpentCasing.COLOR_CASE_16INCH) { 
+			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
+				standardExplosion(shell, mop, 20F, 1F, true, false, 25, 0); }};
+				
+		this.itemTypes[LASER] = new ArtilleryShell("ammo_arty_laser", SpentCasing.COLOR_CASE_16INCH) { 
+			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
+				standardExplosion(shell, mop, 10F, 1F, true, true, 8, 5); }};
 
 		/* MINI NUKE */
 		this.itemTypes[MINI_NUKE] = new ArtilleryShell("ammo_arty_mini_nuke", SpentCasing.COLOR_CASE_16INCH_NUKE) {
@@ -271,7 +327,7 @@ public class ItemAmmoArty extends Item {
 		this.itemTypes[PHOSPHORUS] = new ArtilleryShell("ammo_arty_phosphorus", SpentCasing.COLOR_CASE_16INCH_PHOS) {
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) {
 				shell.worldObj.playSoundEffect(shell.posX, shell.posY, shell.posZ, "hbm:weapon.explosionMedium", 20.0F, 0.9F + rand.nextFloat() * 0.2F);
-				standardExplosion(shell, mop, 10F, 3F, false);
+				standardExplosion(shell, mop, 6F, 1F, false, false, 20, 0);
 				//shell.worldObj.playSoundEffect(shell.posX, shell.posY, shell.posZ, "hbm:weapon.explosionMedium", 20.0F, 0.9F + shell.worldObj.rand.nextFloat() * 0.2F);
 				ExplosionLarge.spawnShrapnels(shell.worldObj, (int) mop.hitVec.xCoord, (int) mop.hitVec.yCoord, (int) mop.hitVec.zCoord, 15);
 				ExplosionChaos.burn(shell.worldObj, (int) mop.hitVec.xCoord, (int) mop.hitVec.yCoord, (int) mop.hitVec.zCoord, 12);
@@ -306,7 +362,7 @@ public class ItemAmmoArty extends Item {
 		}};
 		
 		/* GAS */
-		this.itemTypes[CHLORINE] = new ArtilleryShell("ammo_arty_chlorine", SpentCasing.COLOR_CASE_16INCH) {
+		this.itemTypes[CHLORINE] = new ArtilleryShell("ammo_arty_chlorine_gas", SpentCasing.COLOR_CASE_16INCH) {
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) {
 				shell.killAndClear();
 				Vec3 vec = Vec3.createVectorHelper(shell.motionX, shell.motionY, shell.motionZ).normalize();
@@ -319,7 +375,7 @@ public class ItemAmmoArty extends Item {
 				PollutionHandler.incrementPollution(shell.worldObj, mop.blockX, mop.blockY, mop.blockZ, PollutionType.HEAVYMETAL, 5F);
 			}
 		};
-		this.itemTypes[PHOSGENE] = new ArtilleryShell("ammo_arty_phosgene", SpentCasing.COLOR_CASE_16INCH_NUKE) {
+		this.itemTypes[PHOSGENE] = new ArtilleryShell("ammo_arty_phosgene_gas", SpentCasing.COLOR_CASE_16INCH_NUKE) {
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) {
 				shell.killAndClear();
 				Vec3 vec = Vec3.createVectorHelper(shell.motionX, shell.motionY, shell.motionZ).normalize();
