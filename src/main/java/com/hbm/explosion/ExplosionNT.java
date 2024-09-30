@@ -227,12 +227,25 @@ public class ExplosionNT extends Explosion {
 					
 					boolean doesErrode = false;
 					Block errodesInto = Blocks.air;
+					boolean doesStrip = false;
+					Block stripsInto = Blocks.air;
 					
 					if(this.has(ExAttrib.ERRODE) && this.explosionRNG.nextFloat() < 0.6F) { //errosion has a 60% chance to occour
 						
 						if(errosion.containsKey(block)) {
 							doesErrode = true;
 							errodesInto = errosion.get(block);
+						}
+					}
+					
+					if(this.has(ExAttrib.STRIP)) {
+						
+						if(stripping.containsKey(block)) {
+							doesStrip = true;
+							stripsInto = stripping.get(block);
+							if(block.getMaterial() == Material.leaves) {
+								this.worldObj.setBlock(i, j, k, Blocks.air);
+							}
 						}
 					}
 					
@@ -244,15 +257,17 @@ public class ExplosionNT extends Explosion {
 
 						block.dropBlockAsItemWithChance(this.worldObj, i, j, k, this.worldObj.getBlockMetadata(i, j, k), chance, 0);
 					}
-
-					block.onBlockExploded(this.worldObj, i, j, k, this);
-					
+					if (!has(ExAttrib.STRIP)){
+						block.onBlockExploded(this.worldObj, i, j, k, this);
+					}
 					if(block.isNormalCube()) {
 						
 						if(doesErrode) {
 							this.worldObj.setBlock(i, j, k, errodesInto);
 						}
-						
+						if(doesStrip) {
+							this.worldObj.setBlock(i, j, k, stripsInto);
+						}
 						if(has(ExAttrib.DIGAMMA)) {
 							this.worldObj.setBlock(i, j, k, ModBlocks.ash_digamma);
 							
@@ -332,6 +347,7 @@ public class ExplosionNT extends Explosion {
 		LAVA_V,		//again the same thing but volcanic lava
 		LAVA_R,		//again the same thing but radioactive lava
 		ERRODE,		//will turn select blocks into gravel or sand
+		STRIP,		//will turn select blocks into dead dirt/dead logs
 		ALLMOD,		//block placer attributes like fire are applied for all destroyed blocks
 		ALLDROP,	//miner TNT!
 		NODROP,		//the opposite
@@ -347,6 +363,15 @@ public class ExplosionNT extends Explosion {
 		errosion.put(ModBlocks.concrete_smooth, Blocks.gravel);
 		errosion.put(ModBlocks.brick_concrete, ModBlocks.brick_concrete_broken);
 		errosion.put(ModBlocks.brick_concrete_broken, Blocks.gravel);
+	}
+	
+	public static final HashMap<Block, Block> stripping = new HashMap();
+	
+	static {
+		stripping.put(Blocks.log, ModBlocks.waste_log);
+		stripping.put(Blocks.grass, ModBlocks.dirt_dead);
+		stripping.put(Blocks.leaves, Blocks.stone);
+		stripping.put(Blocks.leaves2, Blocks.stone);
 	}
 
 }
