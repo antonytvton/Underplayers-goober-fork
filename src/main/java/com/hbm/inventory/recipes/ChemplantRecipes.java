@@ -19,6 +19,7 @@ import com.hbm.inventory.RecipesCommon.OreDictStack;
 import com.hbm.inventory.fluid.Fluids;
 import com.hbm.inventory.recipes.loader.SerializableRecipe;
 import com.hbm.items.ModItems;
+import com.hbm.items.weapon.ItemAmmoArty;
 import com.hbm.main.MainRegistry;
 
 import net.minecraft.init.Blocks;
@@ -362,22 +363,22 @@ public class ChemplantRecipes extends SerializableRecipe {
 				.outputFluids(new FluidStack(Fluids.ENDERJUICE, 100)));
 		recipes.add(new ChemRecipe(98, "SHELL_CHLORINE", 100)
 				.inputItems(
-						new ComparableStack(ModItems.ammo_arty, 1, 0),
+						new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.NONE),
 						new OreDictStack(ANY_PLASTIC.ingot(), 1))
 				.inputFluids(new FluidStack(Fluids.CHLORINE, 4000))
-				.outputItems(new ItemStack(ModItems.ammo_arty, 1, 9)));
+				.outputItems(new ItemStack(ModItems.ammo_arty, 1, ItemAmmoArty.CHLORINE)));
 		recipes.add(new ChemRecipe(99, "SHELL_PHOSGENE", 100)
 				.inputItems(
-						new ComparableStack(ModItems.ammo_arty, 1, 0),
+						new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.NONE),
 						new OreDictStack(ANY_PLASTIC.ingot(), 1))
 				.inputFluids(new FluidStack(Fluids.PHOSGENE, 4000))
-				.outputItems(new ItemStack(ModItems.ammo_arty, 1, 10)));
+				.outputItems(new ItemStack(ModItems.ammo_arty, 1, ItemAmmoArty.PHOSGENE)));
 		recipes.add(new ChemRecipe(100, "SHELL_MUSTARD", 100)
 				.inputItems(
-						new ComparableStack(ModItems.ammo_arty, 1, 0),
+						new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.NONE),
 						new OreDictStack(ANY_PLASTIC.ingot(), 1))
 				.inputFluids(new FluidStack(Fluids.MUSTARDGAS, 4000))
-				.outputItems(new ItemStack(ModItems.ammo_arty, 1, 11)));
+				.outputItems(new ItemStack(ModItems.ammo_arty, 1, ItemAmmoArty.MUSTARD)));
 		recipes.add(new ChemRecipe(101, "CC_CENTRIFUGE", 200)
 				.inputFluids(new FluidStack(Fluids.CHLOROCALCITE_CLEANED, 500), new FluidStack(Fluids.SULFURIC_ACID, 8_000))
 				.outputFluids(new FluidStack(Fluids.POTASSIUM_CHLORIDE, 250), new FluidStack(Fluids.CALCIUM_CHLORIDE, 250)));

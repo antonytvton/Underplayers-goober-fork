@@ -169,8 +169,6 @@ public class TileEntityTurretArty extends TileEntityTurretBaseArtillery implemen
 		for(int i = 1; i < 10; i++) {
 			if(slots[i] != null) {
 				if(slots[i].getItem() == ModItems.ammo_arty) {
-					System.out.println(slots[i]);
-
 					return slots[i];
 				}
 			}
@@ -352,8 +350,10 @@ public class TileEntityTurretArty extends TileEntityTurretBaseArtillery implemen
 		timer++;
 		
 		int delay = mode == MODE_MANUAL ? 40 : 200;
-		ItemStack conf = this.getShellLoaded();
-		delay = ItemAmmoArty.itemTypes[conf.getItemDamage()].reloadmult * delay;
+		ItemStack conf = this.getShellLoaded();	
+		if(conf != null) {
+			delay = ItemAmmoArty.itemTypes[conf.getItemDamage()].reloadmult * delay;
+		}
 		if(timer % delay == 0) {
 			
 			

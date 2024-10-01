@@ -34,6 +34,7 @@ import com.hbm.items.machine.ItemAssemblyTemplate;
 import com.hbm.items.machine.ItemCircuit.EnumCircuitType;
 import com.hbm.items.machine.ItemDrillbit.EnumDrillType;
 import com.hbm.items.machine.ItemPistons.EnumPistonType;
+import com.hbm.items.weapon.ItemAmmoArty;
 import com.hbm.items.weapon.ItemAmmoHIMARS;
 import com.hbm.main.MainRegistry;
 
@@ -618,6 +619,74 @@ public class AssemblerRecipes extends SerializableRecipe {
 				new OreDictStack(ANY_HARDPLASTIC.ingot(), 5),
 				new ComparableStack(ModItems.cordite, 5)
 			}, 60);
+		
+		makeRecipe(new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.NONE), new AStack[] {
+				new OreDictStack(ANY_SMOKELESS.dust(), 12),
+				new OreDictStack(CU.shell(), 2),
+				new OreDictStack(CU.plate(), 2),
+			}, 40);
+		
+		makeRecipe(new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.HE), new AStack[] {
+				new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.NONE),
+				new OreDictStack(ANY_PLASTICEXPLOSIVE.ingot(), 8),
+				new ComparableStack(ModItems.circuit, 1, EnumCircuitType.PCB)
+			}, 80);
+		
+		makeRecipe(new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.FRAG), new AStack[] {
+				new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.NONE),
+				new OreDictStack(ANY_SMOKELESS.dust(), 4),
+				new ComparableStack(ModItems.circuit, 3, EnumCircuitType.VACUUM_TUBE),
+				new ComparableStack(ModItems.nugget_lead, 32)
+			}, 80);
+		
+		makeRecipe(new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.LASER), new AStack[] {
+				new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.NONE),
+				new OreDictStack(ANY_PLASTICEXPLOSIVE.ingot(), 8),
+				new ComparableStack(ModItems.circuit, 2, EnumCircuitType.ADVANCED),
+				new OreDictStack(AL.wireFine(), 4)
+			}, 80);
+		
+		makeRecipe(new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.CARGO), new AStack[] {
+				new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.NONE),
+				new ComparableStack(ModItems.circuit, 1, EnumCircuitType.PCB),
+				new OreDictStack(AL.wireFine(), 4)
+			}, 80);
+		
+		
+		makeRecipe(new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.BUNKER), new AStack[] {
+				new OreDictStack(ANY_HIGHEXPLOSIVE.ingot(), 32),
+				new OreDictStack(ANY_SMOKELESS.dust(), 48),
+				new OreDictStack(DURA.ingot(), 12),
+				new OreDictStack(TI.shell(), 4),
+				new OreDictStack(CU.shell(), 2),
+				new ComparableStack(ModItems.circuit, 4, EnumCircuitType.PCB)
+			}, 80);
+		
+		makeRecipe(new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.HHE), new AStack[] {
+				new OreDictStack(ANY_PLASTICEXPLOSIVE.ingot(), 32),
+				new OreDictStack(ANY_SMOKELESS.dust(), 48),
+				new OreDictStack(TI.shell(), 4),
+				new OreDictStack(CU.shell(), 2),
+				new ComparableStack(ModItems.circuit, 2, EnumCircuitType.PCB)
+			}, 80);
+		
+		makeRecipe(new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.PHOSPHORUS), new AStack[] {
+				new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.NONE),
+				new OreDictStack(ANY_SMOKELESS.dust(), 4),
+				new ComparableStack(ModItems.circuit, 3, EnumCircuitType.VACUUM_TUBE),
+				new ComparableStack(ModItems.ingot_phosphorus, 4)
+			}, 80);
+		
+		makeRecipe(new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.PHOSPHORUS_MULTI), new AStack[] {
+				new OreDictStack(TI.shell(), 4),
+				new OreDictStack(CU.shell(), 2),
+				new OreDictStack(ANY_SMOKELESS.dust(), 8),
+				new ComparableStack(ModItems.circuit, 2, EnumCircuitType.ADVANCED),
+				new ComparableStack(ModItems.ingot_phosphorus, 16)
+			}, 80);
+		
+		
+		
 
 		makeRecipe(new ComparableStack(ModItems.spawn_worm, 1), new AStack[] {
 				new OreDictStack(TI.block(), 75),

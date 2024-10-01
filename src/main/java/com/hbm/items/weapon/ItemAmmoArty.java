@@ -58,22 +58,24 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 public class ItemAmmoArty extends Item {
 	
 	public static Random rand = new Random();
-	public static ArtilleryShell[] itemTypes =	new ArtilleryShell[ /* >>> */ 14 /* <<< */ ];
+	public static ArtilleryShell[] itemTypes =	new ArtilleryShell[ /* >>> */ 15 /* <<< */ ];
 	/* item types */
-	public final int HE = 0;
-	public final int FRAG = 1;
-	public final int LASER = 2;
-	public final int HHE = 3;
-	public final int BUNKER = 4;
-	public final int PHOSPHORUS = 5;
-	public final int PHOSPHORUS_MULTI = 6;
-	public final int CHLORINE = 7;
-	public final int PHOSGENE = 8;
-	public final int MUSTARD = 9;
-	public final int NUKE = 10;
-	public final int MINI_NUKE = 11;
-	public final int MINI_NUKE_MULTI = 12;
-	public final int CARGO = 13;
+	public static final int HE = 0;
+	public static final int FRAG = 1;
+	public static final int LASER = 2;
+	public static final int HHE = 3;
+	public static final int BUNKER = 4;
+	public static final int PHOSPHORUS = 5;
+	public static final int PHOSPHORUS_MULTI = 6;
+	public static final int CHLORINE = 7;
+	public static final int PHOSGENE = 8;
+	public static final int MUSTARD = 9;
+	public static final int NUKE = 10;
+	public static final int MINI_NUKE = 11;
+	public static final int MINI_NUKE_MULTI = 12;
+	public static final int NONE = 13;
+	public static final int CARGO = 14;
+
 
 	/* non-item shell types */
 	
@@ -99,8 +101,8 @@ public class ItemAmmoArty extends Item {
 		list.add(new ItemStack(item, 1, NUKE));
 		list.add(new ItemStack(item, 1, MINI_NUKE));
 		list.add(new ItemStack(item, 1, MINI_NUKE_MULTI));
+		list.add(new ItemStack(item, 1, NONE));
 		list.add(new ItemStack(item, 1, CARGO));
-
 	}
 
 	@Override
@@ -182,6 +184,11 @@ public class ItemAmmoArty extends Item {
 		case MINI_NUKE_MULTI:
 			list.add(r + "Nuke but smaller, but also more");
 			list.add(b + "Reload time: 2s");
+			break;
+			
+		case NONE:
+			list.add(y + "Theres quite litteraly no warhead");
+			list.add(y + "Well you probably could shoot it");
 			break;
 		case CARGO:
 			
@@ -337,7 +344,6 @@ public class ItemAmmoArty extends Item {
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
 				standardExplosion(shell, mop, 10F, 1F, true, false, 25, 0);}};
 				
-				
 		this.itemTypes[FRAG] = new ArtilleryShell("ammo_arty_frag", SpentCasing.COLOR_CASE_16INCH, 1) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
 				standardExplosion(shell, mop, 8F, 2F, false, false, 25, -25); }};
@@ -353,6 +359,10 @@ public class ItemAmmoArty extends Item {
 		this.itemTypes[BUNKER] = new ArtilleryShell("ammo_arty_bunker", SpentCasing.COLOR_CASE_16INCH, 4) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
 				standardExplosion(shell, mop, 10F, 1F, true, true, 5, 5); }};
+				
+		this.itemTypes[NONE] = new ArtilleryShell("ammo_arty_none", SpentCasing.COLOR_CASE_16INCH, 1) { 
+			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
+				standardExplosion(shell, mop, 2F, 1F, false, false, 25, 0); }};
 
 		/* MINI NUKE */
 		this.itemTypes[MINI_NUKE] = new ArtilleryShell("ammo_arty_mini_nuke", SpentCasing.COLOR_CASE_16INCH_NUKE, 1) {
