@@ -1,5 +1,6 @@
 package com.hbm.items.weapon;
 
+import java.io.Console;
 import java.util.List;
 import java.util.Random;
 
@@ -35,6 +36,8 @@ import com.hbm.potion.HbmPotion;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -111,61 +114,74 @@ public class ItemAmmoArty extends Item {
 		case HE:
 			list.add(y + "Destroys blocks");
 			list.add(y + "Normal Player Dammage");
-			list.add(r + "Accuracy: 25 blocks");
-			list.add(b + "For when you want to remove medium problems");
+			list.add(b + "Accuracy: 25 blocks");
+			list.add(b + "Reload time: 2s");
+			list.add(r + "For when you want to remove medium problems");
 			
 			break;
 		case FRAG:
 			list.add(y + "Doesnt destroy blocks");
 			list.add(y + "Increased Player Dammage");
-			list.add(r + "Accuracy: 25 blocks");
-			list.add(b + "AIRBURST");
+			list.add(b + "Accuracy: 25 blocks");
+			list.add(b + "Reload time: 2s");
+			list.add(r + "AIRBURST");
 			break;
 		case LASER:
 			list.add(y + "Destroys blocks");
 			list.add(y + "Normal Player Dammage");
-			list.add(r + "Accuracy: 3 blocks");
-			list.add(b + "G-hardened electronics are my best friend");
+			list.add(b + "Accuracy: 3 blocks");
+			list.add(b + "Reload time: 2s");
+			list.add(r + "G-hardened electronics are my best friend");
 			break;
 		case HHE:
 			list.add(y + "Destroys blocks extra well");
 			list.add(y + "Normal Player Dammage");
-			list.add(r + "Accuracy: 25 blocks");
-			list.add(b + "For when you want to remove large problems");
+			list.add(b + "Accuracy: 25 blocks");
+			list.add(b + "Reload time: 8s");
+			list.add(r + "For when you want to remove large problems");
 			break;
 		case BUNKER:
 			list.add(y + "Destroys concrete");
 			list.add(y + "Lower Player Dammage");
-			list.add(r + "Accuracy: 5 blocks");
-			list.add(b + "For when you want to remove emplaced problems");
+			list.add(b + "Accuracy: 5 blocks");
+			list.add(b + "Reload time: 8s");
+			list.add(r + "For when you want to remove emplaced problems");
 			break;
 		case PHOSPHORUS:
 			list.add(r + "Its not a war crime if you dont declare war");
-			list.add(b + "Ive gotta warn you this doesnt do too much player damage. It excells in forest removal however");
+			list.add(b + "Reload time: 2s");
+			list.add(r + "Ive gotta warn you this doesnt do too much player damage. It excells in forest removal however");
 			break;
 		case PHOSPHORUS_MULTI:
+			list.add(b + "Reload time: 8s");
 			list.add(r + "Just as our founding fathers would have intended");
 			break;
 		case CHLORINE:
+			list.add(b + "Reload time: 2s");
 			list.add(r + "Pray the wind is traveling the right direction");
 			break;
 		case PHOSGENE:
+			list.add(b + "Reload time: 2s");
 			list.add(r + "This ones food safe!");
 			break;
 		case MUSTARD:
+			list.add(b + "Reload time: 2s");
 			list.add(r + "Ive run out of fun jokes");
 			break;
 		case NUKE:
 			list.add(r + "☠");
 			list.add(r + "(that is the best skull and crossbones");
 			list.add(r + "minecraft's unicode has to offer)");
+			list.add(b + "Reload time: 8s");
 			break;
 		case MINI_NUKE:
-			list.add(r + "Nuke but smaller, kinda self explanatory");
+			list.add(r + "kinda self explanatory");
+			list.add(b + "Reload time: 2s");
 			break;
 			
 		case MINI_NUKE_MULTI:
 			list.add(r + "Nuke but smaller, but also more");
+			list.add(b + "Reload time: 2s");
 			break;
 		case CARGO:
 			
@@ -221,10 +237,12 @@ public class ItemAmmoArty extends Item {
 		
 		String name;
 		public SpentCasing casing;
+		public int reloadmult;
 		
-		public ArtilleryShell(String name, int casingColor) {
+		public ArtilleryShell(String name, int casingColor, int reloadmult) {
 			this.name = name;
 			this.casing = SIXTEEN_INCH_CASE.clone().register(name).setColor(casingColor);
+			this.reloadmult = reloadmult;
 		}
 		
 		public abstract void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop);
@@ -233,15 +251,28 @@ public class ItemAmmoArty extends Item {
 	
 	public static void standardExplosion(EntityArtilleryShell shell, MovingObjectPosition mop, float size, float rangeMod, boolean breaksBlocks, boolean breaksConcrete, int innacuracy, int bunkerbusting) {
 		Random rand = new Random();
+		
 		Vec3 vec = Vec3.createVectorHelper(shell.motionX, shell.motionY, shell.motionZ).normalize();
 		int offest = -rand.nextInt(2*innacuracy)+innacuracy;
 		int offest2 = -rand.nextInt(2*innacuracy)+innacuracy;
-		ExplosionVNT xnt = new ExplosionVNT(shell.worldObj, mop.hitVec.xCoord - vec.xCoord + offest, mop.hitVec.yCoord - vec.yCoord, mop.hitVec.zCoord + offest2, size);
+		int lift = 0;
+		while ((shell.worldObj.isAirBlock((int)(Math.floor(mop.hitVec.xCoord+offest)), ((int)Math.floor(mop.hitVec.yCoord))+lift, ((int)Math.floor(mop.hitVec.zCoord+offest2))))&&
+		(shell.worldObj.isAirBlock((int)(Math.floor(mop.hitVec.xCoord+offest)), ((int)Math.floor(mop.hitVec.yCoord))+lift, ((int)Math.floor(mop.hitVec.zCoord+offest2))))){//this fucking sucks
+			if (!(shell.worldObj.isAirBlock((int)(Math.floor(mop.hitVec.xCoord+offest)), ((int)Math.floor(mop.hitVec.yCoord))-lift, ((int)Math.floor(mop.hitVec.zCoord+offest2))))) {
+				lift = -lift;
+			}else {
+				lift = lift + 1;
+
+			}
+		}
+		ExplosionVNT xnt = new ExplosionVNT(shell.worldObj, mop.hitVec.xCoord - vec.xCoord + offest, mop.hitVec.yCoord - vec.yCoord+lift, mop.hitVec.zCoord + offest2, size);
+
+
 		if(breaksBlocks) {
 			
 			if (bunkerbusting > 0) {
 				for(int i = 0; i < 6; i++) {
-					ExplosionNT explosion = new ExplosionNT(shell.worldObj, shell, mop.blockX+ offest, mop.blockY - i, mop.blockZ - offest2, 3F);
+					ExplosionNT explosion = new ExplosionNT(shell.worldObj, shell, mop.blockX+ offest, mop.blockY+lift - i+5, mop.blockZ - offest2, 3F);
 					explosion.addAllAttrib(ExAttrib.ERRODE);
 					explosion.explode(); //an explosion exploded!
 				}
@@ -254,7 +285,7 @@ public class ItemAmmoArty extends Item {
 		}
 		if (bunkerbusting < 0) {
 			for(int i = 0; i < 20; i++) {
-				ExplosionNT explosion = new ExplosionNT(shell.worldObj, shell, mop.blockX+ offest, mop.blockY - i+10, mop.blockZ + offest2, 20F);
+				ExplosionNT explosion = new ExplosionNT(shell.worldObj, shell, mop.blockX+ offest, mop.blockY+lift - i+10, mop.blockZ + offest2, 20F);
 				explosion.addAllAttrib(ExAttrib.STRIP);
 				explosion.addAllAttrib(ExAttrib.NODROP);
 				explosion.addAllAttrib(ExAttrib.NOPARTICLE);
@@ -263,7 +294,7 @@ public class ItemAmmoArty extends Item {
 				explosion.explode();
 			}
 		}
-		ExplosionCreator.composeEffect(shell.worldObj, mop.blockX + 0.5+offest, mop.blockY-bunkerbusting, mop.blockZ + 0.5+offest2, 10, 2F, 0.5F, 25F, 5, 0, 20, 0.75F, 1F, -2F, 150);
+		ExplosionCreator.composeEffect(shell.worldObj, mop.blockX + 0.5+offest, mop.blockY+lift-bunkerbusting, mop.blockZ + 0.5+offest2, 10, 2F, 0.5F, 25F, 5, 0, 20, 0.75F, 1F, -2F, 150);
 		xnt.setEntityProcessor(new EntityProcessorCross(7.5D).withRangeMod(rangeMod));
 		xnt.setPlayerProcessor(new PlayerProcessorStandard());
 		//xnt.setSFX(new ExplosionEffectStandard());
@@ -302,29 +333,29 @@ public class ItemAmmoArty extends Item {
 	
 	private void init() {
 		/* STANDARD SHELLS */
-		this.itemTypes[HE] = new ArtilleryShell("ammo_arty_he", SpentCasing.COLOR_CASE_16INCH) { 
+		this.itemTypes[HE] = new ArtilleryShell("ammo_arty_he", SpentCasing.COLOR_CASE_16INCH, 1) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
 				standardExplosion(shell, mop, 10F, 1F, true, false, 25, 0);}};
 				
 				
-		this.itemTypes[FRAG] = new ArtilleryShell("ammo_arty_frag", SpentCasing.COLOR_CASE_16INCH) { 
+		this.itemTypes[FRAG] = new ArtilleryShell("ammo_arty_frag", SpentCasing.COLOR_CASE_16INCH, 1) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
 				standardExplosion(shell, mop, 8F, 2F, false, false, 25, -25); }};
 				
-		this.itemTypes[LASER] = new ArtilleryShell("ammo_arty_laser", SpentCasing.COLOR_CASE_16INCH) { 
+		this.itemTypes[LASER] = new ArtilleryShell("ammo_arty_laser", SpentCasing.COLOR_CASE_16INCH, 1) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
 				standardExplosion(shell, mop, 8F, 1F, true, false, 2, 0); }};
 				
-		this.itemTypes[HHE] = new ArtilleryShell("ammo_arty_higher_explosive", SpentCasing.COLOR_CASE_16INCH) { 
+		this.itemTypes[HHE] = new ArtilleryShell("ammo_arty_higher_explosive", SpentCasing.COLOR_CASE_16INCH, 4) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
 				standardExplosion(shell, mop, 20F, 1F, true, false, 25, 0); }};
 				
-		this.itemTypes[BUNKER] = new ArtilleryShell("ammo_arty_bunker", SpentCasing.COLOR_CASE_16INCH) { 
+		this.itemTypes[BUNKER] = new ArtilleryShell("ammo_arty_bunker", SpentCasing.COLOR_CASE_16INCH, 4) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
 				standardExplosion(shell, mop, 10F, 1F, true, true, 5, 5); }};
 
 		/* MINI NUKE */
-		this.itemTypes[MINI_NUKE] = new ArtilleryShell("ammo_arty_mini_nuke", SpentCasing.COLOR_CASE_16INCH_NUKE) {
+		this.itemTypes[MINI_NUKE] = new ArtilleryShell("ammo_arty_mini_nuke", SpentCasing.COLOR_CASE_16INCH_NUKE, 1) {
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) {
 				shell.killAndClear();
 				Vec3 vec = Vec3.createVectorHelper(shell.motionX, shell.motionY, shell.motionZ).normalize();
@@ -333,7 +364,7 @@ public class ItemAmmoArty extends Item {
 		};
 		
 		/* FULL NUKE */
-		this.itemTypes[NUKE] = new ArtilleryShell("ammo_arty_nuke", SpentCasing.COLOR_CASE_16INCH_NUKE) {
+		this.itemTypes[NUKE] = new ArtilleryShell("ammo_arty_nuke", SpentCasing.COLOR_CASE_16INCH_NUKE, 4) {
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) {
 				shell.worldObj.spawnEntityInWorld(EntityNukeExplosionMK5.statFac(shell.worldObj, BombConfig.missileRadius, mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord));
 				EntityNukeTorex.statFac(shell.worldObj, mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord, BombConfig.missileRadius);
@@ -342,7 +373,7 @@ public class ItemAmmoArty extends Item {
 		};
 		
 		/* PHOSPHORUS */
-		this.itemTypes[PHOSPHORUS] = new ArtilleryShell("ammo_arty_phosphorus", SpentCasing.COLOR_CASE_16INCH_PHOS) {
+		this.itemTypes[PHOSPHORUS] = new ArtilleryShell("ammo_arty_phosphorus", SpentCasing.COLOR_CASE_16INCH_PHOS, 1) {
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) {
 				Random explosionRNG = new Random();
 				int offset3 = 25 - explosionRNG.nextInt(50);
@@ -396,7 +427,7 @@ public class ItemAmmoArty extends Item {
 		};
 		
 		/* THIS DOOFUS */
-		this.itemTypes[CARGO] = new ArtilleryShell("ammo_arty_cargo", SpentCasing.COLOR_CASE_16INCH) { public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) {
+		this.itemTypes[CARGO] = new ArtilleryShell("ammo_arty_cargo", SpentCasing.COLOR_CASE_16INCH, 1) { public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) {
 			if(mop.typeOfHit == MovingObjectType.BLOCK) {
 				shell.setPosition(mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord);
 				shell.getStuck(mop.blockX, mop.blockY, mop.blockZ, mop.sideHit);
@@ -404,7 +435,7 @@ public class ItemAmmoArty extends Item {
 		}};
 		
 		/* GAS */
-		this.itemTypes[CHLORINE] = new ArtilleryShell("ammo_arty_chlorine_gas", SpentCasing.COLOR_CASE_16INCH) {
+		this.itemTypes[CHLORINE] = new ArtilleryShell("ammo_arty_chlorine_gas", SpentCasing.COLOR_CASE_16INCH, 1) {
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) {
 				shell.killAndClear();
 				Vec3 vec = Vec3.createVectorHelper(shell.motionX, shell.motionY, shell.motionZ).normalize();
@@ -417,7 +448,7 @@ public class ItemAmmoArty extends Item {
 				PollutionHandler.incrementPollution(shell.worldObj, mop.blockX, mop.blockY, mop.blockZ, PollutionType.HEAVYMETAL, 5F);
 			}
 		};
-		this.itemTypes[PHOSGENE] = new ArtilleryShell("ammo_arty_phosgene_gas", SpentCasing.COLOR_CASE_16INCH_NUKE) {
+		this.itemTypes[PHOSGENE] = new ArtilleryShell("ammo_arty_phosgene_gas", SpentCasing.COLOR_CASE_16INCH_NUKE, 1) {
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) {
 				shell.killAndClear();
 				Vec3 vec = Vec3.createVectorHelper(shell.motionX, shell.motionY, shell.motionZ).normalize();
@@ -439,7 +470,7 @@ public class ItemAmmoArty extends Item {
 				PollutionHandler.incrementPollution(shell.worldObj, mop.blockX, mop.blockY, mop.blockZ, PollutionType.POISON, 15F);
 			}
 		};
-		this.itemTypes[MUSTARD] = new ArtilleryShell("ammo_arty_mustard_gas", SpentCasing.COLOR_CASE_16INCH_NUKE) {
+		this.itemTypes[MUSTARD] = new ArtilleryShell("ammo_arty_mustard_gas", SpentCasing.COLOR_CASE_16INCH_NUKE, 1) {
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) {
 				shell.killAndClear();
 				Vec3 vec = Vec3.createVectorHelper(shell.motionX, shell.motionY, shell.motionZ).normalize();
@@ -463,11 +494,11 @@ public class ItemAmmoArty extends Item {
 		};
 		
 		/* CLUSTER SHELLS */
-		this.itemTypes[PHOSPHORUS_MULTI] = new ArtilleryShell("ammo_arty_phosphorus_multi", SpentCasing.COLOR_CASE_16INCH_PHOS) {
+		this.itemTypes[PHOSPHORUS_MULTI] = new ArtilleryShell("ammo_arty_phosphorus_multi", SpentCasing.COLOR_CASE_16INCH_PHOS, 4) {
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { ItemAmmoArty.this.itemTypes[PHOSPHORUS].onImpact(shell, mop); }
 			public void onUpdate(EntityArtilleryShell shell) { standardCluster(shell, PHOSPHORUS, 10, 500, 12); }
 		};
-		this.itemTypes[MINI_NUKE_MULTI] = new ArtilleryShell("ammo_arty_mini_nuke_multi", SpentCasing.COLOR_CASE_16INCH_NUKE) {
+		this.itemTypes[MINI_NUKE_MULTI] = new ArtilleryShell("ammo_arty_mini_nuke_multi", SpentCasing.COLOR_CASE_16INCH_NUKE, 4) {
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { ItemAmmoArty.this.itemTypes[MINI_NUKE].onImpact(shell, mop); }
 			public void onUpdate(EntityArtilleryShell shell) { standardCluster(shell, MINI_NUKE, 5, 500, 12); }
 		};

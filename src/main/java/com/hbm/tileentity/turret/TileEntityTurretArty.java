@@ -33,7 +33,7 @@ import net.minecraft.world.World;
 
 public class TileEntityTurretArty extends TileEntityTurretBaseArtillery implements IGUIProvider {
 	
-	public short mode = 0;
+	public short mode = 2;
 	public static final short MODE_ARTILLERY = 0;
 	public static final short MODE_CANNON = 1;
 	public static final short MODE_MANUAL = 2;
@@ -169,6 +169,8 @@ public class TileEntityTurretArty extends TileEntityTurretBaseArtillery implemen
 		for(int i = 1; i < 10; i++) {
 			if(slots[i] != null) {
 				if(slots[i].getItem() == ModItems.ammo_arty) {
+					System.out.println(slots[i]);
+
 					return slots[i];
 				}
 			}
@@ -349,11 +351,11 @@ public class TileEntityTurretArty extends TileEntityTurretBaseArtillery implemen
 		
 		timer++;
 		
-		int delay = mode == MODE_ARTILLERY ? 300 : 40;
-		
+		int delay = mode == MODE_MANUAL ? 40 : 200;
+		ItemStack conf = this.getShellLoaded();
+		delay = ItemAmmoArty.itemTypes[conf.getItemDamage()].reloadmult * delay;
 		if(timer % delay == 0) {
 			
-			ItemStack conf = this.getShellLoaded();
 			
 			if(conf != null) {
 				cachedCasingConfig = ItemAmmoArty.itemTypes[conf.getItemDamage()].casing;
