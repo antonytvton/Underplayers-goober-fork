@@ -16,6 +16,7 @@ import com.hbm.explosion.ExplosionNT;
 import com.hbm.explosion.ExplosionNukeSmall;
 import com.hbm.explosion.ExplosionNT.ExAttrib;
 import com.hbm.explosion.vanillant.ExplosionVNT;
+import com.hbm.explosion.vanillant.interfaces.ICustomDamageHandler;
 import com.hbm.explosion.vanillant.standard.BlockAllocatorStandard;
 import com.hbm.explosion.vanillant.standard.BlockMutatorDebris;
 import com.hbm.explosion.vanillant.standard.BlockProcessorStandard;
@@ -66,7 +67,7 @@ public class ItemAmmoArty extends Item {
 	public static final int LASER = 2;
 	public static final int HHE = 3;
 	public static final int BUNKER = 4;
-	public static final int PHOSPHORUS = 5;
+	public static final int PHOSPHORUS = 15;
 	public static final int PHOSPHORUS_MULTI = 6;
 	public static final int CHLORINE = 7;
 	public static final int PHOSGENE = 8;
@@ -76,7 +77,7 @@ public class ItemAmmoArty extends Item {
 	public static final int MINI_NUKE_MULTI = 12;
 	public static final int NONE = 13;
 	public static final int CARGO = 14;
-	public static final int FIRECRACKER = 15;
+	public static final int FIRECRACKER = 5;
 
 
 	/* non-item shell types */
@@ -90,11 +91,13 @@ public class ItemAmmoArty extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
+		list.add(new ItemStack(item, 1, NONE));
 		list.add(new ItemStack(item, 1, HE));
 		list.add(new ItemStack(item, 1, FRAG));
 		list.add(new ItemStack(item, 1, LASER));
 		list.add(new ItemStack(item, 1, HHE));
 		list.add(new ItemStack(item, 1, BUNKER));
+		list.add(new ItemStack(item, 1, FIRECRACKER));
 		list.add(new ItemStack(item, 1, PHOSPHORUS));
 		list.add(new ItemStack(item, 1, PHOSPHORUS_MULTI));
 		list.add(new ItemStack(item, 1, CHLORINE));
@@ -103,9 +106,7 @@ public class ItemAmmoArty extends Item {
 		list.add(new ItemStack(item, 1, NUKE));
 		list.add(new ItemStack(item, 1, MINI_NUKE));
 		list.add(new ItemStack(item, 1, MINI_NUKE_MULTI));
-		list.add(new ItemStack(item, 1, NONE));
 		list.add(new ItemStack(item, 1, CARGO));
-		list.add(new ItemStack(item, 1, FIRECRACKER));
 	}
 
 	@Override
@@ -185,6 +186,7 @@ public class ItemAmmoArty extends Item {
 			break;
 			
 		case FIRECRACKER:
+			list.add(y + "Deploys 120 submunition bomblets over a 50 block radius circle");
 			list.add(r + "Waranty void if fired");
 			list.add(b + "Reload time: 8s");
 			break;
@@ -308,6 +310,7 @@ public class ItemAmmoArty extends Item {
 				explosion.addAllAttrib(ExAttrib.NOPARTICLE);
 				explosion.addAllAttrib(ExAttrib.NOSOUND);
 				explosion.addAllAttrib(ExAttrib.NOPARTICLE);
+				explosion.addAllAttrib(ExAttrib.NOHURT);
 				explosion.explode();
 			}
 		}
@@ -356,7 +359,7 @@ public class ItemAmmoArty extends Item {
 				
 		this.itemTypes[FRAG] = new ArtilleryShell("ammo_arty_frag", SpentCasing.COLOR_CASE_16INCH, 1) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
-				standardExplosion(shell, mop, 10F, 2F, false, false, 25, -25); }};
+				standardExplosion(shell, mop, 10F, 1.8F, false, false, 25, -25); }};
 				
 		this.itemTypes[LASER] = new ArtilleryShell("ammo_arty_laser", SpentCasing.COLOR_CASE_16INCH, 1) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
@@ -528,20 +531,23 @@ public class ItemAmmoArty extends Item {
 		this.itemTypes[FIRECRACKER] = new ArtilleryShell("ammo_arty_firecracker", SpentCasing.COLOR_CASE_16INCH, 4) {
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) {
 				Random rand = new Random();
-				for(int i = 0; i < 100; i++) {
-					int rand1 = rand.nextInt(80)-40;
-					int rand2 = rand.nextInt(80)-40;
-					double x = mop.hitVec.xCoord + rand1 + rand2/3 +rand.nextInt(40)-20;
+				for(int i = 0; i < 40; i++) {
+					double x = 0;
+					double z = 0;
+					
+					x = mop.hitVec.xCoord + Math.sin(Math.toRadians(9*i+rand.nextDouble()*9))*(rand.nextDouble()-0.5F)*70+(rand.nextDouble()*5)-2;
+					z = mop.hitVec.zCoord + Math.sin(Math.toRadians(9*i+rand.nextDouble()*9))*(rand.nextDouble()-0.5F)*70+(rand.nextDouble()*5)-3;
+
 					double y = mop.hitVec.yCoord;
-					double z = mop.hitVec.zCoord+ rand2 + rand1/3 +rand.nextInt(40)-20;
 					y = y + nearestblock(shell.worldObj, x, y, z);
-					ExplosionVNT xnt = new ExplosionVNT(shell.worldObj, x, y+1, z, 2F);
-					xnt.setBlockAllocator(new BlockAllocatorStandard(48));
-					xnt.setBlockProcessor(new BlockProcessorStandard().setNoDrop());
-					xnt.setEntityProcessor(new EntityProcessorCross(7.5D).withRangeMod(0.5F));
-					xnt.setPlayerProcessor(new PlayerProcessorStandard());
 					ExplosionCreator.composeEffect(shell.worldObj, x, y+1, z, 5, 0.7F, 0.1F, 10F, 0, 0, 20, 0.75F, 1F, -2F, 150);
-					xnt.explode();    }
+					ExplosionNT explosion = new ExplosionNT(shell.worldObj, shell, x, y+2, z, 6);
+					explosion.addAllAttrib(ExAttrib.STRIP);
+					explosion.addAllAttrib(ExAttrib.NODROP);
+					explosion.addAllAttrib(ExAttrib.NOPARTICLE);
+					explosion.addAllAttrib(ExAttrib.NOSOUND);
+					explosion.addAllAttrib(ExAttrib.NOPARTICLE);
+					explosion.explode();}
 				shell.killAndClear();
 
 			}

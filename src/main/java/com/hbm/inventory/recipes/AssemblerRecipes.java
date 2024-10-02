@@ -622,7 +622,7 @@ public class AssemblerRecipes extends SerializableRecipe {
 		
 		makeRecipe(new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.NONE), new AStack[] {
 				new OreDictStack(ANY_SMOKELESS.dust(), 12),
-				new OreDictStack(CU.shell(), 2),
+				new OreDictStack(CU.shell(), 4),
 				new OreDictStack(CU.plate(), 2),
 			}, 40);
 		
@@ -654,20 +654,20 @@ public class AssemblerRecipes extends SerializableRecipe {
 		
 		
 		makeRecipe(new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.BUNKER), new AStack[] {
-				new OreDictStack(ANY_HIGHEXPLOSIVE.ingot(), 32),
+				new ComparableStack(ModItems.ball_tatb, 32),
 				new OreDictStack(ANY_SMOKELESS.dust(), 48),
 				new OreDictStack(DURA.ingot(), 12),
-				new OreDictStack(TI.shell(), 4),
-				new OreDictStack(CU.shell(), 2),
-				new ComparableStack(ModItems.circuit, 4, EnumCircuitType.PCB)
+				new OreDictStack(TI.shell(), 8),
+				new OreDictStack(CU.shell(), 4),
+				new ComparableStack(ModItems.circuit, 1, EnumCircuitType.ADVANCED)
 			}, 80);
 		
 		makeRecipe(new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.HHE), new AStack[] {
 				new OreDictStack(ANY_PLASTICEXPLOSIVE.ingot(), 32),
 				new OreDictStack(ANY_SMOKELESS.dust(), 48),
-				new OreDictStack(TI.shell(), 4),
-				new OreDictStack(CU.shell(), 2),
-				new ComparableStack(ModItems.circuit, 2, EnumCircuitType.PCB)
+				new OreDictStack(TI.shell(), 8),
+				new OreDictStack(CU.shell(), 4),
+				new ComparableStack(ModItems.circuit, 1, EnumCircuitType.ADVANCED)
 			}, 80);
 		
 		makeRecipe(new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.PHOSPHORUS), new AStack[] {
@@ -678,14 +678,20 @@ public class AssemblerRecipes extends SerializableRecipe {
 			}, 80);
 		
 		makeRecipe(new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.PHOSPHORUS_MULTI), new AStack[] {
-				new OreDictStack(TI.shell(), 4),
-				new OreDictStack(CU.shell(), 2),
+				new OreDictStack(TI.shell(), 8),
+				new OreDictStack(CU.shell(), 4),
 				new OreDictStack(ANY_SMOKELESS.dust(), 8),
 				new ComparableStack(ModItems.circuit, 2, EnumCircuitType.ADVANCED),
 				new ComparableStack(ModItems.ingot_phosphorus, 16)
 			}, 80);
 		
-		
+		makeRecipe(new ComparableStack(ModItems.ammo_arty, 1, ItemAmmoArty.FIRECRACKER), new AStack[] {
+				new OreDictStack(TI.shell(), 8),
+				new OreDictStack(CU.shell(), 4),
+				new OreDictStack(ANY_SMOKELESS.dust(), 64),
+				new ComparableStack(ModItems.circuit, 2, EnumCircuitType.ADVANCED),
+				new ComparableStack(ModItems.ingot_bakelite, 16)
+			}, 80);
 		
 
 		makeRecipe(new ComparableStack(ModItems.spawn_worm, 1), new AStack[] {
