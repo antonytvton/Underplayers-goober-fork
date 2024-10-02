@@ -53,12 +53,13 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 
 public class ItemAmmoArty extends Item {
 	
 	public static Random rand = new Random();
-	public static ArtilleryShell[] itemTypes =	new ArtilleryShell[ /* >>> */ 15 /* <<< */ ];
+	public static ArtilleryShell[] itemTypes =	new ArtilleryShell[ /* >>> */ 16 /* <<< */ ];
 	/* item types */
 	public static final int HE = 0;
 	public static final int FRAG = 1;
@@ -75,6 +76,7 @@ public class ItemAmmoArty extends Item {
 	public static final int MINI_NUKE_MULTI = 12;
 	public static final int NONE = 13;
 	public static final int CARGO = 14;
+	public static final int FIRECRACKER = 15;
 
 
 	/* non-item shell types */
@@ -103,6 +105,7 @@ public class ItemAmmoArty extends Item {
 		list.add(new ItemStack(item, 1, MINI_NUKE_MULTI));
 		list.add(new ItemStack(item, 1, NONE));
 		list.add(new ItemStack(item, 1, CARGO));
+		list.add(new ItemStack(item, 1, FIRECRACKER));
 	}
 
 	@Override
@@ -181,6 +184,11 @@ public class ItemAmmoArty extends Item {
 			list.add(b + "Reload time: 2s");
 			break;
 			
+		case FIRECRACKER:
+			list.add(r + "Waranty void if fired");
+			list.add(b + "Reload time: 8s");
+			break;
+			
 		case MINI_NUKE_MULTI:
 			list.add(r + "Nuke but smaller, but also more");
 			list.add(b + "Reload time: 2s");
@@ -255,6 +263,19 @@ public class ItemAmmoArty extends Item {
 		public abstract void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop);
 		public void onUpdate(EntityArtilleryShell shell) { }
 	}
+	public static int nearestblock (World world, double x, double y, double z) {//gets the nearest block in the Y direction. Returns how much you increase or decrease y value
+		int lift = 0;
+		while ((world.isAirBlock((int)Math.floor(x), (int)Math.floor(y)+lift, (int) Math.floor(z))&&
+				(world.isAirBlock((int)Math.floor(x), (int)Math.floor(y)+lift, (int)Math.floor(z))))){
+			if (!(world.isAirBlock((int)(Math.floor(x)), ((int)Math.floor(y))-lift, ((int)Math.floor(z))))) {
+				return(-lift);
+			}else {
+				lift = lift + 1; 
+				} 
+			}
+		return lift; 
+		}
+	
 	
 	public static void standardExplosion(EntityArtilleryShell shell, MovingObjectPosition mop, float size, float rangeMod, boolean breaksBlocks, boolean breaksConcrete, int innacuracy, int bunkerbusting) {
 		Random rand = new Random();
@@ -262,21 +283,10 @@ public class ItemAmmoArty extends Item {
 		Vec3 vec = Vec3.createVectorHelper(shell.motionX, shell.motionY, shell.motionZ).normalize();
 		int offest = -rand.nextInt(2*innacuracy)+innacuracy;
 		int offest2 = -rand.nextInt(2*innacuracy)+innacuracy;
-		int lift = 0;
-		while ((shell.worldObj.isAirBlock((int)(Math.floor(mop.hitVec.xCoord+offest)), ((int)Math.floor(mop.hitVec.yCoord))+lift, ((int)Math.floor(mop.hitVec.zCoord+offest2))))&&
-		(shell.worldObj.isAirBlock((int)(Math.floor(mop.hitVec.xCoord+offest)), ((int)Math.floor(mop.hitVec.yCoord))+lift, ((int)Math.floor(mop.hitVec.zCoord+offest2))))){//this fucking sucks
-			if (!(shell.worldObj.isAirBlock((int)(Math.floor(mop.hitVec.xCoord+offest)), ((int)Math.floor(mop.hitVec.yCoord))-lift, ((int)Math.floor(mop.hitVec.zCoord+offest2))))) {
-				lift = -lift;
-			}else {
-				lift = lift + 1;
-
-			}
-		}
+		int lift = nearestblock(shell.worldObj, mop.blockX+offest, mop.blockY, mop.blockZ + offest2);
 		ExplosionVNT xnt = new ExplosionVNT(shell.worldObj, mop.hitVec.xCoord - vec.xCoord + offest, mop.hitVec.yCoord - vec.yCoord+lift, mop.hitVec.zCoord + offest2, size);
 
-
 		if(breaksBlocks) {
-			
 			if (bunkerbusting > 0) {
 				for(int i = 0; i < 6; i++) {
 					ExplosionNT explosion = new ExplosionNT(shell.worldObj, shell, mop.blockX+ offest, mop.blockY+lift - i+5, mop.blockZ - offest2, 3F);
@@ -290,9 +300,9 @@ public class ItemAmmoArty extends Item {
 			}
 			
 		}
-		if (bunkerbusting < 0) {
+		if (breaksBlocks || bunkerbusting < 0) {
 			for(int i = 0; i < 20; i++) {
-				ExplosionNT explosion = new ExplosionNT(shell.worldObj, shell, mop.blockX+ offest, mop.blockY+lift - i+10, mop.blockZ + offest2, 20F);
+				ExplosionNT explosion = new ExplosionNT(shell.worldObj, shell, mop.blockX+ offest, mop.blockY+lift - i+10, mop.blockZ + offest2, size*rangeMod);
 				explosion.addAllAttrib(ExAttrib.STRIP);
 				explosion.addAllAttrib(ExAttrib.NODROP);
 				explosion.addAllAttrib(ExAttrib.NOPARTICLE);
@@ -346,7 +356,7 @@ public class ItemAmmoArty extends Item {
 				
 		this.itemTypes[FRAG] = new ArtilleryShell("ammo_arty_frag", SpentCasing.COLOR_CASE_16INCH, 1) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
-				standardExplosion(shell, mop, 8F, 2F, false, false, 25, -25); }};
+				standardExplosion(shell, mop, 10F, 2F, false, false, 25, -25); }};
 				
 		this.itemTypes[LASER] = new ArtilleryShell("ammo_arty_laser", SpentCasing.COLOR_CASE_16INCH, 1) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
@@ -506,11 +516,35 @@ public class ItemAmmoArty extends Item {
 		/* CLUSTER SHELLS */
 		this.itemTypes[PHOSPHORUS_MULTI] = new ArtilleryShell("ammo_arty_phosphorus_multi", SpentCasing.COLOR_CASE_16INCH_PHOS, 4) {
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { ItemAmmoArty.this.itemTypes[PHOSPHORUS].onImpact(shell, mop); }
-			public void onUpdate(EntityArtilleryShell shell) { standardCluster(shell, PHOSPHORUS, 10, 500, 12); }
+			public void onUpdate(EntityArtilleryShell shell) { standardCluster(shell, PHOSPHORUS, 10, 400, 10); }
 		};
 		this.itemTypes[MINI_NUKE_MULTI] = new ArtilleryShell("ammo_arty_mini_nuke_multi", SpentCasing.COLOR_CASE_16INCH_NUKE, 4) {
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { ItemAmmoArty.this.itemTypes[MINI_NUKE].onImpact(shell, mop); }
 			public void onUpdate(EntityArtilleryShell shell) { standardCluster(shell, MINI_NUKE, 5, 500, 12); }
+		};
+		
+		/* FIRECRACKER SHELL */
+		
+		this.itemTypes[FIRECRACKER] = new ArtilleryShell("ammo_arty_firecracker", SpentCasing.COLOR_CASE_16INCH, 4) {
+			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) {
+				Random rand = new Random();
+				for(int i = 0; i < 100; i++) {
+					int rand1 = rand.nextInt(80)-40;
+					int rand2 = rand.nextInt(80)-40;
+					double x = mop.hitVec.xCoord + rand1 + rand2/3 +rand.nextInt(40)-20;
+					double y = mop.hitVec.yCoord;
+					double z = mop.hitVec.zCoord+ rand2 + rand1/3 +rand.nextInt(40)-20;
+					y = y + nearestblock(shell.worldObj, x, y, z);
+					ExplosionVNT xnt = new ExplosionVNT(shell.worldObj, x, y+1, z, 2F);
+					xnt.setBlockAllocator(new BlockAllocatorStandard(48));
+					xnt.setBlockProcessor(new BlockProcessorStandard().setNoDrop());
+					xnt.setEntityProcessor(new EntityProcessorCross(7.5D).withRangeMod(0.5F));
+					xnt.setPlayerProcessor(new PlayerProcessorStandard());
+					ExplosionCreator.composeEffect(shell.worldObj, x, y+1, z, 5, 0.7F, 0.1F, 10F, 0, 0, 20, 0.75F, 1F, -2F, 150);
+					xnt.explode();    }
+				shell.killAndClear();
+
+			}
 		};
 	}
 }
