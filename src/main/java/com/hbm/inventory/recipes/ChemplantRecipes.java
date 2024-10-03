@@ -182,7 +182,7 @@ public class ChemplantRecipes extends SerializableRecipe {
 						new ComparableStack(Items.brick),
 						new OreDictStack(COAL.dust()))
 				.inputFluids(new FluidStack(Fluids.PETROLEUM, 100))
-				.outputItems(new ItemStack(ModItems.plate_kevlar, 4)));
+				.outputItems(new ItemStack(ModItems.insert_kevlar, 2)));
 		recipes.add(new ChemRecipe(55, "CONCRETE", 100)
 				.inputItems(
 						new ComparableStack(ModItems.powder_cement, 1),
@@ -397,6 +397,28 @@ public class ChemplantRecipes extends SerializableRecipe {
 				.outputItems(new ItemStack(ModItems.sulfur, 4),
 						new ItemStack(ModItems.niter, 3))
 				.outputFluids(new FluidStack(Fluids.SALIENT, 250)));
+		
+		recipes.add(new ChemRecipe(104, "CERAMIC_PLATE", 40)
+				.inputItems(
+						new OreDictStack(KNO.dust(), 4),
+						new OreDictStack(TI.plateCast(),1))
+				.inputFluids(new FluidStack(Fluids.AROMATICS, 100), new FluidStack(Fluids.NITRIC_ACID, 100))
+				.outputItems(new ItemStack(ModItems.insert_sapi, 1)));
+		
+		recipes.add(new ChemRecipe(105, "BONDED_CERAMIC", 40)
+				.inputItems(
+						new ComparableStack(ModItems.powder_bakelite,2),
+						new ComparableStack(ModItems.insert_sapi,2))
+				.inputFluids(new FluidStack(Fluids.UNSATURATEDS, 100), new FluidStack(Fluids.SOLVENT, 100))
+				.outputItems(new ItemStack(ModItems.insert_esapi, 1)));
+		
+		recipes.add(new ChemRecipe(106, "BORON_COMPOSITE", 40)
+				.inputItems(
+						new ComparableStack(ModItems.powder_boron, 2),
+						new ComparableStack(ModItems.ingot_pc, 4),
+						new ComparableStack(ModItems.insert_esapi,1))
+				.inputFluids(new FluidStack(Fluids.XYLENE, 100), new FluidStack(Fluids.RADIOSOLVENT, 100))
+				.outputItems(new ItemStack(ModItems.insert_xsapi, 2)));
 
 	}
 

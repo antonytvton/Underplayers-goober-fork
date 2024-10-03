@@ -27,11 +27,11 @@ public class ItemModServos extends ItemArmorMod {
 		
 		if(this == ModItems.servo_set) {
 			list.add(EnumChatFormatting.DARK_PURPLE + "Chestplate: Haste I / Damage +50%");
-			list.add(EnumChatFormatting.DARK_PURPLE + "Leggings: Speed +25% / Jump II");
+			list.add(EnumChatFormatting.DARK_PURPLE + "Leggings: Speed +10% / Jump I");
 		}
 		if(this == ModItems.servo_set_desh) {
-			list.add(EnumChatFormatting.DARK_PURPLE + "Chestplate: Haste III / Damage +150%");
-			list.add(EnumChatFormatting.DARK_PURPLE + "Leggings: Speed +50% / Jump III");
+			list.add(EnumChatFormatting.DARK_PURPLE + "Chestplate: Haste III / Damage +100%");
+			list.add(EnumChatFormatting.DARK_PURPLE + "Leggings: Speed +20% / Jump II");
 		}
 		
 		list.add("");
@@ -102,17 +102,17 @@ public class ItemModServos extends ItemArmorMod {
 			
 			if(this == ModItems.servo_set_desh)
 				multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(),
-						new AttributeModifier(ArmorModHandler.UUIDs[((ItemArmor)armor.getItem()).armorType], "NTM Armor Mod Servos", 1.5, 2));
+						new AttributeModifier(ArmorModHandler.UUIDs[((ItemArmor)armor.getItem()).armorType], "NTM Armor Mod Servos", 1, 2));
 		}
 		
 		if(item.armorType == 2) {
 			if(this == ModItems.servo_set)
 				multimap.put(SharedMonsterAttributes.movementSpeed.getAttributeUnlocalizedName(),
-						new AttributeModifier(ArmorModHandler.UUIDs[((ItemArmor)armor.getItem()).armorType], "NTM Armor Mod Servos", 0.25, 2));
+						new AttributeModifier(ArmorModHandler.UUIDs[((ItemArmor)armor.getItem()).armorType], "NTM Armor Mod Servos", 0.1, 2));
 			
 			if(this == ModItems.servo_set_desh)
 				multimap.put(SharedMonsterAttributes.movementSpeed.getAttributeUnlocalizedName(),
-						new AttributeModifier(ArmorModHandler.UUIDs[((ItemArmor)armor.getItem()).armorType], "NTM Armor Mod Servos", 0.5, 2));
+						new AttributeModifier(ArmorModHandler.UUIDs[((ItemArmor)armor.getItem()).armorType], "NTM Armor Mod Servos", 0.2, 2));
 		}
 		
 		return multimap;

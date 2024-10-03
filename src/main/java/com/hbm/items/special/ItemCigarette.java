@@ -46,9 +46,9 @@ public class ItemCigarette extends Item  {
 		if(!world.isRemote) {
 			
 			if(this == ModItems.cigarette) {
-				HbmLivingProps.incrementBlackLung(player, 2000);
-				HbmLivingProps.incrementAsbestos(player, 2000);
-				HbmLivingProps.incrementRadiation(player, 100F);
+				HbmLivingProps.incrementBlackLung(player, 1000);
+				HbmLivingProps.incrementAsbestos(player, 1000);
+				HbmLivingProps.incrementRadiation(player, -100F);
 				
 				ItemStack helmet = player.getEquipmentInSlot(4);
 				if(helmet != null && helmet.getItem() == ModItems.no9) {
@@ -82,7 +82,7 @@ public class ItemCigarette extends Item  {
 		if(this == ModItems.cigarette) {
 			list.add(EnumChatFormatting.RED + "✓ Asbestos filter");
 			list.add(EnumChatFormatting.RED + "✓ High in tar");
-			list.add(EnumChatFormatting.RED + "✓ Tobacco contains 100% Polonium-210");
+			list.add(EnumChatFormatting.RED + "✓ This somehow removes 100 rads? S.T.A.L.K.E.WR Logic");
 			list.add(EnumChatFormatting.RED + "✓ Yum");
 		} else {
 			String[] colors = new String[] {

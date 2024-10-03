@@ -4,9 +4,12 @@ import java.util.Random;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.explosion.ExplosionLarge;
+import com.hbm.explosion.ExplosionNT;
 import com.hbm.explosion.ExplosionNukeSmall;
+import com.hbm.explosion.ExplosionNT.ExAttrib;
 import com.hbm.interfaces.IBomb;
 import com.hbm.items.ModItems;
+import com.hbm.particle.helper.ExplosionCreator;
 import com.hbm.tileentity.bomb.TileEntityLandmine;
 
 import net.minecraft.block.Block;
@@ -147,10 +150,21 @@ public class Landmine extends BlockContainer implements IBomb {
 			Landmine.safeMode = false;
 
 			if(this == ModBlocks.mine_ap) {
-				world.newExplosion(null, x + 0.5, y + 0.5, z + 0.5, 2.5F, false, false);
+				ExplosionCreator.composeEffect(world, x, y+1, z, 3, 0.5F, 0.1F, 10F, 0, 0, 20, 0.75F, 1F, -2F, 50);
+				ExplosionNT explosion = new ExplosionNT(world, null, x, y+1, z, 5);
+				explosion.addAllAttrib(ExAttrib.STRIP);
+				explosion.addAllAttrib(ExAttrib.NODROP);
+				explosion.addAllAttrib(ExAttrib.NOPARTICLE);
+				explosion.addAllAttrib(ExAttrib.NOPARTICLE);
+				explosion.explode();
 			} else if(this == ModBlocks.mine_he) {
-				ExplosionLarge.explode(world, x + 0.5, y + 0.5, z + 0.5, 3F, true, false, false);
-				world.newExplosion(null, x + 0.5, y + 2, z + 0.5, 15F, false, false);
+				ExplosionCreator.composeEffect(world, x, y+1, z, 4, 0.7F, 0.1F, 10F, 0, 0, 20, 0.75F, 1F, -2F, 50);
+				ExplosionNT explosion = new ExplosionNT(world, null, x, y+1, z, 7);
+				explosion.addAllAttrib(ExAttrib.STRIP);
+				explosion.addAllAttrib(ExAttrib.NODROP);
+				explosion.addAllAttrib(ExAttrib.NOPARTICLE);
+				explosion.addAllAttrib(ExAttrib.NOPARTICLE);
+				explosion.explode();
 			} else if(this == ModBlocks.mine_shrap) {
 				ExplosionLarge.explode(world, x + 0.5, y + 0.5, z + 0.5, 1, true, false, false);
 				ExplosionLarge.spawnShrapnelShower(world, x + 0.5, y + 0.5, z + 0.5, 0, 1D, 0, 45, 0.2D);

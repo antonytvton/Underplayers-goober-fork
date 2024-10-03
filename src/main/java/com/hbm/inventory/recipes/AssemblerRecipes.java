@@ -693,6 +693,17 @@ public class AssemblerRecipes extends SerializableRecipe {
 				new ComparableStack(ModItems.ingot_bakelite, 16)
 			}, 80);
 		
+		makeRecipe(new ComparableStack(ModItems.insert_steel, 1), new AStack[] {
+				new OreDictStack(STEEL.plateWelded(), 4),
+				new OreDictStack(STEEL.plateCast(), 8),
+				new OreDictStack(STEEL.plate(), 16)
+			}, 80);
+		
+		makeRecipe(new ComparableStack(ModItems.insert_du, 1), new AStack[] {
+				new OreDictStack(TI.plateCast(), 8),
+				new OreDictStack(TI.plateWelded(), 4),
+				new OreDictStack(TI.plate(), 16)
+			}, 80);
 
 		makeRecipe(new ComparableStack(ModItems.spawn_worm, 1), new AStack[] {
 				new OreDictStack(TI.block(), 75),
