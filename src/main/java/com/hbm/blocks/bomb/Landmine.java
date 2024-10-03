@@ -150,25 +150,35 @@ public class Landmine extends BlockContainer implements IBomb {
 			Landmine.safeMode = false;
 
 			if(this == ModBlocks.mine_ap) {
-				ExplosionCreator.composeEffect(world, x, y+1, z, 3, 0.5F, 0.1F, 10F, 0, 0, 20, 0.75F, 1F, -2F, 50);
-				ExplosionNT explosion = new ExplosionNT(world, null, x, y+1, z, 5);
+				ExplosionCreator.composeEffect(world, x, y+1, z, 3, 0.5F, 0F, 0F, 0, 0, 20, 0.75F, 1F, -2F, 50);
+				ExplosionNT explosion = new ExplosionNT(world, null, x, y+0.5, z, 5);
 				explosion.addAllAttrib(ExAttrib.STRIP);
 				explosion.addAllAttrib(ExAttrib.NODROP);
 				explosion.addAllAttrib(ExAttrib.NOPARTICLE);
 				explosion.addAllAttrib(ExAttrib.NOPARTICLE);
 				explosion.explode();
 			} else if(this == ModBlocks.mine_he) {
-				ExplosionCreator.composeEffect(world, x, y+1, z, 4, 0.7F, 0.1F, 10F, 0, 0, 20, 0.75F, 1F, -2F, 50);
-				ExplosionNT explosion = new ExplosionNT(world, null, x, y+1, z, 7);
+				ExplosionCreator.composeEffect(world, x, y+1, z, 4, 1F, 0F, 0F, 0, 0, 20, 0.75F, 1F, -2F, 50);
+				ExplosionNT explosion = new ExplosionNT(world, null, x, y+0.5, z, 7);
 				explosion.addAllAttrib(ExAttrib.STRIP);
 				explosion.addAllAttrib(ExAttrib.NODROP);
 				explosion.addAllAttrib(ExAttrib.NOPARTICLE);
 				explosion.addAllAttrib(ExAttrib.NOPARTICLE);
 				explosion.explode();
 			} else if(this == ModBlocks.mine_shrap) {
-				ExplosionLarge.explode(world, x + 0.5, y + 0.5, z + 0.5, 1, true, false, false);
-				ExplosionLarge.spawnShrapnelShower(world, x + 0.5, y + 0.5, z + 0.5, 0, 1D, 0, 45, 0.2D);
-				ExplosionLarge.spawnShrapnels(world, x + 0.5, y + 0.5, z + 0.5, 5);
+				ExplosionCreator.composeEffect(world, x, y+1, z, 4, 2F, 0F, 0F, 0, 0, 20, 0.75F, 1F, -2F, 50);				
+				for(int i = 0; i < 5; i++) {
+					for(int l = 0; l < 5; l++) {
+						ExplosionNT explosion = new ExplosionNT(world, null, x-9+3*i, y+0.5, z-9+3*l, 6);
+						explosion.addAllAttrib(ExAttrib.STRIP);
+						explosion.addAllAttrib(ExAttrib.NODROP);
+						explosion.addAllAttrib(ExAttrib.NOPARTICLE);
+						explosion.addAllAttrib(ExAttrib.NOPARTICLE);
+						explosion.explode();
+					}
+				}
+				
+				
 			} else if(this == ModBlocks.mine_fat) {
 				ExplosionNukeSmall.explode(world, x + 0.5, y + 0.5, z + 0.5, ExplosionNukeSmall.PARAMS_MEDIUM);
 			}

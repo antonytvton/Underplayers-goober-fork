@@ -465,8 +465,8 @@ public class ItemAmmoArty extends Item {
 				shell.worldObj.createExplosion(shell, mop.hitVec.xCoord - vec.xCoord, mop.hitVec.yCoord - vec.yCoord, mop.hitVec.zCoord - vec.zCoord, 5F, false);
 				EntityMist mist = new EntityMist(shell.worldObj);
 				mist.setType(Fluids.CHLORINE);
-				mist.setPosition(mop.hitVec.xCoord - vec.xCoord, mop.hitVec.yCoord - vec.yCoord - 3, mop.hitVec.zCoord - vec.zCoord);
-				mist.setArea(15, 7.5F);
+				mist.setPosition(mop.hitVec.xCoord - vec.xCoord, mop.hitVec.yCoord - vec.yCoord - 7, mop.hitVec.zCoord - vec.zCoord);
+				mist.setArea(20, 20);
 				shell.worldObj.spawnEntityInWorld(mist);
 				PollutionHandler.incrementPollution(shell.worldObj, mop.blockX, mop.blockY, mop.blockZ, PollutionType.HEAVYMETAL, 5F);
 			}
@@ -485,8 +485,8 @@ public class ItemAmmoArty extends Item {
 						x += rand.nextGaussian() * 15;
 						z += rand.nextGaussian() * 15;
 					}
-					mist.setPosition(x, mop.hitVec.yCoord - vec.yCoord - 5, z);
-					mist.setArea(15, 10);
+					mist.setPosition(x, mop.hitVec.yCoord - vec.yCoord - 7, z);
+					mist.setArea(25, 20);
 					shell.worldObj.spawnEntityInWorld(mist);
 				}
 				PollutionHandler.incrementPollution(shell.worldObj, mop.blockX, mop.blockY, mop.blockZ, PollutionType.HEAVYMETAL, 10F);
@@ -507,8 +507,8 @@ public class ItemAmmoArty extends Item {
 						x += rand.nextGaussian() * 25;
 						z += rand.nextGaussian() * 25;
 					}
-					mist.setPosition(x, mop.hitVec.yCoord - vec.yCoord - 5, z);
-					mist.setArea(20, 10);
+					mist.setPosition(x, mop.hitVec.yCoord - vec.yCoord - 7, z);
+					mist.setArea(30, 20);
 					shell.worldObj.spawnEntityInWorld(mist);
 				}
 				PollutionHandler.incrementPollution(shell.worldObj, mop.blockX, mop.blockY, mop.blockZ, PollutionType.HEAVYMETAL, 15F);
