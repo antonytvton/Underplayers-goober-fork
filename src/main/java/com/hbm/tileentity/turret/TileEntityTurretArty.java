@@ -195,13 +195,15 @@ public class TileEntityTurretArty extends TileEntityTurretBaseArtillery implemen
 		Vec3 vec = Vec3.createVectorHelper(this.getBarrelLength(), 0, 0);
 		vec.rotateAroundZ((float) -this.rotationPitch);
 		vec.rotateAroundY((float) -(this.rotationYaw + Math.PI * 0.5));
+
 		
 		EntityArtilleryShell proj = new EntityArtilleryShell(worldObj);
 		proj.setPositionAndRotation(pos.xCoord + vec.xCoord, pos.yCoord + vec.yCoord, pos.zCoord + vec.zCoord, 0.0F, 0.0F);
 		proj.setThrowableHeading(vec.xCoord, vec.yCoord, vec.zCoord, (float) getV0(), 0.0F);
+
 		proj.setTarget((int) tPos.xCoord, (int) tPos.yCoord, (int) tPos.zCoord);
 		proj.setType(type.getItemDamage());
-		
+
 		if(type.getItemDamage() == 8 && type.hasTagCompound()) {
 			NBTTagCompound cargo = type.stackTagCompound.getCompoundTag("cargo");
 			

@@ -43,7 +43,7 @@ public class EntityArtilleryShell extends EntityThrowableNT implements IChunkLoa
 	private double targetX;
 	private double targetY;
 	private double targetZ;
-	private boolean shouldWhistle = false;
+	public boolean shouldWhistle = false;
 	private boolean didWhistle = false;
 	
 	private ItemStack cargo = null;
@@ -117,8 +117,12 @@ public class EntityArtilleryShell extends EntityThrowableNT implements IChunkLoa
 				double deltaX = this.posX - this.targetX;
 				double deltaZ = this.posZ - this.targetZ;
 				double dist = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
-				
 				if(speed * 18 > dist) {
+					worldObj.playSoundEffect(this.targetX, this.targetY, this.targetZ, "hbm:turret.mortarWhistle", 15.0F, 0.9F + rand.nextFloat() * 0.2F);
+					this.didWhistle = true;
+				}
+
+				if ((speed == 0)&& ((this.motionY*18)*(-1) > this.posY-this.targetY)) {
 					worldObj.playSoundEffect(this.targetX, this.targetY, this.targetZ, "hbm:turret.mortarWhistle", 15.0F, 0.9F + rand.nextFloat() * 0.2F);
 					this.didWhistle = true;
 				}

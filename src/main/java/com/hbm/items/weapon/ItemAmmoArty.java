@@ -60,7 +60,7 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 public class ItemAmmoArty extends Item {
 	
 	public static Random rand = new Random();
-	public static ArtilleryShell[] itemTypes =	new ArtilleryShell[ /* >>> */ 16 /* <<< */ ];
+	public static ArtilleryShell[] itemTypes =	new ArtilleryShell[ /* >>> */ 17 /* <<< */ ];
 	/* item types */
 	public static final int HE = 0;
 	public static final int FRAG = 1;
@@ -78,6 +78,8 @@ public class ItemAmmoArty extends Item {
 	public static final int NONE = 13;
 	public static final int CARGO = 14;
 	public static final int FIRECRACKER = 5;
+	public static final int SMOKE = 16;
+
 
 
 	/* non-item shell types */
@@ -107,6 +109,8 @@ public class ItemAmmoArty extends Item {
 		list.add(new ItemStack(item, 1, MINI_NUKE));
 		list.add(new ItemStack(item, 1, MINI_NUKE_MULTI));
 		list.add(new ItemStack(item, 1, CARGO));
+		list.add(new ItemStack(item, 1, SMOKE));
+
 	}
 
 	@Override
@@ -120,7 +124,7 @@ public class ItemAmmoArty extends Item {
 		case HE:
 			list.add(y + "Destroys blocks");
 			list.add(y + "Normal Player Dammage");
-			list.add(b + "Accuracy: 25 blocks");
+			list.add(b + "Accuracy: 30 blocks");
 			list.add(b + "Reload time: 2s");
 			list.add(r + "For when you want to remove medium problems");
 			
@@ -128,7 +132,7 @@ public class ItemAmmoArty extends Item {
 		case FRAG:
 			list.add(y + "Doesnt destroy blocks");
 			list.add(y + "Increased Player Dammage");
-			list.add(b + "Accuracy: 25 blocks");
+			list.add(b + "Accuracy: 20 blocks");
 			list.add(b + "Reload time: 2s");
 			list.add(r + "AIRBURST");
 			break;
@@ -142,7 +146,7 @@ public class ItemAmmoArty extends Item {
 		case HHE:
 			list.add(y + "Destroys blocks extra well");
 			list.add(y + "Normal Player Dammage");
-			list.add(b + "Accuracy: 25 blocks");
+			list.add(b + "Accuracy: 15 blocks");
 			list.add(b + "Reload time: 8s");
 			list.add(r + "For when you want to remove large problems");
 			break;
@@ -164,15 +168,18 @@ public class ItemAmmoArty extends Item {
 			break;
 		case CHLORINE:
 			list.add(b + "Reload time: 2s");
-			list.add(r + "Pray the wind is traveling the right direction");
+			list.add(b + "Coverage: 20 blocks");
+			list.add(b + "Accuracy: 10 blocks");
 			break;
 		case PHOSGENE:
 			list.add(b + "Reload time: 2s");
-			list.add(r + "This ones food safe!");
+			list.add(b + "Coverage: 25 blocks");
+			list.add(b + "Accuracy: 10 blocks");
 			break;
 		case MUSTARD:
 			list.add(b + "Reload time: 2s");
-			list.add(r + "Ive run out of fun jokes");
+			list.add(b + "Coverage: 30 blocks");
+			list.add(b + "Accuracy: 10 blocks");
 			break;
 		case NUKE:
 			list.add(r + "☠");
@@ -186,7 +193,8 @@ public class ItemAmmoArty extends Item {
 			break;
 			
 		case FIRECRACKER:
-			list.add(y + "Deploys 120 submunition bomblets over a 50 block radius circle");
+			list.add(y + "Deploys 30 submunition bomblets");
+			list.add(b + "accuracy: 50 blocks");
 			list.add(r + "Waranty void if fired");
 			list.add(b + "Reload time: 8s");
 			break;
@@ -199,6 +207,10 @@ public class ItemAmmoArty extends Item {
 		case NONE:
 			list.add(y + "Theres quite litteraly no warhead");
 			list.add(y + "Well you probably could shoot it");
+			break;
+		case SMOKE:
+			list.add(y + "HES LOOKING AT US");
+			list.add(y + "GUNNER SABOT TANK");
 			break;
 		case CARGO:
 			
@@ -355,11 +367,11 @@ public class ItemAmmoArty extends Item {
 		/* STANDARD SHELLS */
 		this.itemTypes[HE] = new ArtilleryShell("ammo_arty_he", SpentCasing.COLOR_CASE_16INCH, 1) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
-				standardExplosion(shell, mop, 10F, 1F, true, false, 25, 0);}};
+				standardExplosion(shell, mop, 8F, 1F, true, false, 30, 0);}};
 				
 		this.itemTypes[FRAG] = new ArtilleryShell("ammo_arty_frag", SpentCasing.COLOR_CASE_16INCH, 1) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
-				standardExplosion(shell, mop, 10F, 1.8F, false, false, 25, -25); }};
+				standardExplosion(shell, mop, 10F, 1.2F, false, false, 20, -25); }};
 				
 		this.itemTypes[LASER] = new ArtilleryShell("ammo_arty_laser", SpentCasing.COLOR_CASE_16INCH, 1) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
@@ -367,7 +379,7 @@ public class ItemAmmoArty extends Item {
 				
 		this.itemTypes[HHE] = new ArtilleryShell("ammo_arty_higher_explosive", SpentCasing.COLOR_CASE_16INCH, 4) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
-				standardExplosion(shell, mop, 20F, 1F, true, false, 25, 0); }};
+				standardExplosion(shell, mop, 20F, 1F, true, false, 15, 0); }};
 				
 		this.itemTypes[BUNKER] = new ArtilleryShell("ammo_arty_bunker", SpentCasing.COLOR_CASE_16INCH, 4) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
@@ -504,8 +516,8 @@ public class ItemAmmoArty extends Item {
 					double x = mop.hitVec.xCoord - vec.xCoord;
 					double z = mop.hitVec.zCoord - vec.zCoord;
 					if(i > 0) {
-						x += rand.nextGaussian() * 25;
-						z += rand.nextGaussian() * 25;
+						x += rand.nextGaussian() * 20;
+						z += rand.nextGaussian() * 20;
 					}
 					mist.setPosition(x, mop.hitVec.yCoord - vec.yCoord - 7, z);
 					mist.setArea(30, 20);
@@ -513,6 +525,37 @@ public class ItemAmmoArty extends Item {
 				}
 				PollutionHandler.incrementPollution(shell.worldObj, mop.blockX, mop.blockY, mop.blockZ, PollutionType.HEAVYMETAL, 15F);
 				PollutionHandler.incrementPollution(shell.worldObj, mop.blockX, mop.blockY, mop.blockZ, PollutionType.POISON, 30F);
+			}
+		};
+		this.itemTypes[SMOKE] = new ArtilleryShell("ammo_arty_smoke", SpentCasing.COLOR_CASE_16INCH, 1) {
+			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) {
+				shell.killAndClear();
+				Vec3 vec = Vec3.createVectorHelper(shell.motionX, shell.motionY, shell.motionZ).normalize();				
+				for(int i = 0; i<30; i++) {
+					NBTTagCompound data = new NBTTagCompound();
+					double x = mop.hitVec.xCoord + shell.worldObj.rand.nextInt(30)-15;
+					double y = mop.hitVec.yCoord;
+					double z = mop.hitVec.zCoord + shell.worldObj.rand.nextInt(30)-15;
+					y = y+nearestblock(shell.worldObj, x, y, z)+shell.worldObj.rand.nextInt(3);
+
+					NBTTagCompound fx = new NBTTagCompound();
+					fx.setString("type", "tower");
+					fx.setFloat("lift", 0F);
+					fx.setFloat("base", 4F);
+					fx.setFloat("max", 4F);
+					fx.setInteger("life", 20*90);
+					fx.setDouble("posX", x);
+					fx.setDouble("posY", y);
+					fx.setDouble("posZ", z);
+					fx.setDouble("mX", 0);
+					fx.setDouble("mY", 0);
+					fx.setDouble("mZ", 0);
+					fx.setBoolean("noWind", true);
+					MainRegistry.proxy.effectNT(fx);
+					shell.worldObj.createExplosion(shell, x, y, z, 5F, false);
+				}
+
+
 			}
 		};
 		

@@ -40,7 +40,7 @@ public class EntityMist extends Entity {
 		super(world);
 		this.noClip = true;
 	}
-	public int maxAge = 150;
+	public int maxAge = 20*60;
 	public EntityMist setArea(float width, float height) {
 		this.dataWatcher.updateObject(11, width);
 		this.dataWatcher.updateObject(12, height);

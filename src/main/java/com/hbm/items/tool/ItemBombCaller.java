@@ -1,8 +1,11 @@
 package com.hbm.items.tool;
 
 import java.util.List;
+import java.util.Random;
 
 import com.hbm.entity.logic.EntityBomber;
+import com.hbm.entity.projectile.EntityArtilleryShell;
+import com.hbm.items.weapon.ItemAmmoArty;
 import com.hbm.lib.Library;
 
 import cpw.mods.fml.relauncher.Side;
@@ -26,21 +29,65 @@ public class ItemBombCaller extends Item {
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool)
 	{
-		list.add("Aim & click to call an airstrike!");
-
 		switch (stack.getItemDamage()) {
-			case 0: list.add("Type: Carpet bombing"); break;
-			case 1: list.add("Type: Napalm"); break;
-			case 2: list.add("Type: Poison gas"); break;
-			case 3: list.add("Type: Agent orange"); break;
-			case 4: list.add("Type: Atomic bomb"); break;
-			case 5: list.add("Type: VT stinger rockets"); break;
-			case 6: list.add("Type: PIP OH GOD"); break;
-			case 7: list.add("Type: Cloud the cloud oh god the cloud"); break;
-			default: list.add("Type: INVALID, Report it to mod creator");
+			case 0: list.add("Type:  Orbital 155MM HE Barrage");
+			list.add("Call in 8 155mm artillery shell");						break;
+			case 1: list.add("Type:  Orbital Airbust Strike");
+			list.add("Call in 4 airbust shells");								break;
+			case 2: list.add("Type:  Orbital 350MM HE Barrage");
+			list.add("Call in a 350mm artillery shell");						break;
+			case 3: list.add("Type:  Orbital 155MM Precision Barrage");
+			list.add("Call in 4 artillery highly accurate shells");				break;
+			case 4: list.add("Type:  Orbital 155MM Creeping Barrage");
+			list.add("Call in 10 creeping artillery shells");					break;
+			case 5: list.add("Type:  Orbital Posion Gas");
+			list.add("Call in posion gas artillery shells");					break;
+			case 6: list.add("Type:  Orbital Smoke Barrage");
+			list.add("Call in orbital smoke");									break;
+			default: list.add("Type: INVALID, Report it to underplayer since he probably fucked this up");
 
 		}
 
+	}
+	
+	public void artystrike(World world, double x, double y, double z, int type, int number, int innacuracy, int clumptime) {
+		Random rand = new Random();
+		for(int i = 0; i < number; i++) {
+			EntityArtilleryShell proj = new EntityArtilleryShell(world);
+			double x_2 = x+rand.nextInt(2*innacuracy)-innacuracy;
+			double z_2 = z+rand.nextInt(2*innacuracy)-innacuracy;
+
+			proj.setPositionAndRotation(x_2, y+3000+rand.nextDouble()*clumptime*20*20, z_2, 0.0F, 0.0F);
+			proj.setThrowableHeading(0, -9, 0, (float) 20, 0.0F);
+			proj.setTarget((int) x_2, (int) y, (int) z_2);
+			proj.setType(type);
+			proj.setWhistle(true);
+			world.spawnEntityInWorld(proj);
+		}
+	}
+	
+	public void creeping(World world, double x, double y, double z, EntityPlayer player) {
+		Random rand = new Random();
+		double x_dif = x - player.posX;
+		double z_dif = z - player.posZ;
+		double distance = Math.sqrt((x_dif*x_dif)+(z_dif*z_dif));
+		double norm_x = x_dif/distance;
+		double norm_z = z_dif/distance;
+		System.out.println(norm_x);
+		System.out.println(norm_z);
+
+		for(int i = 0; i < 2; i++) {
+			for(int l = 0; l < 5; l++) {
+				EntityArtilleryShell proj = new EntityArtilleryShell(world);
+				double movex = x+(norm_x*l*12-norm_z*(i-0.5)*10);
+				double movez = z+(norm_z*l*12+norm_x*(i-0.5)*10);
+				proj.setPositionAndRotation(movex, 2400+l*400+rand.nextInt(200),movez, 0.0F, 0.0F);
+				proj.setThrowableHeading(0, -9, 0, (float) 20, 0.0F);
+				proj.setTarget((int) (movex), (int) y, (int) movez);
+				proj.setType(ItemAmmoArty.LASER);
+				world.spawnEntityInWorld(proj);
+			}
+		}
 	}
 
 	@Override
@@ -53,23 +100,28 @@ public class ItemBombCaller extends Item {
 
 		if(!world.isRemote)
 		{
-			EntityBomber bomber;
-			switch(stack.getItemDamage()) {
-
-				case 1: bomber = EntityBomber.statFacNapalm(world, x, y, z); break;
-				case 2: bomber = EntityBomber.statFacChlorine(world, x, y, z); break;
-				case 3: bomber = EntityBomber.statFacOrange(world, x, y, z); break;
-				case 4: bomber = EntityBomber.statFacABomb(world, x, y, z); break;
-				case 5: bomber = EntityBomber.statFacStinger(world, x, y, z); break;
-				case 6: bomber = EntityBomber.statFacBoxcar(world, x, y, z); break;
-				case 7: bomber = EntityBomber.statFacPC(world, x, y, z); break;
-				default: bomber = EntityBomber.statFacCarpet(world, x, y, z);
-
+			if(stack.getItemDamage() == 0) {
+				artystrike(world, x, y, z, ItemAmmoArty.HE, 8, 20, 10);
 			}
-			WorldUtil.loadAndSpawnEntityInWorld(bomber);
-			player.addChatMessage(new ChatComponentText("Called in airstrike!"));
-			world.playSoundAtEntity(player, "hbm:item.techBleep", 1.0F, 1.0F);
-
+			if(stack.getItemDamage() == 1) {
+				artystrike(world, x, y, z, ItemAmmoArty.FRAG, 3, 1, 3);
+			}
+			if(stack.getItemDamage() == 2) {
+				artystrike(world, x, y, z, ItemAmmoArty.HHE, 1, 1, 1);
+			}
+			if(stack.getItemDamage() == 3) {
+				artystrike(world, x, y, z, ItemAmmoArty.LASER, 4, 8, 3);
+			}
+			if(stack.getItemDamage() == 4) {
+				creeping(world, x, y, z, player);
+			}
+			if(stack.getItemDamage() == 5) {
+				artystrike(world, x, y, z, ItemAmmoArty.PHOSGENE, 3, 20, 3);
+			}
+			if(stack.getItemDamage() == 6) {
+				artystrike(world, x, y, z, ItemAmmoArty.SMOKE, 4, 8, 3);
+			}
+			
 		}
 
 		stack.stackSize -= 1;
@@ -86,6 +138,10 @@ public class ItemBombCaller extends Item {
 		p_150895_3_.add(new ItemStack(p_150895_1_, 1, 2));
 		p_150895_3_.add(new ItemStack(p_150895_1_, 1, 3));
 		p_150895_3_.add(new ItemStack(p_150895_1_, 1, 4));
+		p_150895_3_.add(new ItemStack(p_150895_1_, 1, 5));
+		p_150895_3_.add(new ItemStack(p_150895_1_, 1, 6));
+
+
 	}
 
 	@Override
