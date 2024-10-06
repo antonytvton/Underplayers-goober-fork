@@ -970,6 +970,7 @@ public class ResourceManager {
 	public static final ResourceLocation ff_nightmare_orig_tex = new ResourceLocation(RefStrings.MODID, "textures/models/weapons/ff/nightmare_orig.png");
 
 	public static final ResourceLocation grenade_mk2 = new ResourceLocation(RefStrings.MODID, "textures/models/weapons/grenade_mk2.png");
+
 	public static final ResourceLocation grenade_aschrab_tex = new ResourceLocation(RefStrings.MODID, "textures/models/weapons/grenade_aschrab.png");
 
 	public static final ResourceLocation bj_eyepatch = new ResourceLocation(RefStrings.MODID, "textures/armor/bj_eyepatch.png");

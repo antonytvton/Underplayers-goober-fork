@@ -1643,6 +1643,7 @@ public class ModItems {
 	public static Item grenade_black_hole;
 	public static Item grenade_cloud;
 	public static Item grenade_pink_cloud;
+	public static Item satchel_charge;
 	public static Item ullapool_caber;
 
 	public static Item grenade_if_generic;
@@ -4172,6 +4173,7 @@ public class ModItems {
 		grenade_gascan = new ItemGrenade(-1).setUnlocalizedName("grenade_gascan").setCreativeTab(MainRegistry.weaponTab).setTextureName(RefStrings.MODID + ":grenade_gascan");
 		grenade_kyiv = new ItemGrenadeKyiv(-1).setUnlocalizedName("grenade_kyiv").setCreativeTab(MainRegistry.weaponTab).setTextureName(RefStrings.MODID + ":grenade_kyiv");
 		grenade_mk2 = new ItemGrenade(5).setUnlocalizedName("grenade_mk2").setCreativeTab(MainRegistry.weaponTab).setTextureName(RefStrings.MODID + ":grenade_mk2_alt");
+		satchel_charge = new ItemGrenade(8).setUnlocalizedName("satchel_charge").setCreativeTab(MainRegistry.weaponTab).setTextureName(RefStrings.MODID + ":satchel_charge");
 		grenade_aschrab = new ItemGrenade(-1).setUnlocalizedName("grenade_aschrab").setCreativeTab(MainRegistry.weaponTab).setTextureName(RefStrings.MODID + ":grenade_aschrab");
 		grenade_nuke = new ItemGrenade(-1).setUnlocalizedName("grenade_nuke").setCreativeTab(MainRegistry.weaponTab).setTextureName(RefStrings.MODID + ":grenade_nuke_alt");
 		grenade_nuclear = new ItemGrenade(7).setUnlocalizedName("grenade_nuclear").setCreativeTab(MainRegistry.weaponTab).setTextureName(RefStrings.MODID + ":grenade_nuclear");
@@ -7106,6 +7108,7 @@ public class ModItems {
 		GameRegistry.registerItem(grenade_gascan, grenade_gascan.getUnlocalizedName());
 		GameRegistry.registerItem(grenade_kyiv, grenade_kyiv.getUnlocalizedName());
 		GameRegistry.registerItem(grenade_mk2, grenade_mk2.getUnlocalizedName());
+		GameRegistry.registerItem(satchel_charge, satchel_charge.getUnlocalizedName());
 		GameRegistry.registerItem(grenade_aschrab, grenade_aschrab.getUnlocalizedName());
 		GameRegistry.registerItem(grenade_nuclear, grenade_nuclear.getUnlocalizedName());
 		GameRegistry.registerItem(grenade_zomg, grenade_zomg.getUnlocalizedName());

@@ -1,5 +1,9 @@
 package com.hbm.entity.grenade;
 
+import com.hbm.explosion.ExplosionNT;
+import com.hbm.explosion.ExplosionNT.ExAttrib;
+import com.hbm.particle.helper.ExplosionCreator;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 
@@ -24,7 +28,7 @@ public class EntityGrenadeDynamite extends EntityGrenadeBouncyBase {
 
 	@Override
 	public void explode() {
-		worldObj.newExplosion(this, posX, posY + 0.25D, posZ, 10F, false, true);
+		worldObj.newExplosion(this, posX, posY + 0.25D, posZ, 6F, false, true);
 		this.setDead();
 	}
 

@@ -91,7 +91,9 @@ public class ItemGrenade extends Item {
 			if (this == ModItems.grenade_lemon) {
 				p_77659_2_.spawnEntityInWorld(new EntityGrenadeLemon(p_77659_2_, p_77659_3_));
 			}
-			
+			if (this == ModItems.satchel_charge) {
+				p_77659_2_.spawnEntityInWorld(new EntitySatchelCharge(p_77659_2_, p_77659_3_));
+			}
 			if (this == ModItems.grenade_mk2) {
 				p_77659_2_.spawnEntityInWorld(new EntityGrenadeMk2(p_77659_2_, p_77659_3_));
 			}

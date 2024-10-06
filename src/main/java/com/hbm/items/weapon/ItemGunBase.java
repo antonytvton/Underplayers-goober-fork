@@ -14,6 +14,7 @@ import com.hbm.handler.GunConfiguration;
 import com.hbm.handler.HbmKeybinds;
 import com.hbm.interfaces.IHoldableWeapon;
 import com.hbm.interfaces.IItemHUD;
+import com.hbm.inventory.RecipesCommon.AStack;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.items.IEquipReceiver;
 import com.hbm.items.ModItems;
@@ -241,7 +242,11 @@ public class ItemGunBase extends Item implements IHoldableWeapon, IItemHUD, IEqu
 			for(int i = 0; i < bullets; i++) {
 				spawnProjectile(world, player, stack, BulletConfigSyncingUtil.getKey(config));
 			}
-			
+			System.out.println(stack);
+			if (stack.getItem() == ModItems.gun_karl) {
+				ComparableStack karl = new ComparableStack(ModItems.gun_karl, 1);
+				InventoryUtil.tryConsumeAStack(player.inventory.mainInventory, 0, player.inventory.mainInventory.length - 1, karl);
+			}				
 			useUpAmmo(player, stack, true);
 			player.inventoryContainer.detectAndSendChanges();
 			

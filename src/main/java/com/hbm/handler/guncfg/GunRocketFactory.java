@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import com.hbm.entity.effect.EntitySpear;
 import com.hbm.entity.projectile.EntityBulletBaseNT;
+import com.hbm.explosion.ExplosionNT;
 import com.hbm.explosion.ExplosionNukeSmall;
+import com.hbm.explosion.ExplosionNT.ExAttrib;
 import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
@@ -26,7 +28,7 @@ public class GunRocketFactory {
 		
 		GunConfiguration config = new GunConfiguration();
 		
-		config.rateOfFire = 30;
+		config.rateOfFire = 25;
 		config.roundsPerCycle = 1;
 		config.gunMode = GunConfiguration.MODE_NORMAL;
 		config.firingMode = GunConfiguration.FIRE_MANUAL;
@@ -42,8 +44,8 @@ public class GunRocketFactory {
 		
 		config.name = "gustav";
 		config.manufacturer = EnumGunManufacturer.SAAB;
-		config.comment.add("Fun fact of the day: Recoilless");
-		config.comment.add("rifles don't actually fire rockets.");
+		config.comment.add("Reloadable rocket launcher");
+		config.comment.add("10 uses");
 		
 		config.config = new ArrayList<Integer>();
 		config.config.add(BulletConfigSyncingUtil.ROCKET_NORMAL);
@@ -58,7 +60,7 @@ public class GunRocketFactory {
 		config.config.add(BulletConfigSyncingUtil.ROCKET_SLEEK);
 		config.config.add(BulletConfigSyncingUtil.ROCKET_NUKE);
 		config.config.add(BulletConfigSyncingUtil.ROCKET_CHAINSAW);
-		config.durability = 140;
+		config.durability = 200;
 		
 		return config;
 	}
@@ -132,13 +134,14 @@ public class GunRocketFactory {
 		
 		GunConfiguration config = getGustavConfig();
 		
-		config.reloadDuration = 20;
+		config.reloadDuration = 1;
 		
 		config.name = "karl";
 		config.manufacturer = EnumGunManufacturer.UNKNOWN;
 		config.comment.clear();
-		
+		config.comment.add("single use rocket launcher");
 		config.config = new ArrayList<Integer>();
+		config.config.add(BulletConfigSyncingUtil.ROCKET_NORMAL);
 		config.config.add(BulletConfigSyncingUtil.ROCKET_HE);
 		config.config.add(BulletConfigSyncingUtil.ROCKET_EMP);
 		config.config.add(BulletConfigSyncingUtil.ROCKET_SLEEK);
@@ -147,7 +150,7 @@ public class GunRocketFactory {
 		config.config.add(BulletConfigSyncingUtil.ROCKET_NUKE);
 		config.config.add(BulletConfigSyncingUtil.ROCKET_CHAINSAW);
 		config.config.add(BulletConfigSyncingUtil.ROCKET_ERROR);
-		config.durability = 500;
+		config.durability = 10;
 		
 		return config;
 	}
@@ -156,15 +159,17 @@ public class GunRocketFactory {
 		
 		GunConfiguration config = getGustavConfig();
 		
-		config.reloadDuration = 25;
+		config.reloadDuration = 35;
 		config.hasSights = true;
 		
 		config.name = "panz";
 		config.manufacturer = EnumGunManufacturer.ENZINGER;
 		config.comment.clear();
 		config.comment.add("Panzer-Shrek");
+		config.comment.add("Slow reloading");
+
 		
-		config.durability = 260;
+		config.durability = 300;
 		
 		return config;
 	}
@@ -176,7 +181,8 @@ public class GunRocketFactory {
 		bullet.ammo = new ComparableStack(ModItems.ammo_rocket.stackFromEnum(AmmoRocket.STOCK));
 		bullet.dmgMin = 10;
 		bullet.dmgMax = 15;
-		bullet.explosive = 4F;
+		bullet.explosive = 3F;
+		bullet.wear = 10;
 		bullet.trail = 0;
 		
 		return bullet;
@@ -189,10 +195,15 @@ public class GunRocketFactory {
 		bullet.ammo = new ComparableStack(ModItems.ammo_rocket.stackFromEnum(AmmoRocket.HE));
 		bullet.dmgMin = 10;
 		bullet.dmgMax = 15;
-		bullet.wear = 15;
-		bullet.explosive = 6.5F;
+		bullet.wear = 10;
+		bullet.explosive = 4F;
 		bullet.trail = 1;
-		
+		bullet.bntImpact = (bulletnt, x, y, z, sideHit) -> {
+			//bulletnt.worldObj.newExplosion(bulletnt, x, y, z, 5F, false, true);
+			ExplosionNT explosion = new ExplosionNT(bulletnt.worldObj, bulletnt, x, y, z, 2F);
+			explosion.addAllAttrib(ExAttrib.ERRODE);
+			explosion.explode();;
+		};
 		return bullet;
 	}
 	
@@ -203,8 +214,8 @@ public class GunRocketFactory {
 		bullet.ammo = new ComparableStack(ModItems.ammo_rocket.stackFromEnum(AmmoRocket.INCENDIARY));
 		bullet.dmgMin = 10;
 		bullet.dmgMax = 15;
-		bullet.wear = 15;
-		bullet.explosive = 4F;
+		bullet.wear = 10;
+		bullet.explosive = 3F;
 		bullet.incendiary = 5;
 		bullet.trail = 2;
 		
@@ -221,6 +232,8 @@ public class GunRocketFactory {
 		bullet.explosive = 2.5F;
 		bullet.emp = 10;
 		bullet.trail = 4;
+		bullet.wear = 10;
+
 		
 		return bullet;
 	}
@@ -236,6 +249,8 @@ public class GunRocketFactory {
 		bullet.trail = 6;
 		bullet.gravity = 0;
 		bullet.jolt = 6.5D;
+		bullet.wear = 10;
+
 		
 		return bullet;
 	}
@@ -250,6 +265,8 @@ public class GunRocketFactory {
 		bullet.explosive = 4F;
 		bullet.shrapnel = 25;
 		bullet.trail = 3;
+		bullet.wear = 10;
+
 		
 		return bullet;
 	}
@@ -262,7 +279,7 @@ public class GunRocketFactory {
 		bullet.velocity = 5.0F;
 		bullet.dmgMin = 10;
 		bullet.dmgMax = 15;
-		bullet.wear = 20;
+		bullet.wear = 10;
 		bullet.explosive = 4F;
 		bullet.incendiary = 5;
 		bullet.trail = 5;
@@ -278,7 +295,7 @@ public class GunRocketFactory {
 		bullet.velocity = 1.5F;
 		bullet.dmgMin = 10;
 		bullet.dmgMax = 15;
-		bullet.wear = 35;
+		bullet.wear = 10;
 		bullet.explosive = 0;
 		bullet.incendiary = 0;
 		bullet.trail = 7;
@@ -314,7 +331,7 @@ public class GunRocketFactory {
 		bullet.velocity = 3.0F;
 		bullet.dmgMin = 20;
 		bullet.dmgMax = 25;
-		bullet.wear = 15;
+		bullet.wear = 10;
 		bullet.explosive = 0;
 		bullet.incendiary = 0;
 		bullet.trail = 8;
@@ -343,7 +360,7 @@ public class GunRocketFactory {
 		bullet.ammo = new ComparableStack(ModItems.ammo_rocket.stackFromEnum(AmmoRocket.PHOSPHORUS));
 		bullet.dmgMin = 10;
 		bullet.dmgMax = 15;
-		bullet.wear = 15;
+		bullet.wear = 10;
 		bullet.explosive = 4F;
 		bullet.incendiary = 5;
 		bullet.trail = 9;
@@ -362,6 +379,7 @@ public class GunRocketFactory {
 		bullet.dmgMax = 15;
 		bullet.explosive = 2F;
 		bullet.trail = 0;
+		bullet.wear = 10;
 		
 		bullet.bntUpdate = (bulletnt) -> {
 			if(!bulletnt.worldObj.isRemote) {
