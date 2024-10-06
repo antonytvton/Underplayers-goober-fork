@@ -530,7 +530,8 @@ public class ItemAmmoArty extends Item {
 		this.itemTypes[SMOKE] = new ArtilleryShell("ammo_arty_smoke", SpentCasing.COLOR_CASE_16INCH, 1) {
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) {
 				shell.killAndClear();
-				Vec3 vec = Vec3.createVectorHelper(shell.motionX, shell.motionY, shell.motionZ).normalize();				
+				Vec3 vec = Vec3.createVectorHelper(shell.motionX, shell.motionY, shell.motionZ).normalize();
+				shell.worldObj.createExplosion(shell, mop.hitVec.xCoord - vec.xCoord, mop.hitVec.yCoord - vec.yCoord, mop.hitVec.zCoord - vec.zCoord, 5F, false);
 				for(int i = 0; i<30; i++) {
 					NBTTagCompound data = new NBTTagCompound();
 					double x = mop.hitVec.xCoord + shell.worldObj.rand.nextInt(30)-15;
@@ -543,7 +544,7 @@ public class ItemAmmoArty extends Item {
 					fx.setFloat("lift", 0F);
 					fx.setFloat("base", 4F);
 					fx.setFloat("max", 4F);
-					fx.setInteger("life", 20*90);
+					fx.setInteger("life", 20*60*3);
 					fx.setDouble("posX", x);
 					fx.setDouble("posY", y);
 					fx.setDouble("posZ", z);
@@ -552,7 +553,7 @@ public class ItemAmmoArty extends Item {
 					fx.setDouble("mZ", 0);
 					fx.setBoolean("noWind", true);
 					MainRegistry.proxy.effectNT(fx);
-					shell.worldObj.createExplosion(shell, x, y, z, 5F, false);
+
 				}
 
 

@@ -16,6 +16,11 @@ public class EntityGrenadeDynamite extends EntityGrenadeBouncyBase {
 	public EntityGrenadeDynamite(World world, double x, double y, double z) {
 		super(world, x, y, z);
 	}
+	
+	protected float func_70182_d()
+    {
+        return 0.5F;
+    }
 
 	@Override
 	public void explode() {
@@ -25,11 +30,11 @@ public class EntityGrenadeDynamite extends EntityGrenadeBouncyBase {
 
 	@Override
 	protected int getMaxTimer() {
-		return 60;
+		return 160;
 	}
 
 	@Override
 	protected double getBounceMod() {
-		return 0.5D;
+		return 0.3D;
 	}
 }

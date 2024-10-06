@@ -43,18 +43,18 @@ public class ItemGrenadeFishing extends ItemGenericGrenade {
 	
 	public static ItemStack getRandomLoot(Random rand) {
 		float chance = rand.nextFloat();
-		int luck = 0;
-		int speed = 100; //reduces both the junk and treasure chance to near zero
+		int luck = rand.nextInt(100);
+		int speed = rand.nextInt(100); //reduces both the junk and treasure chance to near zero
 		return net.minecraftforge.common.FishingHooks.getRandomFishable(rand, chance, luck, speed);
 	}
 
 	@Override
 	public int getMaxTimer() {
-		return 60;
+		return 160;
 	}
 
 	@Override
 	public double getBounceMod() {
-		return 0.5D;
+		return 0.3D;
 	}
 }

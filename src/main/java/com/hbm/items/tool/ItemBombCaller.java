@@ -43,7 +43,7 @@ public class ItemBombCaller extends Item {
 			case 5: list.add("Type:  Orbital Posion Gas");
 			list.add("Call in posion gas artillery shells");					break;
 			case 6: list.add("Type:  Orbital Smoke Barrage");
-			list.add("Call in orbital smoke");									break;
+			list.add("Call in orbital smoke artillery shells");					break;
 			default: list.add("Type: INVALID, Report it to underplayer since he probably fucked this up");
 
 		}
@@ -85,6 +85,7 @@ public class ItemBombCaller extends Item {
 				proj.setThrowableHeading(0, -9, 0, (float) 20, 0.0F);
 				proj.setTarget((int) (movex), (int) y, (int) movez);
 				proj.setType(ItemAmmoArty.LASER);
+				proj.setWhistle(true);
 				world.spawnEntityInWorld(proj);
 			}
 		}
@@ -148,6 +149,6 @@ public class ItemBombCaller extends Item {
 	@SideOnly(Side.CLIENT)
 	public boolean hasEffect(ItemStack p_77636_1_)
 	{
-		return p_77636_1_.getItemDamage() >= 4;
+		return p_77636_1_.getItemDamage() == 4;
 	}
 }
