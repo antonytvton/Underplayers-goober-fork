@@ -32,11 +32,16 @@ public class EntitySatchelCharge extends EntityGrenadeBouncyBase
         if (!this.worldObj.isRemote)
         {
             this.setDead();
-			this.worldObj.newExplosion((Entity)null, (float)this.posX, (float)this.posY, (float)this.posZ, 3F, false, true);
+			this.worldObj.newExplosion((Entity)null, (float)this.posX, (float)this.posY, (float)this.posZ, 2F, false, true);
 			ExplosionNT explosion = new ExplosionNT(worldObj, this, posX, posY, posZ, 2F);
 			explosion.addAllAttrib(ExAttrib.ERRODE);
 			explosion.explode();
         }
+    }
+    
+    protected float func_70182_d()
+    {
+        return 0.5F;
     }
 
 	@Override

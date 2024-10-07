@@ -143,13 +143,16 @@ public class GunRocketFactory {
 		config.config = new ArrayList<Integer>();
 		config.config.add(BulletConfigSyncingUtil.ROCKET_NORMAL);
 		config.config.add(BulletConfigSyncingUtil.ROCKET_HE);
+		config.config.add(BulletConfigSyncingUtil.ROCKET_INCENDIARY);
+		config.config.add(BulletConfigSyncingUtil.ROCKET_PHOSPHORUS);
+		config.config.add(BulletConfigSyncingUtil.ROCKET_SHRAPNEL);
 		config.config.add(BulletConfigSyncingUtil.ROCKET_EMP);
-		config.config.add(BulletConfigSyncingUtil.ROCKET_SLEEK);
+		config.config.add(BulletConfigSyncingUtil.ROCKET_GLARE);
 		config.config.add(BulletConfigSyncingUtil.ROCKET_TOXIC);
 		config.config.add(BulletConfigSyncingUtil.ROCKET_CANISTER);
+		config.config.add(BulletConfigSyncingUtil.ROCKET_SLEEK);
 		config.config.add(BulletConfigSyncingUtil.ROCKET_NUKE);
 		config.config.add(BulletConfigSyncingUtil.ROCKET_CHAINSAW);
-		config.config.add(BulletConfigSyncingUtil.ROCKET_ERROR);
 		config.durability = 10;
 		
 		return config;
@@ -199,7 +202,6 @@ public class GunRocketFactory {
 		bullet.explosive = 4F;
 		bullet.trail = 1;
 		bullet.bntImpact = (bulletnt, x, y, z, sideHit) -> {
-			//bulletnt.worldObj.newExplosion(bulletnt, x, y, z, 5F, false, true);
 			ExplosionNT explosion = new ExplosionNT(bulletnt.worldObj, bulletnt, x, y, z, 2F);
 			explosion.addAllAttrib(ExAttrib.ERRODE);
 			explosion.explode();;
@@ -266,6 +268,7 @@ public class GunRocketFactory {
 		bullet.shrapnel = 25;
 		bullet.trail = 3;
 		bullet.wear = 10;
+		bullet.blockDamage = false;
 
 		
 		return bullet;
@@ -362,7 +365,8 @@ public class GunRocketFactory {
 		bullet.dmgMax = 15;
 		bullet.wear = 10;
 		bullet.explosive = 4F;
-		bullet.incendiary = 5;
+		bullet.blockDamage = false;
+		bullet.incendiary = 8;
 		bullet.trail = 9;
 		
 		bullet.bntImpact = BulletConfigFactory.getPhosphorousEffect(10, 60 * 20, 100, 0.5D, 1F);

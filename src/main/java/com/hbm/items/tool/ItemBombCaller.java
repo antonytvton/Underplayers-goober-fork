@@ -31,15 +31,15 @@ public class ItemBombCaller extends Item {
 	{
 		switch (stack.getItemDamage()) {
 			case 0: list.add("Type:  Orbital 155MM HE Barrage");
-			list.add("Call in 8 155mm artillery shell");						break;
+			list.add("Call in 6 155mm artillery shell");						break;
 			case 1: list.add("Type:  Orbital Airbust Strike");
-			list.add("Call in 4 airbust shells");								break;
+			list.add("Call in 3 airbust shells");								break;
 			case 2: list.add("Type:  Orbital 350MM HE Barrage");
 			list.add("Call in a 350mm artillery shell");						break;
 			case 3: list.add("Type:  Orbital 155MM Precision Barrage");
-			list.add("Call in 4 artillery highly accurate shells");				break;
+			list.add("Call in 3 artillery highly accurate shells");				break;
 			case 4: list.add("Type:  Orbital 155MM Creeping Barrage");
-			list.add("Call in 10 creeping artillery shells");					break;
+			list.add("Call in 6 creeping artillery shells");					break;
 			case 5: list.add("Type:  Orbital Posion Gas");
 			list.add("Call in posion gas artillery shells");					break;
 			case 6: list.add("Type:  Orbital Smoke Barrage");
@@ -76,8 +76,8 @@ public class ItemBombCaller extends Item {
 		System.out.println(norm_x);
 		System.out.println(norm_z);
 
-		for(int i = 0; i < 2; i++) {
-			for(int l = 0; l < 5; l++) {
+		for(int i = 0; i < 1; i++) {
+			for(int l = 0; l < 6; l++) {
 				EntityArtilleryShell proj = new EntityArtilleryShell(world);
 				double movex = x+(norm_x*l*12-norm_z*(i-0.5)*10);
 				double movez = z+(norm_z*l*12+norm_x*(i-0.5)*10);
@@ -102,7 +102,7 @@ public class ItemBombCaller extends Item {
 		if(!world.isRemote)
 		{
 			if(stack.getItemDamage() == 0) {
-				artystrike(world, x, y, z, ItemAmmoArty.HE, 8, 20, 10);
+				artystrike(world, x, y, z, ItemAmmoArty.HE, 6, 15, 10);
 			}
 			if(stack.getItemDamage() == 1) {
 				artystrike(world, x, y, z, ItemAmmoArty.FRAG, 3, 1, 3);
@@ -111,7 +111,7 @@ public class ItemBombCaller extends Item {
 				artystrike(world, x, y, z, ItemAmmoArty.HHE, 1, 1, 1);
 			}
 			if(stack.getItemDamage() == 3) {
-				artystrike(world, x, y, z, ItemAmmoArty.LASER, 4, 8, 3);
+				artystrike(world, x, y, z, ItemAmmoArty.LASER, 3, 8, 3);
 			}
 			if(stack.getItemDamage() == 4) {
 				creeping(world, x, y, z, player);

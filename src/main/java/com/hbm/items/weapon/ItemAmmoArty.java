@@ -367,15 +367,15 @@ public class ItemAmmoArty extends Item {
 		/* STANDARD SHELLS */
 		this.itemTypes[HE] = new ArtilleryShell("ammo_arty_he", SpentCasing.COLOR_CASE_16INCH, 1) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
-				standardExplosion(shell, mop, 8F, 1F, true, false, 30, 0);}};
+				standardExplosion(shell, mop, 6.5F, 1F, true, false, 20, 0);}};
 				
 		this.itemTypes[FRAG] = new ArtilleryShell("ammo_arty_frag", SpentCasing.COLOR_CASE_16INCH, 1) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
-				standardExplosion(shell, mop, 10F, 1.2F, false, false, 20, -25); }};
+				standardExplosion(shell, mop, 9F, 1.2F, false, false, 20, -25); }};
 				
 		this.itemTypes[LASER] = new ArtilleryShell("ammo_arty_laser", SpentCasing.COLOR_CASE_16INCH, 1) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
-				standardExplosion(shell, mop, 8F, 1F, true, false, 2, 0); }};
+				standardExplosion(shell, mop, 6.5F, 1F, true, false, 2, 0); }};
 				
 		this.itemTypes[HHE] = new ArtilleryShell("ammo_arty_higher_explosive", SpentCasing.COLOR_CASE_16INCH, 4) { 
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) { 
@@ -575,12 +575,12 @@ public class ItemAmmoArty extends Item {
 		this.itemTypes[FIRECRACKER] = new ArtilleryShell("ammo_arty_firecracker", SpentCasing.COLOR_CASE_16INCH, 4) {
 			public void onImpact(EntityArtilleryShell shell, MovingObjectPosition mop) {
 				Random rand = new Random();
-				for(int i = 0; i < 40; i++) {
+				for(int i = 0; i < 90; i++) {
 					double x = 0;
 					double z = 0;
 					
-					x = mop.hitVec.xCoord + Math.sin(Math.toRadians(9*i+rand.nextDouble()*9))*(rand.nextDouble()-0.5F)*70+(rand.nextDouble()*5)-2;
-					z = mop.hitVec.zCoord + Math.sin(Math.toRadians(9*i+rand.nextDouble()*9))*(rand.nextDouble()-0.5F)*70+(rand.nextDouble()*5)-3;
+					x = mop.hitVec.xCoord + Math.sin(Math.toRadians(4*i+rand.nextDouble()*6))*(rand.nextDouble()-0.5F)*80+(rand.nextDouble()*15)-7;
+					z = mop.hitVec.zCoord + Math.sin(Math.toRadians(4*i+rand.nextDouble()*6))*(rand.nextDouble()-0.5F)*80+(rand.nextDouble()*15)-7;
 
 					double y = mop.hitVec.yCoord;
 					y = y + nearestblock(shell.worldObj, x, y, z);
