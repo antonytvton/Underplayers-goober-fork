@@ -33,7 +33,6 @@ import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.SimpleComponent;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
@@ -180,12 +179,12 @@ public class TileEntityMachineTurbineGas extends TileEntityMachineBase implement
 				
 				if(audio == null) { //if there is no sound playing, start it
 					
-					audio = MainRegistry.proxy.getLoopedSound("hbm:block.turbinegasRunning", xCoord, yCoord, zCoord, 1.0F, 20F, 2.0F);
+					audio = MainRegistry.proxy.getLoopedSound("hbm:block.turbinegasRunning", xCoord, yCoord, zCoord, getVolume(1.0F), 20F, 2.0F);
 					audio.startSound();
 					
 				} else if(!audio.isPlaying()) {
 					audio.stopSound();
-					audio = MainRegistry.proxy.getLoopedSound("hbm:block.turbinegasRunning", xCoord, yCoord, zCoord, 1.0F, 20F, 2.0F);
+					audio = MainRegistry.proxy.getLoopedSound("hbm:block.turbinegasRunning", xCoord, yCoord, zCoord, getVolume(1.0F), 20F, 2.0F);
 					audio.startSound();
 				}
 				
@@ -235,7 +234,7 @@ public class TileEntityMachineTurbineGas extends TileEntityMachineBase implement
 		}
 		
 		if(counter == 50) {
-			worldObj.playSoundEffect(xCoord, yCoord + 2, zCoord, "hbm:block.turbinegasStartup", 1F, 1.0F);
+			worldObj.playSoundEffect(xCoord, yCoord + 2, zCoord, "hbm:block.turbinegasStartup", getVolume(1.0F), 1.0F);
 		}
 			
 		if(counter == 580) {
@@ -259,7 +258,7 @@ public class TileEntityMachineTurbineGas extends TileEntityMachineBase implement
 			
 			if(counter == 225) {
 				
-				worldObj.playSoundEffect(xCoord, yCoord + 2, zCoord, "hbm:block.turbinegasShutdown", 1F, 1.0F);
+				worldObj.playSoundEffect(xCoord, yCoord + 2, zCoord, "hbm:block.turbinegasShutdown", getVolume(1.0F), 1.0F);
 				
 				rpmLast = rpm;
 				tempLast = temp;
@@ -697,7 +696,7 @@ public class TileEntityMachineTurbineGas extends TileEntityMachineBase implement
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public GuiScreen provideGUI(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public Object provideGUI(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		return new GUIMachineTurbineGas(player.inventory, this);
 	}
 
