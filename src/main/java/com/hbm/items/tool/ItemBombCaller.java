@@ -73,8 +73,6 @@ public class ItemBombCaller extends Item {
 		double distance = Math.sqrt((x_dif*x_dif)+(z_dif*z_dif));
 		double norm_x = x_dif/distance;
 		double norm_z = z_dif/distance;
-		System.out.println(norm_x);
-		System.out.println(norm_z);
 
 		for(int i = 0; i < 1; i++) {
 			for(int l = 0; l < 6; l++) {
