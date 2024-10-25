@@ -2,6 +2,7 @@ package com.hbm.tileentity.turret;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.hbm.entity.projectile.EntityArtilleryShell;
 import com.hbm.handler.CasingEjector;
@@ -22,7 +23,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
@@ -195,13 +195,19 @@ public class TileEntityTurretArty extends TileEntityTurretBaseArtillery implemen
 		Vec3 vec = Vec3.createVectorHelper(this.getBarrelLength(), 0, 0);
 		vec.rotateAroundZ((float) -this.rotationPitch);
 		vec.rotateAroundY((float) -(this.rotationYaw + Math.PI * 0.5));
-
 		
+        Random rand = new Random();
+		int accuracy = ItemAmmoArty.itemTypes[type.getItemDamage()].accuracy;
+		int x_offset = rand.nextInt(2* accuracy)-accuracy; 
+		int z_offset = rand.nextInt(2* accuracy)-accuracy; 
+
 		EntityArtilleryShell proj = new EntityArtilleryShell(worldObj);
-		proj.setPositionAndRotation(pos.xCoord + vec.xCoord, pos.yCoord + vec.yCoord, pos.zCoord + vec.zCoord, 0.0F, 0.0F);
+		type.getItemDamage();
+		
+		proj.setPositionAndRotation(pos.xCoord + vec.xCoord+x_offset, pos.yCoord + vec.yCoord, pos.zCoord + vec.zCoord+z_offset, 0.0F, 0.0F);
 		proj.setThrowableHeading(vec.xCoord, vec.yCoord, vec.zCoord, (float) getV0(), 0.0F);
 
-		proj.setTarget((int) tPos.xCoord, (int) tPos.yCoord, (int) tPos.zCoord);
+		proj.setTarget((int) tPos.xCoord+x_offset, (int) tPos.yCoord, (int) tPos.zCoord+z_offset);
 		proj.setType(type.getItemDamage());
 
 		if(type.getItemDamage() == 8 && type.hasTagCompound()) {
@@ -469,7 +475,7 @@ public class TileEntityTurretArty extends TileEntityTurretBaseArtillery implemen
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public GuiScreen provideGUI(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public GUITurretArty provideGUI(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		return new GUITurretArty(player.inventory, this);
 	}
 	@Callback

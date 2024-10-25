@@ -43,6 +43,10 @@ public class HbmLivingProps implements IExtendedEntityProperties {
 	private int blacklung;
 	public static final int maxBlacklung = 2 * 60 * 60 * 20;
 	private float radEnv;
+	private int overdose;
+	private int antidote;
+	private float healthmult = 1;
+	public static final int maxOverdose = 10000;
 	private float radBuf;
 	private int bombTimer;
 	private int contagion;
@@ -123,6 +127,41 @@ public class HbmLivingProps implements IExtendedEntityProperties {
 	public static void addCont(EntityLivingBase entity, ContaminationEffect cont) {
 		getData(entity).contamination.add(cont);
 	}
+	/// Antidote ///
+	public static int getAntidote(EntityLivingBase entity) {
+		return getData(entity).antidote;
+	}
+	
+	public static void setAntidote(EntityLivingBase entity, int value) {
+		getData(entity).antidote = value;
+	}
+	
+	public static void addAntidote(EntityLivingBase entity, int value) {
+		getData(entity).antidote = getData(entity).antidote+value;
+	}
+	
+	/// Overdose///
+	public static int getOverdose(EntityLivingBase entity) {
+		return getData(entity).overdose;
+	}
+	
+	public static void addOverdose(EntityLivingBase entity, int value) {
+		setOverdose(entity, getData(entity).overdose + value);
+	}
+	
+	public static void setOverdose(EntityLivingBase entity, int value) {
+		getData(entity).overdose = value;
+	}
+	
+	///Health Multiplier///
+	public static void setHealthMult(EntityLivingBase entity, float value) {
+		getData(entity).healthmult = value;
+		setDigamma(entity, getDigamma(entity));
+	}
+	
+	public static float getHealthMult(EntityLivingBase entity) {
+		return getData(entity).healthmult;
+	}
 	
 	/// DIGAMA ///
 	public static float getDigamma(EntityLivingBase entity) {
@@ -138,8 +177,9 @@ public class HbmLivingProps implements IExtendedEntityProperties {
 			digamma = 0.0F;
 		
 		getData(entity).digamma = digamma;
-		
-		float healthMod = (float)Math.pow(0.5, digamma) - 1F;
+		float hpmult = getData(entity).healthmult;
+		float healthMod = (float)(Math.pow(0.5, digamma)*hpmult - 1F);
+		System.out.println(healthMod);
 		
 		IAttributeInstance attributeinstance = entity.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth);
 		
