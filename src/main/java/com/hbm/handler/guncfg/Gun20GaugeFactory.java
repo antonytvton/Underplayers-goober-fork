@@ -7,6 +7,7 @@ import com.hbm.handler.CasingEjector;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.items.ModItems;
+import com.hbm.items.weapon.sedna.Crosshair;
 import com.hbm.items.ItemAmmoEnums.Ammo20Gauge;
 import com.hbm.lib.HbmCollection;
 import com.hbm.lib.HbmCollection.EnumGunManufacturer;
@@ -15,7 +16,6 @@ import com.hbm.particle.SpentCasing.CasingType;
 import com.hbm.render.anim.BusAnimation;
 import com.hbm.render.anim.BusAnimationSequence;
 import com.hbm.render.anim.HbmAnimations.AnimType;
-import com.hbm.render.util.RenderScreenOverlay.Crosshair;
 
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -49,16 +49,16 @@ public class Gun20GaugeFactory {
 		
 		config.animations.put(AnimType.CYCLE, new BusAnimation()
 				.addBus("LEVER_ROTATE", new BusAnimationSequence()
-						.addKeyframePosition(0, 0, 0, 250)
-						.addKeyframePosition(0, 0, 45, 500)
-						.addKeyframePosition(0, 0, 0, 500)
+						.addPos(0, 0, 0, 250)
+						.addPos(0, 0, 45, 500)
+						.addPos(0, 0, 0, 500)
 						)
 				.addBus("LEVER_RECOIL", new BusAnimationSequence()
-						.addKeyframePosition(0.5, 0, 0, 50)
-						.addKeyframePosition(0, 0, 0, 50)
-						.addKeyframePosition(0, 0, 0, 150)
-						.addKeyframePosition(0, -0.5, 0, 500)
-						.addKeyframePosition(0, 0, 0, 500)
+						.addPos(0.5, 0, 0, 50)
+						.addPos(0, 0, 0, 50)
+						.addPos(0, 0, 0, 150)
+						.addPos(0, -0.5, 0, 500)
+						.addPos(0, 0, 0, 500)
 						)
 				);
 		

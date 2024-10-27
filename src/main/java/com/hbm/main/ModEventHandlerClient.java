@@ -14,6 +14,7 @@ import org.lwjgl.opengl.GL11;
 import com.hbm.blocks.ILookOverlay;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.BlockAshes;
+import com.hbm.config.ClientConfig;
 import com.hbm.config.GeneralConfig;
 import com.hbm.entity.mob.EntityHunterChopper;
 import com.hbm.entity.projectile.EntityChopperMine;
@@ -105,7 +106,6 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderPlayer;
-import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -157,7 +157,7 @@ public class ModEventHandlerClient {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		
 		/// NUKE FLASH ///
-		if(event.type == ElementType.CROSSHAIRS && (flashTimestamp + flashDuration - System.currentTimeMillis()) > 0) {
+		if(event.type == ElementType.CROSSHAIRS && (flashTimestamp + flashDuration - System.currentTimeMillis()) > 0 && ClientConfig.NUKE_HUD_FLASH.get()) {
 			int width = event.resolution.getScaledWidth();
 			int height = event.resolution.getScaledHeight();
 			Tessellator tess = Tessellator.instance;
@@ -201,7 +201,7 @@ public class ModEventHandlerClient {
 		}
 
 		/// DODD DIAG HOOK FOR RBMK
-		if(event.type == ElementType.CROSSHAIRS) {
+		if(event.type == ElementType.CROSSHAIRS && ClientConfig.DODD_RBMK_DIAGNOSTIC.get()) {
 			Minecraft mc = Minecraft.getMinecraft();
 			World world = mc.theWorld;
 			MovingObjectPosition mop = mc.objectMouseOver;
@@ -322,19 +322,21 @@ public class ModEventHandlerClient {
 		/// HANLDE ANIMATION BUSES ///
 		
 		for(int i = 0; i < HbmAnimations.hotbar.length; i++) {
-			
-			Animation animation = HbmAnimations.hotbar[i];
-			
-			if(animation == null)
-				continue;
-
-			if(animation.holdLastFrame)
-				continue;
-			
-			long time = System.currentTimeMillis() - animation.startMillis;
-			
-			if(time > animation.animation.getDuration())
-				HbmAnimations.hotbar[i] = null;
+			for(int j = 0; j < HbmAnimations.hotbar[i].length; j++) {
+				
+				Animation animation = HbmAnimations.hotbar[i][j];
+				
+				if(animation == null)
+					continue;
+	
+				if(animation.holdLastFrame)
+					continue;
+				
+				long time = System.currentTimeMillis() - animation.startMillis;
+				
+				if(time > animation.animation.getDuration())
+					HbmAnimations.hotbar[i][j] = null;
+			}
 		}
 			
 		if(!ducked && Keyboard.isKeyDown(Keyboard.KEY_O) && Minecraft.getMinecraft().currentScreen == null) {
@@ -735,7 +737,7 @@ public class ModEventHandlerClient {
 		/// HAZARDS ///
 		HazardSystem.addFullTooltip(stack, event.entityPlayer, list);
 		
-		if(event.showAdvancedItemTooltips) {
+		if(event.showAdvancedItemTooltips && ClientConfig.ITEM_TOOLTIP_SHOW_OREDICT.get()) {
 			List<String> names = ItemStackUtil.getOreDictNames(stack);
 			
 			if(names.size() > 0) {
@@ -757,18 +759,21 @@ public class ModEventHandlerClient {
 		
 		/// CUSTOM NUKE ///
 		ComparableStack comp = new ComparableStack(stack).makeSingular();
-		CustomNukeEntry entry = TileEntityNukeCustom.entries.get(comp);
 		
-		if(entry != null) {
+		if(ClientConfig.ITEM_TOOLTIP_SHOW_CUSTOM_NUKE.get()) {
+			CustomNukeEntry entry = TileEntityNukeCustom.entries.get(comp);
 			
-			if(!list.isEmpty())
-				list.add("");
-			
-			if(entry.entry == EnumEntryType.ADD)
-				list.add(EnumChatFormatting.GOLD + "Adds " + entry.value + " to the custom nuke stage " + entry.type);
-
-			if(entry.entry == EnumEntryType.MULT)
-				list.add(EnumChatFormatting.GOLD + "Adds multiplier " + entry.value + " to the custom nuke stage " + entry.type);
+			if(entry != null) {
+				
+				if(!list.isEmpty())
+					list.add("");
+				
+				if(entry.entry == EnumEntryType.ADD)
+					list.add(EnumChatFormatting.GOLD + "Adds " + entry.value + " to the custom nuke stage " + entry.type);
+	
+				if(entry.entry == EnumEntryType.MULT)
+					list.add(EnumChatFormatting.GOLD + "Adds multiplier " + entry.value + " to the custom nuke stage " + entry.type);
+			}
 		}
 		
 		try {
@@ -908,7 +913,7 @@ public class ModEventHandlerClient {
 			}
 		}
 		
-		if(Keyboard.isKeyDown(Keyboard.KEY_F1)) {
+		if(Keyboard.isKeyDown(Keyboard.KEY_F1) && Minecraft.getMinecraft().currentScreen != null) {
 			
 			ComparableStack comp = canneryTimestamp > System.currentTimeMillis() - 100 ? lastCannery : null;
 			
@@ -973,9 +978,10 @@ public class ModEventHandlerClient {
 		} else {
 			isRenderingItems = false;
 		}
+
+		EntityPlayer player = mc.thePlayer;
 		
 		if(event.phase == Phase.START) {
-			EntityPlayer player = mc.thePlayer;
 			
 			float discriminator = 0.003F;
 			float defaultStepSize = 0.5F;
@@ -991,6 +997,26 @@ public class ModEventHandlerClient {
 			} else {
 				for(int i = 1; i < 4; i++) if(player.stepHeight == i + discriminator) player.stepHeight = defaultStepSize;
 			}
+		}
+		
+		if(event.phase == Phase.END) {
+			
+			ItemGunBaseNT.offsetVertical += ItemGunBaseNT.recoilVertical;
+			ItemGunBaseNT.offsetHorizontal += ItemGunBaseNT.recoilHorizontal;
+			player.rotationPitch -= ItemGunBaseNT.recoilVertical;
+			player.rotationYaw -= ItemGunBaseNT.recoilHorizontal;
+
+			float decay = 0.75F;
+			float rebound = 0.25F;
+			ItemGunBaseNT.recoilVertical *= decay;
+			ItemGunBaseNT.recoilHorizontal *= decay;
+			float dV = ItemGunBaseNT.offsetVertical * rebound;
+			float dH = ItemGunBaseNT.offsetHorizontal * rebound;
+			
+			ItemGunBaseNT.offsetVertical -= dV;
+			ItemGunBaseNT.offsetHorizontal -= dH;
+			player.rotationPitch += dV;
+			player.rotationYaw += dH;
 		}
 	}
 	
@@ -1059,7 +1085,7 @@ public class ModEventHandlerClient {
 	}
 
 	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onMouseClicked(InputEvent.MouseInputEvent event) {
 		
 		Minecraft mc = Minecraft.getMinecraft();
@@ -1074,8 +1100,8 @@ public class ModEventHandlerClient {
 				if(key.getKeyCode() == keyCode && KeyBinding.hash.lookup(key.getKeyCode()) != key) {
 
 					key.pressed = state;
-					if(state) {
-						key.pressTime++;
+					if(state && key.pressTime == 0) {
+						key.pressTime = 1;
 					}
 				}
 			}
@@ -1083,15 +1109,16 @@ public class ModEventHandlerClient {
 			boolean gunKey = keyCode == HbmKeybinds.gunPrimaryKey.getKeyCode() || keyCode == HbmKeybinds.gunSecondaryKey.getKeyCode() ||
 					keyCode == HbmKeybinds.gunTertiaryKey.getKeyCode() || keyCode == HbmKeybinds.reloadKey.getKeyCode();
 			
-			/* Shoot in favor of attacking */
-			if(gunKey && keyCode == mc.gameSettings.keyBindAttack.getKeyCode()) {
-				mc.gameSettings.keyBindAttack.pressed = false;
-				mc.gameSettings.keyBindAttack.pressTime = 0;
-			}
-			
 			EntityPlayer player = mc.thePlayer;
 			
 			if(player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemGunBaseNT) {
+				
+				/* Shoot in favor of attacking */
+				if(gunKey && keyCode == mc.gameSettings.keyBindAttack.getKeyCode()) {
+					mc.gameSettings.keyBindAttack.pressed = false;
+					mc.gameSettings.keyBindAttack.pressTime = 0;
+				}
+				
 				if(gunKey && keyCode == mc.gameSettings.keyBindPickBlock.getKeyCode()) {
 					mc.gameSettings.keyBindPickBlock.pressed = false;
 					mc.gameSettings.keyBindPickBlock.pressTime = 0;
@@ -1101,7 +1128,7 @@ public class ModEventHandlerClient {
 	}
 
 	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onKeyTyped(InputEvent.KeyInputEvent event) {
 
 		Minecraft mc = Minecraft.getMinecraft();
@@ -1116,8 +1143,8 @@ public class ModEventHandlerClient {
 				if(keyCode != 0 && key.getKeyCode() == keyCode && KeyBinding.hash.lookup(key.getKeyCode()) != key) {
 					
 					key.pressed = state;
-					if(state) {
-						key.pressTime++;
+					if(state && key.pressTime == 0) {
+						key.pressTime = 1;
 					}
 				}
 			}
@@ -1254,24 +1281,6 @@ public class ModEventHandlerClient {
 			}
 		}
 	}
-	
-	/*@SubscribeEvent
-	public void setupFog(RenderFogEvent event) {
-		event.setResult(Result.DENY);
-	}
-	
-	@SubscribeEvent
-	public void thickenFog(FogDensity event) {
-		event.density = 0.05F;
-		event.setCanceled(true);
-	}
-	
-	@SubscribeEvent
-	public void tintFog(FogColors event) {
-		event.red = 0.5F;
-		event.green = 0.0F;
-		event.blue = 0.0F;
-	}*/
 
 	public static IIcon particleBase;
 	public static IIcon particleLeaf;
@@ -1355,7 +1364,7 @@ public class ModEventHandlerClient {
 	@SubscribeEvent
 	public void onOpenGUI(GuiOpenEvent event) {
 		
-		if(event.gui instanceof GuiMainMenu) {
+		if(event.gui instanceof GuiMainMenu && ClientConfig.MAIN_MENU_WACKY_SPLASHES.get()) {
 			GuiMainMenu main = (GuiMainMenu) event.gui;
 			int rand = (int)(Math.random() * 150);
 			

@@ -10,12 +10,11 @@ import com.hbm.interfaces.IHoldableWeapon;
 import com.hbm.inventory.fluid.FluidType;
 import com.hbm.inventory.fluid.Fluids;
 import com.hbm.items.machine.ItemFluidIcon;
+import com.hbm.items.weapon.sedna.Crosshair;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.toclient.GunAnimationPacket;
 import com.hbm.render.anim.HbmAnimations.AnimType;
 import com.hbm.render.util.RenderScreenOverlay;
-import com.hbm.render.util.RenderScreenOverlay.Crosshair;
-
 import api.hbm.fluid.IFillableItem;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -88,7 +87,7 @@ public class ItemGunChemthrower extends ItemGunBase implements IFillableItem {
 	@Override
 	protected void spawnProjectile(World world, EntityPlayer player, ItemStack stack, int config) {
 		//spawn fluid projectile
-		EntityChemical chem = new EntityChemical(world, player);
+		EntityChemical chem = new EntityChemical(world, player, 0, 0, 0);
 		chem.setFluid(this.getFluidType(stack));
 		world.spawnEntityInWorld(chem);
 	}
