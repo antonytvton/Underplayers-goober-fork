@@ -25,24 +25,28 @@ import net.minecraft.world.World;
 import com.hbm.extprop.HbmLivingProps;
 
 public class ItemPharmacy extends Item {
-	public int cooldown = 0;
 	public ItemPharmacy(int uses) {
 		this.setMaxDamage(uses);
 		this.maxStackSize = 1;
 	}
 	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int i, boolean b) {
+		if(world.isRemote) {
+			return;
+		}
 	    NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) {
 	        nbt = new NBTTagCompound();
 	        nbt.setInteger("dmg", 0);
+	        nbt.setInteger("cooldown", 0);
+	        stack.setTagCompound(nbt);
 		}
 
-		if (this.cooldown > 0){
-			this.cooldown = this.cooldown-1;
+		if (nbt.getInteger("cooldown") > 0){
+			nbt.setInteger ("cooldown", nbt.getInteger("cooldown")-1);
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entity;
-				if(this.cooldown == 2) {
+				if(nbt.getInteger("cooldown") == 2) {
 					if (this == ModItems.ibuprofen) {
 						player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 5 * 20, 1));
 						HbmLivingProps.setHealthMult(player, 1);
@@ -72,12 +76,13 @@ public class ItemPharmacy extends Item {
 						HbmLivingProps.addOverdose(player, -3000);
 					}
 				}
-			}
-			if (this.cooldown == 78) {
-				if (!world.isRemote) {
-				    stack.setItemDamage(stack.getItemDamage() + 1);
-					}
+				if (nbt.getInteger("cooldown") == 68) {
+					if (!world.isRemote) {
+					    stack.setItemDamage(stack.getItemDamage() + 1);
+					}		
 				}
+			}
+			
 
 		}
 		if(stack.getItemDamage() == this.getMaxDamage()) {
@@ -87,18 +92,33 @@ public class ItemPharmacy extends Item {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		if(this.cooldown == 0){
-			if (stack.getItemDamage() != stack.getMaxDamage() && !VersatileConfig.hasPotionSickness(player)) {
-				this.cooldown = 80;
-				if((this == ModItems.antidote)||(this == ModItems.painkiller)) {
-					player.playSound("hbm:player.pills_blister", 1F, 1F);
-				}
-				if((this == ModItems.yadulin)||(this == ModItems.ibuprofen)) {
-					player.playSound("hbm:player.pills_bottle", 1F, 1F);
+		Boolean sound = false;
+		if(world.isRemote == false) {
+			NBTTagCompound nbt = stack.getTagCompound();
+			if (nbt == null) {
+		        nbt = new NBTTagCompound();
+		        nbt.setInteger("dmg", 0);
+		        nbt.setInteger("cooldown", 0);
+		        stack.setTagCompound(nbt);
+			}
+			if(nbt.getInteger("cooldown") == 0){
+				if (stack.getItemDamage() != stack.getMaxDamage() && !VersatileConfig.hasPotionSickness(player)) {
+					nbt.setInteger("cooldown", 70);
+					nbt.setInteger("dmg", nbt.getInteger("dmg")+1);
+			        stack.setTagCompound(nbt);
+					sound = true;
+					System.out.println("play sound please");
+					if((this == ModItems.antidote)||(this == ModItems.painkiller)) {
+						world.playSoundAtEntity(player, "hbm:player.pills_blister", 1F, 1F);
+						System.out.println("sound");
+					}
+					if((this == ModItems.yadulin)||(this == ModItems.ibuprofen)) {
+						world.playSoundAtEntity(player, "hbm:player.pills_bottle", 1F, 1F);
+						System.out.println("sound");
+					}
 				}
 			}
 		}
-		System.out.println(stack);
 		return stack;
 	}
     
