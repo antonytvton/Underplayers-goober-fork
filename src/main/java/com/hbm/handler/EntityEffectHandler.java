@@ -125,7 +125,8 @@ public class EntityEffectHandler {
 		handleOil(entity);
 		handlePollution(entity);
 		handleTemperature(entity);
-
+		handleAntidote(entity);
+		handleOverdose(entity);
 		handleDashing(entity);
 		handlePlinking(entity);
 		
@@ -496,7 +497,86 @@ public class EntityEffectHandler {
 			}
 		}
 	}
+	private static void handleOverdose(EntityLivingBase entity) {
+		if(entity.worldObj.isRemote)
+			return;
+        Random rand = new Random();
+        int overdose = HbmLivingProps.getOverdose(entity);
+		HbmLivingProps.addOverdose(entity, -1);
+		if (overdose > 3000) {
+			if (rand.nextInt(60*20) == 1) {
+				entity.addPotionEffect(new PotionEffect(Potion.weakness.id, 30, 1));
+				entity.addPotionEffect(new PotionEffect(Potion.confusion.id, 30, 0));
+			}
+		}
+		if (overdose > 4000) {
+			if (rand.nextInt(30*20) == 1) {
+				entity.addPotionEffect(new PotionEffect(Potion.weakness.id, 30, 1));
+				entity.addPotionEffect(new PotionEffect(Potion.confusion.id, 30, 0));
+			}
+		}
+		if (overdose > 5000) {
+			if (rand.nextInt(15*20) == 1) {
+				entity.addPotionEffect(new PotionEffect(Potion.weakness.id, 30, 1));
+				entity.addPotionEffect(new PotionEffect(Potion.confusion.id, 30, 0));
+			}
+			if (rand.nextInt(90*20) == 1) {
+				NBTTagCompound nbt = new NBTTagCompound();
+				nbt.setString("type", "vomit");
+				nbt.setString("mode", "normal");
+				nbt.setInteger("count", 15);
+				nbt.setInteger("entity", entity.getEntityId());
+				PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(nbt, 0, 0, 0),  new TargetPoint(entity.dimension, entity.posX, entity.posY, entity.posZ, 25));
+				
+					entity.worldObj.playSoundEffect(entity.posX, entity.posY, entity.posZ, "hbm:player.vomit", 1.0F, 1.0F);
+					entity.addPotionEffect(new PotionEffect(Potion.hunger.id, 60, 19));
+			}
+			
+		}
+		if (overdose > 8000) {
+			if (rand.nextInt(90*20) == 1) {
+				NBTTagCompound nbt = new NBTTagCompound();
+				nbt.setString("type", "vomit");
+				nbt.setString("mode", "blood");
+				nbt.setInteger("count", 15);
+				nbt.setInteger("entity", entity.getEntityId());
+				PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(nbt, 0, 0, 0),  new TargetPoint(entity.dimension, entity.posX, entity.posY, entity.posZ, 25));
+				
+					entity.worldObj.playSoundEffect(entity.posX, entity.posY, entity.posZ, "hbm:player.vomit", 1.0F, 1.0F);
+					entity.addPotionEffect(new PotionEffect(Potion.poison.id, 20*20, 3));
+			}
+			entity.addPotionEffect(new PotionEffect(Potion.poison.id, 10, 1));
+
+		}
+		if (overdose > 9000) {
+			if (rand.nextInt(30*20) == 1) {
+				NBTTagCompound nbt = new NBTTagCompound();
+				nbt.setString("type", "vomit");
+				nbt.setString("mode", "blood");
+				nbt.setInteger("count", 15);
+				nbt.setInteger("entity", entity.getEntityId());
+				PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(nbt, 0, 0, 0),  new TargetPoint(entity.dimension, entity.posX, entity.posY, entity.posZ, 25));
+				
+					entity.worldObj.playSoundEffect(entity.posX, entity.posY, entity.posZ, "hbm:player.vomit", 1.0F, 1.0F);
+					entity.addPotionEffect(new PotionEffect(Potion.poison.id, 20*20, 3));
+			}
+		}
+		if (overdose > 10000) {
+			entity.attackEntityFrom(ModDamageSource.euthanizedSelf, 100000F);
+			
+		}
+	}
 	
+	private static void handleAntidote(EntityLivingBase entity) {
+		if(entity.worldObj.isRemote)
+			return;
+		int antidote = HbmLivingProps.getAntidote(entity);
+		if(antidote > 1) {
+			HbmLivingProps.addOverdose(entity, -3);
+			HbmLivingProps.addAntidote(entity, -1);
+		}
+	}
+
 	private static void handleOil(EntityLivingBase entity) {
 		
 		if(entity.worldObj.isRemote)

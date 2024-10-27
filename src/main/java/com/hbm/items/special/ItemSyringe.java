@@ -104,7 +104,8 @@ public class ItemSyringe extends Item {
 
 		if(this == ModItems.syringe_metal_stimpak && !VersatileConfig.hasPotionSickness(player)) {
 			if(!world.isRemote) {
-				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 20*1, 4));
+				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 30*1, 3));
+				player.heal(1);
 
 				stack.stackSize--;
 				world.playSoundAtEntity(player, "hbm:item.syringe", 1.0F, 1.0F);
@@ -123,8 +124,33 @@ public class ItemSyringe extends Item {
 
 		if(this == ModItems.syringe_metal_medx && !VersatileConfig.hasPotionSickness(player)) {
 			if(!world.isRemote) {
-				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 4 * 60 * 20, 2));
+				float hp_dif = (player.getMaxHealth() - player.getHealth())/player.getMaxHealth();
+				
+				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 30, 4));
+				
+				HbmLivingProps.setHealthMult(player, HbmLivingProps.getHealthMult(player)-(hp_dif/5));
+				stack.stackSize--;
+				world.playSoundAtEntity(player, "hbm:item.syringe", 1.0F, 1.0F);
 
+				if(stack.stackSize <= 0) {
+					return new ItemStack(ModItems.syringe_metal_empty);
+				}
+
+				if(!player.inventory.addItemStackToInventory(new ItemStack(ModItems.syringe_metal_empty))) {
+					player.dropPlayerItemWithRandomChoice(new ItemStack(ModItems.syringe_metal_empty, 1, 0), false);
+				}
+				
+				VersatileConfig.applyPotionSickness(player, 5);
+			}
+		}
+		
+		if(this == ModItems.syringe_military && !VersatileConfig.hasPotionSickness(player)) {
+			if(!world.isRemote) {
+				float hp_dif = Math.min((player.getMaxHealth() - player.getHealth())/player.getMaxHealth(), 0.5F);
+				
+				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 10, 6));
+				player.addPotionEffect(new PotionEffect(Potion.confusion.id, 10, 6));
+				HbmLivingProps.setHealthMult(player, HbmLivingProps.getHealthMult(player)-(hp_dif/5));
 				stack.stackSize--;
 				world.playSoundAtEntity(player, "hbm:item.syringe", 1.0F, 1.0F);
 
@@ -142,9 +168,9 @@ public class ItemSyringe extends Item {
 
 		if(this == ModItems.syringe_metal_psycho && !VersatileConfig.hasPotionSickness(player)) {
 			if(!world.isRemote) {
-				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 5 * 20 * 20, 0));
+				player.addPotionEffect(new PotionEffect(Potion.resistance.id, 30 * 20, 4));
 				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 2 * 20 * 20, 0));
-				HbmLivingProps.setDigamma(player, (float)(HbmLivingProps.getDigamma(player) + 2.5));
+				HbmLivingProps.setDigamma(player, (float)(HbmLivingProps.getDigamma(player) + 4));
 				stack.stackSize--;
 				world.playSoundAtEntity(player, "hbm:item.syringe", 1.0F, 1.0F);
 
@@ -435,7 +461,7 @@ public class ItemSyringe extends Item {
 
 		if(this == ModItems.syringe_metal_stimpak && !VersatileConfig.hasPotionSickness(entity)) {
 			if(!world.isRemote) {
-				entity.heal(5);
+				entity.addPotionEffect(new PotionEffect(Potion.regeneration.id, 20*1, 4));
 				VersatileConfig.applyPotionSickness(entity, 5);
 
 				stack.stackSize--;
@@ -457,6 +483,7 @@ public class ItemSyringe extends Item {
 
 				stack.stackSize--;
 				world.playSoundAtEntity(entity, "hbm:item.syringe", 1.0F, 1.0F);
+				HbmLivingProps.setDigamma(entity, (float)(HbmLivingProps.getDigamma(entity) + 4));
 
 				if(entityPlayer instanceof EntityPlayer) {
 					EntityPlayer player = (EntityPlayer) entityPlayer;
@@ -469,9 +496,9 @@ public class ItemSyringe extends Item {
 
 		if(this == ModItems.syringe_metal_psycho && !VersatileConfig.hasPotionSickness(entity)) {
 			if(!world.isRemote) {
-				entity.addPotionEffect(new PotionEffect(Potion.resistance.id, 2 * 60 * 20, 0));
+				entity.addPotionEffect(new PotionEffect(Potion.resistance.id, 30 * 20, 4));
 				entity.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 2 * 60 * 20, 0));
-				VersatileConfig.applyPotionSickness(entity, 5);
+				VersatileConfig.applyPotionSickness(entity, 5);	
 
 				stack.stackSize--;
 				world.playSoundAtEntity(entity, "hbm:item.syringe", 1.0F, 1.0F);
@@ -488,7 +515,7 @@ public class ItemSyringe extends Item {
 		if(this == ModItems.syringe_metal_super && !VersatileConfig.hasPotionSickness(entity)) {
 			if(!world.isRemote) {
 				entity.heal(25);
-				entity.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 10 * 20, 0));
+				HbmLivingProps.setDigamma(entity, (float)(Math.log(Math.pow(0.5, (HbmLivingProps.getDigamma(entity)))-0.1)/-0.30103));
 				VersatileConfig.applyPotionSickness(entity, 15);
 
 				stack.stackSize--;
@@ -543,11 +570,17 @@ public class ItemSyringe extends Item {
 			list.add("Every good effect for 50 seconds");
 		}
 		if(this == ModItems.syringe_metal_medx) {
-			list.add("Resistance III for 4 minutes");
+			list.add("Heals 5 hearts over 1.5 Seconds");
+			list.add("20% of damage is turned into Hard Damage");
+		}
+		if(this == ModItems.syringe_military) {
+			list.add("Heals 5 hearts over 1 Second");
+			list.add("20% of damage is turned into Hard Damage");
+			list.add("Mixture of Epinephrine, Morphine and Antibacterial Medication");
 		}
 		if(this == ModItems.syringe_metal_psycho) {
-			list.add("Resistance I for 2 minutes");
-			list.add("Strength I for 2 minutes");
+			list.add("Caps your HP to 2 hearts");
+			list.add("Also makes you unkillable for 30 seconds");
 		}
 		if(this == ModItems.syringe_metal_stimpak) {
 			list.add("Heals 2.5 hearts");

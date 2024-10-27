@@ -265,6 +265,8 @@
     "player.cough": {"category": "player", "sounds": ["player/cough1", "player/cough2", "player/cough3", "player/cough4"]},
     "player.gulp": {"category": "player", "sounds": ["player/gulp1", "player/gulp2", "player/gulp3", "player/gulp4"]},
     "player.groan": {"category": "player", "sounds": ["player/groan1", "player/groan2", "player/groan3"]},
+    "player.pills_bottle": {"category": "player", "sounds": ["player/pills_bottle"]},
+    "player.pills_blister": {"category": "player", "sounds": ["player/pills_blister"]},
     
     "potatos.random": {"category": "player", "sounds": ["potatos/randResponse0", "potatos/randResponse1", "potatos/randResponse2", "potatos/randResponse3", "potatos/randResponse4", "potatos/randResponse5", "potatos/randResponse6", "potatos/randResponse7"]},
     

@@ -73,21 +73,17 @@ public class ItemBombCaller extends Item {
 		double distance = Math.sqrt((x_dif*x_dif)+(z_dif*z_dif));
 		double norm_x = x_dif/distance;
 		double norm_z = z_dif/distance;
-		System.out.println(norm_x);
-		System.out.println(norm_z);
 
-		for(int i = 0; i < 1; i++) {
-			for(int l = 0; l < 6; l++) {
-				EntityArtilleryShell proj = new EntityArtilleryShell(world);
-				double movex = x+(norm_x*l*12-norm_z*(i-0.5)*10);
-				double movez = z+(norm_z*l*12+norm_x*(i-0.5)*10);
-				proj.setPositionAndRotation(movex, 2400+l*400+rand.nextInt(200),movez, 0.0F, 0.0F);
-				proj.setThrowableHeading(0, -9, 0, (float) 20, 0.0F);
-				proj.setTarget((int) (movex), (int) y, (int) movez);
-				proj.setType(ItemAmmoArty.LASER);
-				proj.setWhistle(true);
-				world.spawnEntityInWorld(proj);
-			}
+		for(int l = 0; l < 6; l++) {
+			EntityArtilleryShell proj = new EntityArtilleryShell(world);
+			double movex = x+(norm_x*l*12);
+			double movez = z+(norm_z*l*12);
+			proj.setPositionAndRotation(movex, 2400+l*400+rand.nextInt(200),movez, 0.0F, 0.0F);
+			proj.setThrowableHeading(0, -9, 0, (float) 20, 0.0F);
+			proj.setTarget((int) (movex), (int) y, (int) movez);
+			proj.setType(ItemAmmoArty.HE);
+			proj.setWhistle(true);
+			world.spawnEntityInWorld(proj);
 		}
 	}
 
@@ -102,16 +98,16 @@ public class ItemBombCaller extends Item {
 		if(!world.isRemote)
 		{
 			if(stack.getItemDamage() == 0) {
-				artystrike(world, x, y, z, ItemAmmoArty.HE, 6, 15, 10);
+				artystrike(world, x, y, z, ItemAmmoArty.HE, 6, 20, 16);
 			}
 			if(stack.getItemDamage() == 1) {
-				artystrike(world, x, y, z, ItemAmmoArty.FRAG, 3, 1, 3);
+				artystrike(world, x, y, z, ItemAmmoArty.FRAG, 3, 5, 16);
 			}
 			if(stack.getItemDamage() == 2) {
-				artystrike(world, x, y, z, ItemAmmoArty.HHE, 1, 1, 1);
+				artystrike(world, x, y, z, ItemAmmoArty.HHE, 1, 5, 1);
 			}
 			if(stack.getItemDamage() == 3) {
-				artystrike(world, x, y, z, ItemAmmoArty.LASER, 3, 8, 3);
+				artystrike(world, x, y, z, ItemAmmoArty.LASER, 3, 10, 3);
 			}
 			if(stack.getItemDamage() == 4) {
 				creeping(world, x, y, z, player);

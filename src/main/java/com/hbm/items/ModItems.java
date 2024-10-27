@@ -923,6 +923,7 @@ public class ModItems {
 	public static Item syringe_metal_empty;
 	public static Item syringe_metal_stimpak;
 	public static Item syringe_metal_medx;
+	public static Item syringe_military;
 	public static Item syringe_metal_psycho;
 	public static Item syringe_metal_super;
 	public static Item syringe_taint;
@@ -1703,6 +1704,10 @@ public class ModItems {
 
 	public static Item canteen_vodka;
 	public static Item canteen_fab;
+	public static Item ibuprofen;
+	public static Item painkiller;
+	public static Item yadulin;
+	public static Item antidote;
 
 	public static Item defuser;
 	public static Item reacher;
@@ -3222,6 +3227,8 @@ public class ModItems {
 		syringe_metal_empty = new Item().setUnlocalizedName("syringe_metal_empty").setFull3D().setCreativeTab(MainRegistry.consumableTab).setTextureName(RefStrings.MODID + ":syringe_metal_empty");
 		syringe_metal_stimpak = new ItemSyringe().setUnlocalizedName("syringe_metal_stimpak").setFull3D().setCreativeTab(MainRegistry.consumableTab).setTextureName(RefStrings.MODID + ":syringe_metal_stimpak").setMaxStackSize(16);
 		syringe_metal_medx = new ItemSyringe().setUnlocalizedName("syringe_metal_medx").setFull3D().setCreativeTab(MainRegistry.consumableTab).setTextureName(RefStrings.MODID + ":syringe_metal_medx").setMaxStackSize(16);
+		syringe_military = new ItemSyringe().setUnlocalizedName("syringe_military").setFull3D().setCreativeTab(MainRegistry.consumableTab).setTextureName(RefStrings.MODID + ":syringe_military").setMaxStackSize(16);
+
 		syringe_metal_psycho = new ItemSyringe().setUnlocalizedName("syringe_metal_psycho").setFull3D().setCreativeTab(MainRegistry.consumableTab).setTextureName(RefStrings.MODID + ":syringe_metal_psycho").setMaxStackSize(16);
 		syringe_metal_super = new ItemSyringe().setUnlocalizedName("syringe_metal_super").setFull3D().setCreativeTab(MainRegistry.consumableTab).setTextureName(RefStrings.MODID + ":syringe_metal_super").setMaxStackSize(16);
 		syringe_taint = new ItemSyringe().setUnlocalizedName("syringe_taint").setFull3D().setCreativeTab(MainRegistry.consumableTab).setTextureName(RefStrings.MODID + ":syringe_taint");
@@ -3305,12 +3312,14 @@ public class ModItems {
 		cladding_ghiorsium = new ItemModCladding(0.5).setUnlocalizedName("cladding_ghiorsium").setTextureName(RefStrings.MODID + ":cladding_ghiorsium");
 		cladding_iron = new ItemModIron().setUnlocalizedName("cladding_iron").setTextureName(RefStrings.MODID + ":cladding_iron");
 		cladding_obsidian = new ItemModObsidian().setUnlocalizedName("cladding_obsidian").setTextureName(RefStrings.MODID + ":cladding_obsidian");
-		insert_kevlar = new ItemModInsert(40, 1F, 0.9F, 0.8F, 0.9F).setUnlocalizedName("insert_kevlar").setTextureName(RefStrings.MODID + ":insert_kevlar");
-		insert_sapi = new ItemModInsert(50, 1F, 0.8F, 0.8F, 0.8F).setUnlocalizedName("insert_sapi").setTextureName(RefStrings.MODID + ":insert_sapi");
-		insert_esapi = new ItemModInsert(60, 0.95F, 0.75F, 0.7F, 0.9F).setUnlocalizedName("insert_esapi").setTextureName(RefStrings.MODID + ":insert_esapi");
-		insert_xsapi = new ItemModInsert(70, 0.9F, 0.7F, 0.7F, 1F).setUnlocalizedName("insert_xsapi").setTextureName(RefStrings.MODID + ":insert_xsapi");
-		insert_steel = new ItemModInsert(50, 1F, 0.8F, 0.75F, 0.7F).setUnlocalizedName("insert_steel").setTextureName(RefStrings.MODID + ":insert_steel");
-		insert_du = new ItemModInsert(100, 0.9F, 0.6F, 0.6F, 0.6F).setUnlocalizedName("insert_du").setTextureName(RefStrings.MODID + ":insert_du");
+		insert_kevlar = new ItemModInsert(40, 0.85F, 1F, 0.8F, 0.9F).setUnlocalizedName("insert_kevlar").setTextureName(RefStrings.MODID + ":insert_kevlar");
+		insert_steel = new ItemModInsert(60, 0.8F, 1F, 0.75F, 0.8F).setUnlocalizedName("insert_steel").setTextureName(RefStrings.MODID + ":insert_steel");
+		insert_du = new ItemModInsert(100, 0.6F, 1F, 0.7F, 0.6F).setUnlocalizedName("insert_du").setTextureName(RefStrings.MODID + ":insert_du");
+
+		insert_sapi = new ItemModInsert(60, 0.8F, 1F, 0.75F, 0.9F).setUnlocalizedName("insert_sapi").setTextureName(RefStrings.MODID + ":insert_sapi");
+		insert_esapi = new ItemModInsert(80, 0.7F, 1F, 0.6F, 0.8F).setUnlocalizedName("insert_esapi").setTextureName(RefStrings.MODID + ":insert_esapi");
+		insert_xsapi = new ItemModInsert(150, 0.5F, 1F, 0.5F, 0.6F).setUnlocalizedName("insert_xsapi").setTextureName(RefStrings.MODID + ":insert_xsapi");
+		
 		insert_polonium = new ItemModInsert(500, 0.9F, 1F, 0.95F, 0.9F).setUnlocalizedName("insert_polonium").setTextureName(RefStrings.MODID + ":insert_polonium");
 		insert_ghiorsium = new ItemModInsert(2000, 0.8F, 0.75F, 0.35F, 0.9F).setUnlocalizedName("insert_ghiorsium").setTextureName(RefStrings.MODID + ":insert_ghiorsium");
 		insert_era = new ItemModInsert(2, 0.1F, 1F, 0.25F, 1F).setUnlocalizedName("insert_era").setTextureName(RefStrings.MODID + ":insert_era");
@@ -4228,6 +4237,11 @@ public class ModItems {
 		pudding = new ItemLemon(6, 1F, false).setUnlocalizedName("pudding").setCreativeTab(MainRegistry.consumableTab).setTextureName(RefStrings.MODID + ":pudding");
 		canteen_vodka = new ItemCanteen(3 * 60).setUnlocalizedName("canteen_vodka").setCreativeTab(MainRegistry.consumableTab).setTextureName(RefStrings.MODID + ":canteen_vodka");
 		canteen_fab = new ItemCanteen(2 * 60).setUnlocalizedName("canteen_fab").setCreativeTab(MainRegistry.consumableTab).setTextureName(RefStrings.MODID + ":canteen_fab");
+		ibuprofen = new ItemPharmacy(4).setUnlocalizedName("ibuprofen").setCreativeTab(MainRegistry.consumableTab).setTextureName(RefStrings.MODID + ":ibuprofen");
+		painkiller = new ItemPharmacy(4).setUnlocalizedName("painkiller").setCreativeTab(MainRegistry.consumableTab).setTextureName(RefStrings.MODID + ":painkiller");
+		yadulin = new ItemPharmacy(4).setUnlocalizedName("yadulin").setCreativeTab(MainRegistry.consumableTab).setTextureName(RefStrings.MODID + ":yadulin");
+		antidote = new ItemPharmacy(4).setUnlocalizedName("antidote").setCreativeTab(MainRegistry.consumableTab).setTextureName(RefStrings.MODID + ":antidote");
+
 		pancake = new ItemPancake(20, 20, false).setUnlocalizedName("pancake").setCreativeTab(MainRegistry.consumableTab).setTextureName(RefStrings.MODID + ":pancake");
 		nugget = new ItemLemon(200, 1F, false).setUnlocalizedName("nugget").setCreativeTab(MainRegistry.consumableTab).setTextureName(RefStrings.MODID + ":nugget");
 		peas = new ItemPeas().setUnlocalizedName("peas").setCreativeTab(MainRegistry.consumableTab).setTextureName(RefStrings.MODID + ":peas");
@@ -7267,6 +7281,7 @@ public class ModItems {
 		GameRegistry.registerItem(syringe_metal_empty, syringe_metal_empty.getUnlocalizedName());
 		GameRegistry.registerItem(syringe_metal_stimpak, syringe_metal_stimpak.getUnlocalizedName());
 		GameRegistry.registerItem(syringe_metal_medx, syringe_metal_medx.getUnlocalizedName());
+		GameRegistry.registerItem(syringe_military, syringe_military.getUnlocalizedName());
 		GameRegistry.registerItem(syringe_metal_psycho, syringe_metal_psycho.getUnlocalizedName());
 		GameRegistry.registerItem(syringe_metal_super, syringe_metal_super.getUnlocalizedName());
 		GameRegistry.registerItem(syringe_taint, syringe_taint.getUnlocalizedName());
@@ -7330,6 +7345,11 @@ public class ModItems {
 		GameRegistry.registerItem(med_ptsd, med_ptsd.getUnlocalizedName());
 		GameRegistry.registerItem(canteen_vodka, canteen_vodka.getUnlocalizedName());
 		GameRegistry.registerItem(canteen_fab, canteen_fab.getUnlocalizedName());
+		GameRegistry.registerItem(ibuprofen, ibuprofen.getUnlocalizedName());
+		GameRegistry.registerItem(painkiller, painkiller.getUnlocalizedName());
+		GameRegistry.registerItem(yadulin, yadulin.getUnlocalizedName());
+		GameRegistry.registerItem(antidote, antidote.getUnlocalizedName());
+
 		GameRegistry.registerItem(mucho_mango, mucho_mango.getUnlocalizedName());
 		GameRegistry.registerItem(chocolate, chocolate.getUnlocalizedName());
 		
