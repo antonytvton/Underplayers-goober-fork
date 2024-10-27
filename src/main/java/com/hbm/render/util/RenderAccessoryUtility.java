@@ -47,7 +47,8 @@ public class RenderAccessoryUtility {
 	private static ResourceLocation adam = new ResourceLocation(RefStrings.MODID + ":textures/models/capes/CapeAdam.png");
 	private static ResourceLocation alcater = new ResourceLocation(RefStrings.MODID + ":textures/models/capes/CapeAlcater.png");
 	private static ResourceLocation jame = new ResourceLocation(RefStrings.MODID + ":textures/models/capes/CapeJame.png");
-	
+	private static ResourceLocation johntrustworthy = new ResourceLocation(RefStrings.MODID + ":textures/models/capes/CapeTrustworthy.png");
+
 	public static ResourceLocation getCloakFromPlayer(EntityPlayer player) {
 		
 		String uuid = player.getUniqueID().toString();
@@ -131,6 +132,12 @@ public class RenderAccessoryUtility {
 		}
 		if(uuid.equals(ShadyUtil.ege444)) {
 			return jame;
+		}
+		if(uuid.equals(ShadyUtil.underplayer123)) {
+			return johntrustworthy;
+		}
+		if(uuid.equals(ShadyUtil.rockandfire)) {
+			return nostalgia;
 		}
 		if(ShadyUtil.contributors.contains(uuid)) {
 			return wiki;
