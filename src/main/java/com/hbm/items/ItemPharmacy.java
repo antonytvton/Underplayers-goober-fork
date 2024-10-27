@@ -136,6 +136,7 @@ public class ItemPharmacy extends Item {
     	{	
     		list.add("Decreases Damage by 20%");
 			list.add("Overdose: 10%");
+			list.add("I hope you like these 4K textures. You can just taste the crunchiness.");
     	}
     	if(this == ModItems.yadulin)
     	{	
@@ -147,6 +148,7 @@ public class ItemPharmacy extends Item {
     	if(this == ModItems.antidote)
     	{
 			list.add("Cures poison and overdose");
+			list.add("Take this after chugging a bottle of yadulin");
     	}
     	
     }
