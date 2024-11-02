@@ -6,6 +6,8 @@ import java.util.function.Consumer;
 
 import com.hbm.entity.effect.EntityFireLingering;
 import com.hbm.entity.projectile.EntityBulletBaseMK4;
+import com.hbm.explosion.ExplosionNT;
+import com.hbm.explosion.ExplosionNT.ExAttrib;
 import com.hbm.explosion.vanillant.ExplosionVNT;
 import com.hbm.explosion.vanillant.standard.BlockAllocatorStandard;
 import com.hbm.explosion.vanillant.standard.BlockProcessorStandard;
@@ -90,6 +92,9 @@ public class XFactoryRocket {
 		vnt.setPlayerProcessor(new PlayerProcessorStandard());
 		vnt.setSFX(new ExplosionEffectWeapon(10, 2.5F, 1F));
 		vnt.explode();
+		ExplosionNT explosion = new ExplosionNT(bullet.worldObj, bullet, bullet.posX, bullet.posY, bullet.posZ, 2F);
+		explosion.addAllAttrib(ExAttrib.ERRODE);
+		explosion.explode();;
 		bullet.setDead();
 	};
 	public static BiConsumer<EntityBulletBaseMK4, MovingObjectPosition> LAMBDA_STANDARD_EXPLODE_INC = (bullet, mop) -> {
