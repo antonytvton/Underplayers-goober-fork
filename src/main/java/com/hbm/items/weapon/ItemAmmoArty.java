@@ -123,7 +123,7 @@ public class ItemAmmoArty extends Item {
 		switch(stack.getItemDamage()) {
 		case HE:
 			list.add(y + "Destroys blocks");
-			list.add(y + "Normal Player Dammage");
+			list.add(y + "Normal Player Damage");
 			list.add(b + "Accuracy: 30 blocks");
 			list.add(b + "Reload time: 2s");
 			list.add(r + "For when you want to remove medium problems");
@@ -131,28 +131,28 @@ public class ItemAmmoArty extends Item {
 			break;
 		case FRAG:
 			list.add(y + "Doesnt destroy blocks");
-			list.add(y + "Increased Player Dammage");
+			list.add(y + "Increased Player Damage");
 			list.add(b + "Accuracy: 20 blocks");
 			list.add(b + "Reload time: 2s");
 			list.add(r + "AIRBURST");
 			break;
 		case LASER:
 			list.add(y + "Destroys blocks");
-			list.add(y + "Normal Player Dammage");
+			list.add(y + "Normal Player Damage");
 			list.add(b + "Accuracy: 3 blocks");
 			list.add(b + "Reload time: 2s");
 			list.add(r + "G-hardened electronics are my best friend");
 			break;
 		case HHE:
 			list.add(y + "Destroys blocks extra well");
-			list.add(y + "Normal Player Dammage");
+			list.add(y + "Normal Player Damage");
 			list.add(b + "Accuracy: 15 blocks");
 			list.add(b + "Reload time: 8s");
 			list.add(r + "For when you want to remove large problems");
 			break;
 		case BUNKER:
 			list.add(y + "Destroys concrete");
-			list.add(y + "Lower Player Dammage");
+			list.add(y + "Lower Player Damage");
 			list.add(b + "Accuracy: 5 blocks");
 			list.add(b + "Reload time: 8s");
 			list.add(r + "For when you want to remove emplaced problems");
@@ -226,6 +226,7 @@ public class ItemAmmoArty extends Item {
 
 	private IIcon[] icons = new IIcon[itemTypes.length];
 	private IIcon iconCargo;
+	
 
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister reg) {

@@ -150,6 +150,7 @@ public class TileMappings {
 		put(TileEntityBarrel.class, "tileentity_fluid_barrel");
 		put(TileEntityCyberCrab.class, "tileentity_crabs");
 		put(TileEntitySoyuzCapsule.class, "tileentity_soyuz_capsule");
+		put(TileEntityMachineRotaryFurnace.class, "tileentity_rotary_furnace");
 		put(TileEntityMachineCrystallizer.class, "tileentity_acidomatic");
 		put(TileEntitySoyuzStruct.class, "tileentity_soyuz_struct");
 		put(TileEntityITERStruct.class, "tileentity_iter_struct");
@@ -340,6 +341,7 @@ public class TileMappings {
 		put(TileEntityMachineCatalyticReformer.class, "tileentity_catalytic_reformer");
 		put(TileEntityMachineHydrotreater.class, "tileentity_hydrotreater");
 		put(TileEntityMachineCoker.class, "tileentity_coker");
+		put(TileEntityMachinePyroOven.class, "tileentity_pyrooven");
 		put(TileEntityChimneyBrick.class, "tileentity_chimney_brick");
 		put(TileEntityChimneyIndustrial.class, "tileentity_chimney_industrial");
 		

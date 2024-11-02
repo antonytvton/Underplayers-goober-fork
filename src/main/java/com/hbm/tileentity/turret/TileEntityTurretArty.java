@@ -475,7 +475,7 @@ public class TileEntityTurretArty extends TileEntityTurretBaseArtillery implemen
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public GUITurretArty provideGUI(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public Object provideGUI(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		return new GUITurretArty(player.inventory, this);
 	}
 	@Callback

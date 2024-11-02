@@ -179,7 +179,6 @@ public class HbmLivingProps implements IExtendedEntityProperties {
 		getData(entity).digamma = digamma;
 		float hpmult = getData(entity).healthmult;
 		float healthMod = (float)(Math.pow(0.5, digamma)*hpmult - 1F);
-		System.out.println(healthMod);
 		
 		IAttributeInstance attributeinstance = entity.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth);
 		

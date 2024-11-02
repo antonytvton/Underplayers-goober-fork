@@ -30,7 +30,6 @@ import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.SimpleComponent;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
@@ -136,9 +135,9 @@ public class TileEntityICF extends TileEntityMachineBase implements IGUIProvider
 				
 				int coolingCycles = tanks[0].getFill() / step.amountReq;
 				int heatingCycles = (tanks[1].getMaxFill() - tanks[1].getFill()) / step.amountProduced;
-				int heatCycles = (int) (this.heat / 4 / step.heatReq * trait.getEfficiency(HeatingType.ICF)); //25% cooling per tick
+				int heatCycles = (int) Math.min(this.heat / 4D / step.heatReq * trait.getEfficiency(HeatingType.ICF), this.heat / step.heatReq); //25% cooling per tick
 				int cycles = Math.min(coolingCycles, Math.min(heatingCycles, heatCycles));
-
+				
 				tanks[0].setFill(tanks[0].getFill() - step.amountReq * cycles);
 				tanks[1].setFill(tanks[1].getFill() + step.amountProduced * cycles);
 				this.heat -= step.heatReq * cycles;
@@ -280,7 +279,7 @@ public class TileEntityICF extends TileEntityMachineBase implements IGUIProvider
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public GuiScreen provideGUI(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public Object provideGUI(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		return new GUIICF(player.inventory, this);
 	}
 	

@@ -69,7 +69,7 @@ public abstract class EntityGrenadeBouncyBase extends Entity implements IProject
 
     protected float func_70182_d()
     {
-        return 1.0F;
+        return 1F;
     }
 
     protected float func_70183_g()

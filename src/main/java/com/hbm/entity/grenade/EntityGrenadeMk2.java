@@ -27,7 +27,7 @@ public class EntityGrenadeMk2 extends EntityGrenadeBouncyBase {
 
 		if(!this.worldObj.isRemote) {
 			this.setDead();
-			worldObj.newExplosion(this, posX, posY, posZ, 15, false, false);
+			worldObj.newExplosion(this, posX, posY+0.5, posZ, 9, false, false);
 		}
 	}
 
@@ -35,9 +35,15 @@ public class EntityGrenadeMk2 extends EntityGrenadeBouncyBase {
 	protected int getMaxTimer() {
 		return ItemGrenade.getFuseTicks(ModItems.grenade_mk2);
 	}
+	
+	@Override
+	protected float func_70182_d()
+    {
+        return 0.85F;
+    }
 
 	@Override
 	protected double getBounceMod() {
-		return 0.25D;
+		return 0.4D;
 	}
 }

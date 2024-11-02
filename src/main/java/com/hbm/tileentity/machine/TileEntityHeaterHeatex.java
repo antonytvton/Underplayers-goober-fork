@@ -2,7 +2,6 @@ package com.hbm.tileentity.machine;
 
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.interfaces.IControlReceiver;
-import com.hbm.interfaces.ICopiable;
 import com.hbm.inventory.container.ContainerHeaterHeatex;
 import com.hbm.inventory.fluid.FluidType;
 import com.hbm.inventory.fluid.Fluids;
@@ -20,7 +19,6 @@ import api.hbm.fluid.IFluidStandardTransceiver;
 import api.hbm.tile.IHeatSource;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
@@ -32,7 +30,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class TileEntityHeaterHeatex extends TileEntityMachineBase implements IHeatSource, INBTPacketReceiver, IFluidStandardTransceiver, IGUIProvider, IControlReceiver, IFluidCopiable {
 	
 	public FluidTank[] tanks;
-	public int amountToCool = 1;
+	public int amountToCool = 24_000;
 	public int tickDelay = 1;
 	public int heatEnergy;
 	
@@ -194,7 +192,7 @@ public class TileEntityHeaterHeatex extends TileEntityMachineBase implements IHe
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public GuiScreen provideGUI(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public Object provideGUI(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		return new GUIHeaterHeatex(player.inventory, this);
 	}
 	

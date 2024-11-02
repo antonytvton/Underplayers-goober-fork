@@ -26,10 +26,14 @@ public class EntityGrenadeGeneric extends EntityGrenadeBouncyBase
         if (!this.worldObj.isRemote)
         {
             this.setDead();
-            this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 2.0F, true);
+			worldObj.newExplosion(this, posX, posY+0.5, posZ, 8, false, false);
         }
     }
-
+    @Override
+	protected float func_70182_d()
+    {
+        return 1F;
+    }
 	@Override
 	protected int getMaxTimer() {
 		return 100;
@@ -37,7 +41,7 @@ public class EntityGrenadeGeneric extends EntityGrenadeBouncyBase
 
 	@Override
 	protected double getBounceMod() {
-		return 0.25D;
+		return 0.4D;
 	}
 
 }

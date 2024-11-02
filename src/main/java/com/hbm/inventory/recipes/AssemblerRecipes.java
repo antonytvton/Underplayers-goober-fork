@@ -363,8 +363,8 @@ public class AssemblerRecipes extends SerializableRecipe {
 		makeRecipe(new ComparableStack(ModItems.upgrade_overdrive_1, 1), new AStack[] {
 				new ComparableStack(ModItems.upgrade_speed_3, 1),
 				new ComparableStack(ModItems.upgrade_effect_3, 1),
-				new OreDictStack(DESH.ingot(), 16),
-				new ComparableStack(ModItems.crystal_lithium, 4),
+				new OreDictStack(BIGMT.ingot(), 16),
+				new OreDictStack(ANY_HARDPLASTIC.ingot(), 16),
 				new ComparableStack(ModItems.circuit, 16, EnumCircuitType.ADVANCED),
 			}, 200);
 		makeRecipe(new ComparableStack(ModItems.upgrade_overdrive_2, 1), new AStack[] {
@@ -372,15 +372,15 @@ public class AssemblerRecipes extends SerializableRecipe {
 				new ComparableStack(ModItems.upgrade_speed_3, 1),
 				new ComparableStack(ModItems.upgrade_effect_3, 1),
 				new OreDictStack(BIGMT.ingot(), 16),
-				new ComparableStack(ModItems.crystal_lithium, 8),
+				new ComparableStack(ModItems.ingot_cft, 8),
 				new ComparableStack(ModItems.circuit, 16, EnumCircuitType.CAPACITOR_BOARD),
 			}, 300);
 		makeRecipe(new ComparableStack(ModItems.upgrade_overdrive_3, 1), new AStack[] {
 				new ComparableStack(ModItems.upgrade_overdrive_2, 1),
 				new ComparableStack(ModItems.upgrade_speed_3, 1),
 				new ComparableStack(ModItems.upgrade_effect_3, 1),
-				new OreDictStack(STAR.ingot(), 16),
-				new ComparableStack(ModItems.crystal_lithium, 16),
+				new OreDictStack(ANY_BISMOIDBRONZE.ingot(), 16),
+				new ComparableStack(ModItems.ingot_cft, 16),
 				new ComparableStack(ModItems.circuit, 16, EnumCircuitType.BISMOID),
 			}, 500);
 		
@@ -1041,6 +1041,14 @@ public class AssemblerRecipes extends SerializableRecipe {
 				new OreDictStack(STEEL.shell(), 2),
 				new OreDictStack(STEEL.pipe(), 8),
 				new ComparableStack(ModItems.motor_desh, 2),
+				new ComparableStack(ModItems.circuit, 1, EnumCircuitType.BISMOID)
+			}, 200);
+		makeRecipe(new ComparableStack(ModBlocks.machine_pyrooven, 1), new AStack[] {
+				!exp ? new OreDictStack(STEEL.plateWelded(), 16) : new OreDictStack(STEEL.heavyComp(), 4),
+				new OreDictStack(ANY_HARDPLASTIC.ingot(), 16),
+				new ComparableStack(ModItems.ingot_cft, 4),
+				new OreDictStack(CU.pipe(), 12),
+				new ComparableStack(ModItems.motor_desh, 1),
 				new ComparableStack(ModItems.circuit, 1, EnumCircuitType.BISMOID)
 			}, 200);
 
