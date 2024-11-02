@@ -40,6 +40,12 @@ public class ItemGenericGrenade extends ItemGrenade {
 	public int getMaxTimer() {
 		return this.fuse * 20;
 	}
+	
+    protected float func_70182_d()
+    {
+        return 1F;
+    }
+
 
 	public double getBounceMod() {
 		return 0.5D;

@@ -48,6 +48,7 @@ public class RenderAccessoryUtility {
 	private static ResourceLocation alcater = new ResourceLocation(RefStrings.MODID + ":textures/models/capes/CapeAlcater.png");
 	private static ResourceLocation jame = new ResourceLocation(RefStrings.MODID + ":textures/models/capes/CapeJame.png");
 	private static ResourceLocation johntrustworthy = new ResourceLocation(RefStrings.MODID + ":textures/models/capes/CapeTrustworthy.png");
+	private static ResourceLocation crunchy = new ResourceLocation(RefStrings.MODID + ":textures/models/capes/CapeCrunchy.png");
 
 	public static ResourceLocation getCloakFromPlayer(EntityPlayer player) {
 		
@@ -133,8 +134,11 @@ public class RenderAccessoryUtility {
 		if(uuid.equals(ShadyUtil.ege444)) {
 			return jame;
 		}
-		if(uuid.equals(ShadyUtil.underplayer123)) {
+		if(uuid.equals(ShadyUtil.ivanmoesurlawn)) {
 			return johntrustworthy;
+		}
+		if(uuid.equals(ShadyUtil.underplayer123)) {
+			return crunchy;
 		}
 		if(uuid.equals(ShadyUtil.rockandfire)) {
 			return nostalgia;

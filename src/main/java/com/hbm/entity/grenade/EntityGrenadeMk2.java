@@ -39,7 +39,7 @@ public class EntityGrenadeMk2 extends EntityGrenadeBouncyBase {
 	@Override
 	protected float func_70182_d()
     {
-        return 0.8F;
+        return 0.85F;
     }
 
 	@Override
