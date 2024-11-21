@@ -77,7 +77,7 @@ public class Landmine extends BlockContainer implements IBomb {
 		if(this == ModBlocks.mine_he)
 			this.setBlockBounds(4 * f, 0.0F, 4 * f, 12 * f, 2 * f, 12 * f);
 		if(this == ModBlocks.mine_shrap)
-			this.setBlockBounds(4 * f, 0.0F, 4 * f, 12 * f, 2 * f, 12 * f);
+			this.setBlockBounds(4 * f, 0.0F, 4 * f, 20 * f, 4 * f, 20 * f);
 		if(this == ModBlocks.mine_fat)
 			this.setBlockBounds(5 * f, 0.0F, 4 * f, 11 * f, 6 * f, 12 * f);
 	}
@@ -156,7 +156,7 @@ public class Landmine extends BlockContainer implements IBomb {
 
 			if(this == ModBlocks.mine_ap) {
 				ExplosionVNT vnt = new ExplosionVNT(world, x + 0.5, y + 0.5, z + 0.5, 3F);
-				vnt.setEntityProcessor(new EntityProcessorCrossSmooth(0.5, 10F));
+				vnt.setEntityProcessor(new EntityProcessorCrossSmooth(0.5, 80F));
 				vnt.setPlayerProcessor(new PlayerProcessorStandard());
 				vnt.setSFX(new ExplosionEffectWeapon(5, 1F, 0.5F));
 				vnt.explode();
@@ -164,13 +164,13 @@ public class Landmine extends BlockContainer implements IBomb {
 				ExplosionVNT vnt = new ExplosionVNT(world, x + 0.5, y + 0.5, z + 0.5, 4F);
 				vnt.setBlockAllocator(new BlockAllocatorStandard());
 				vnt.setBlockProcessor(new BlockProcessorStandard());
-				vnt.setEntityProcessor(new EntityProcessorCrossSmooth(1, 35));
+				vnt.setEntityProcessor(new EntityProcessorCrossSmooth(1, 150));
 				vnt.setPlayerProcessor(new PlayerProcessorStandard());
 				vnt.setSFX(new ExplosionEffectWeapon(15, 3.5F, 1.25F));
 				vnt.explode();
 			} else if(this == ModBlocks.mine_shrap) {
 				ExplosionVNT vnt = new ExplosionVNT(world, x + 0.5, y + 0.5, z + 0.5, 3F);
-				vnt.setEntityProcessor(new EntityProcessorCrossSmooth(0.5, 7.5F));
+				vnt.setEntityProcessor(new EntityProcessorCrossSmooth(4, 80F));
 				vnt.setPlayerProcessor(new PlayerProcessorStandard());
 				vnt.setSFX(new ExplosionEffectWeapon(5, 1F, 0.5F));
 				vnt.explode();

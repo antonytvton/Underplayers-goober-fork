@@ -674,6 +674,9 @@ chem.VIT_LIQUID=Liquid Nuclear Waste Vitrification
 chem.XENON=Linde Xenon Cycle
 chem.XENON_OXY=Boosted Linde Xenon Cycle
 chem.YELLOWCAKE=Yellowcake Production
+chem.CERAMIC_PLATE=Ceramic Body Armor Production
+chem.BONDED_CERAMIC=Ceramic Plate Bonding
+chem.BORON_COMPOSITE=Boron Composite Plate Production
 
 commands.satellite.no_active_satellites=No active satellites found!
 commands.satellite.no_satellite=No satellite using this frequency found!

@@ -77,11 +77,11 @@ public class XFactoryRocket {
 	// IMPACT
 	public static BiConsumer<EntityBulletBaseMK4, MovingObjectPosition> LAMBDA_STANDARD_EXPLODE = (bullet, mop) -> {
 		if(mop.typeOfHit == mop.typeOfHit.ENTITY && bullet.ticksExisted < 3) return;
-		Lego.standardExplode(bullet, mop, 5F); bullet.setDead();
+		Lego.standardExplode(bullet, mop, 6F); bullet.setDead();
 	};
 	public static BiConsumer<EntityBulletBaseMK4, MovingObjectPosition> LAMBDA_STANDARD_EXPLODE_HEAT = (bullet, mop) -> {
 		if(mop.typeOfHit == mop.typeOfHit.ENTITY && bullet.ticksExisted < 3) return;
-		Lego.standardExplode(bullet, mop, 2.5F); bullet.setDead();
+		Lego.standardExplode(bullet, mop, 3.5F); bullet.setDead();
 	};
 	public static BiConsumer<EntityBulletBaseMK4, MovingObjectPosition> LAMBDA_STANDARD_EXPLODE_DEMO = (bullet, mop) -> {
 		if(mop.typeOfHit == mop.typeOfHit.ENTITY && bullet.ticksExisted < 3) return;
@@ -92,7 +92,7 @@ public class XFactoryRocket {
 		vnt.setPlayerProcessor(new PlayerProcessorStandard());
 		vnt.setSFX(new ExplosionEffectWeapon(10, 2.5F, 1F));
 		vnt.explode();
-		ExplosionNT explosion = new ExplosionNT(bullet.worldObj, bullet, bullet.posX, bullet.posY, bullet.posZ, 2F);
+		ExplosionNT explosion = new ExplosionNT(bullet.worldObj, bullet, bullet.posX, bullet.posY, bullet.posZ, 1F);
 		explosion.addAllAttrib(ExAttrib.ERRODE);
 		explosion.explode();;
 		bullet.setDead();
@@ -101,7 +101,7 @@ public class XFactoryRocket {
 		if(mop.typeOfHit == mop.typeOfHit.ENTITY && bullet.ticksExisted < 3) return;
 		World world = bullet.worldObj;
 		Lego.standardExplode(bullet, mop, 3F);
-		EntityFireLingering fire = new EntityFireLingering(world).setArea(6, 2).setDuration(300).setType(EntityFireLingering.TYPE_DIESEL);
+		EntityFireLingering fire = new EntityFireLingering(world).setArea(8, 3).setDuration(300).setType(EntityFireLingering.TYPE_DIESEL);
 		fire.setPosition(mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord);
 		world.spawnEntityInWorld(fire);
 		bullet.setDead();
