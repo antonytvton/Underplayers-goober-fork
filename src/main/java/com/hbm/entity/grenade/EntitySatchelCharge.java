@@ -51,6 +51,6 @@ public class EntitySatchelCharge extends EntityGrenadeBouncyBase
 
 	@Override
 	protected double getBounceMod() {
-		return 0.25D;
+		return -1D;
 	}
 }

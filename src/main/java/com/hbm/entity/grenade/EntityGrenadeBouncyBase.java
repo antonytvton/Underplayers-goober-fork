@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 
 public abstract class EntityGrenadeBouncyBase extends Entity implements IProjectile {
 
+	protected boolean sticky = false;
 	protected EntityLivingBase thrower;
     protected String throwerName;
     protected int timer = 0;
@@ -156,9 +157,14 @@ public abstract class EntityGrenadeBouncyBase extends Entity implements IProject
 
         	Vec3 mot = Vec3.createVectorHelper(motionX, motionY, motionZ);
         	
-        	if(mot.lengthVector() > 0.05)
+        	if((mot.lengthVector() > 0.05) & (getBounceMod() < 0.1))
         		worldObj.playSoundAtEntity(this, "hbm:weapon.gBounce", 2.0F, 1.0F);
-
+        	if (getBounceMod() < 0.1) {
+        		motionX = 0;
+        		motionY = 0;
+        		motionZ = 0;
+            	sticky = true;
+        	}
         	motionX *= getBounceMod();
         	motionY *= getBounceMod();
         	motionZ *= getBounceMod();
@@ -198,12 +204,17 @@ public abstract class EntityGrenadeBouncyBase extends Entity implements IProject
 
             f2 = 0.8F;
         }
-
+        
         this.motionX *= (double)f2;
         this.motionY *= (double)f2;
         this.motionZ *= (double)f2;
         this.motionY -= (double)f3;
         this.setPosition(this.posX, this.posY, this.posZ);
+        if (sticky == true) {
+        	this.motionX = 0;
+        	this.motionY = 0;
+        	this.motionZ = 0;
+        }
         
         timer++;
         
