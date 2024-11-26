@@ -41,7 +41,7 @@ public class EntitySatchelCharge extends EntityGrenadeBouncyBase
     
     protected float func_70182_d()
     {
-        return 0.5F;
+        return 0.8F;
     }
 
 	@Override

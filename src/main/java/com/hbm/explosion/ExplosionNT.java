@@ -370,6 +370,75 @@ public class ExplosionNT extends Explosion {
 		errosion.put(ModBlocks.concrete_smooth, Blocks.gravel);
 		errosion.put(ModBlocks.brick_concrete, ModBlocks.brick_concrete_broken);
 		errosion.put(ModBlocks.brick_concrete_broken, Blocks.gravel);
+		errosion.put(ModBlocks.brick_concrete_cracked, Blocks.gravel);
+		errosion.put(ModBlocks.brick_concrete_mossy, Blocks.gravel);
+		
+		errosion.put(ModBlocks.reinforced_stone, Blocks.gravel);
+		errosion.put(ModBlocks.reinforced_brick, Blocks.gravel);
+		errosion.put(ModBlocks.reinforced_brick_stairs, Blocks.gravel);
+		errosion.put(ModBlocks.reinforced_glass, Blocks.air);
+		errosion.put(ModBlocks.reinforced_glass_pane, Blocks.air);
+		errosion.put(ModBlocks.reinforced_laminate, Blocks.air);
+		errosion.put(ModBlocks.reinforced_laminate_pane, Blocks.air);
+		errosion.put(ModBlocks.reinforced_lamp_off, Blocks.air);
+		errosion.put(ModBlocks.reinforced_lamp_on, Blocks.air);
+		errosion.put(ModBlocks.asphalt, Blocks.air);
+		errosion.put(ModBlocks.asphalt_light, Blocks.air);
+		errosion.put(ModBlocks.asphalt_stairs, Blocks.air);
+		errosion.put(ModBlocks.reinforced_sand, Blocks.air);
+		errosion.put(ModBlocks.brick_compound, Blocks.air);
+		errosion.put(ModBlocks.brick_compound_stairs, Blocks.air);
+		errosion.put(ModBlocks.concrete_asbestos, Blocks.air);
+		errosion.put(ModBlocks.concrete_asbestos_stairs, Blocks.air);
+		errosion.put(ModBlocks.brick_obsidian, Blocks.air);
+		errosion.put(ModBlocks.brick_obsidian_stairs, Blocks.air);
+		errosion.put(ModBlocks.concrete_colored, Blocks.air);
+		errosion.put(ModBlocks.concrete_colored_ext, Blocks.air);
+		errosion.put(ModBlocks.vinyl_tile, Blocks.air);
+		errosion.put(ModBlocks.concrete_pillar, Blocks.air);
+		errosion.put(ModBlocks.reinforced_light, Blocks.air);
+		errosion.put(ModBlocks.brick_fire, Blocks.air);
+		errosion.put(ModBlocks.brick_fire_stairs, Blocks.air);
+		errosion.put(ModBlocks.concrete_brick_slab, Blocks.air);
+		errosion.put(ModBlocks.concrete_double_slab, Blocks.air);
+		errosion.put(ModBlocks.brick_slab, Blocks.air);
+		errosion.put(ModBlocks.brick_double_slab, Blocks.air);
+		errosion.put(ModBlocks.concrete_slab, Blocks.air);
+		errosion.put(ModBlocks.concrete_double_slab, Blocks.air);
+		errosion.put(ModBlocks.brick_asbestos, Blocks.air);
+		errosion.put(ModBlocks.concrete_brick_double_slab, Blocks.air);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	}
 	
 	public static final HashMap<Block, Block> stripping = new HashMap();

@@ -163,7 +163,7 @@ public abstract class EntityGrenadeBouncyBase extends Entity implements IProject
         		motionX = 0;
         		motionY = 0;
         		motionZ = 0;
-            	sticky = true;
+            	sticky = true;//if bounce mod is low enough then it sticks to a surface
         	}
         	motionX *= getBounceMod();
         	motionY *= getBounceMod();

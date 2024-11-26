@@ -94,11 +94,10 @@ public class ItemBobmazonPacket implements IMessage {
 					
 					Random rand = world.rand;
 					EntityBobmazon bob = new EntityBobmazon(world);
-					bob.posX = p.posX + rand.nextGaussian() * 10;
+					bob.posX = p.posX + rand.nextGaussian() * 3;
 					bob.posY = 300;
-					bob.posZ = p.posZ + rand.nextGaussian() * 10;
+					bob.posZ = p.posZ + rand.nextGaussian() * 3;
 					bob.payload = stack.copy();
-					
 					world.spawnEntityInWorld(bob);
 				} else {
 					p.addChatMessage(new ChatComponentText("[BOBMAZON] Not enough caps!"));
