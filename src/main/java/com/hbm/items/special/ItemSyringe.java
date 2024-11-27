@@ -189,7 +189,7 @@ public class ItemSyringe extends Item {
 		if(this == ModItems.syringe_metal_super && !VersatileConfig.hasPotionSickness(player)) {
 			if(!world.isRemote) {
 				player.heal(25);
-				HbmLivingProps.setDigamma(player, (float)(Math.log(Math.pow(0.5, (HbmLivingProps.getDigamma(entity)))-0.1)/-0.30103));
+				HbmLivingProps.setDigamma(player, (float)(Math.log(Math.pow(0.5, (HbmLivingProps.getDigamma(player)))-0.1)/-0.30103));
 
 				stack.stackSize--;
 				world.playSoundAtEntity(player, "hbm:item.syringe", 1.0F, 1.0F);
