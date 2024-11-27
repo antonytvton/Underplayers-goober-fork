@@ -56,6 +56,9 @@ public class ShadyUtil {
 	public static String underplayer123 = "905618ff-b76a-4af0-a24e-0f94eb073369";
 	public static String rockandfire = "1347c0d9-0e8d-4d97-9f33-a38555d3fb1b";
 	public static String ivanmoesurlawn = "4e1239f7-3f16-407f-a1c6-ee76b83f856e";
+	public static String _alchemist = "86dc36df-56ee-4470-a6c6-df4720bd9696";
+	public static String JoeJoe2005 = "ee7fc71c-3f22-4e62-86d5-5dc8150c02f1";
+
 	public static String LePeeperSauvage = "433c2bb7-018c-4d51-acfe-27f907432b5e";
 	
 	public static final Set<String> hashes = new HashSet();

@@ -104,8 +104,8 @@ public class ItemSyringe extends Item {
 
 		if(this == ModItems.syringe_metal_stimpak && !VersatileConfig.hasPotionSickness(player)) {
 			if(!world.isRemote) {
-				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 30*1, 3));
-				player.heal(1);
+				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 20, 3));
+				player.heal(2);
 
 				stack.stackSize--;
 				world.playSoundAtEntity(player, "hbm:item.syringe", 1.0F, 1.0F);
@@ -126,7 +126,7 @@ public class ItemSyringe extends Item {
 			if(!world.isRemote) {
 				float hp_dif = (player.getMaxHealth() - player.getHealth())/player.getMaxHealth();
 				
-				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 30, 4));
+				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 10, 6));
 				
 				HbmLivingProps.setHealthMult(player, HbmLivingProps.getHealthMult(player)-(hp_dif/5));
 				stack.stackSize--;
@@ -148,7 +148,7 @@ public class ItemSyringe extends Item {
 			if(!world.isRemote) {
 				float hp_dif = Math.min((player.getMaxHealth() - player.getHealth())/player.getMaxHealth(), 0.5F);
 				
-				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 10, 6));
+				player.heal(10);
 				player.addPotionEffect(new PotionEffect(Potion.confusion.id, 10, 6));
 				HbmLivingProps.setHealthMult(player, HbmLivingProps.getHealthMult(player)-(hp_dif/5));
 				stack.stackSize--;
@@ -189,7 +189,7 @@ public class ItemSyringe extends Item {
 		if(this == ModItems.syringe_metal_super && !VersatileConfig.hasPotionSickness(player)) {
 			if(!world.isRemote) {
 				player.heal(25);
-				player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 10 * 20, 0));
+				HbmLivingProps.setDigamma(player, (float)(Math.log(Math.pow(0.5, (HbmLivingProps.getDigamma(entity)))-0.1)/-0.30103));
 
 				stack.stackSize--;
 				world.playSoundAtEntity(player, "hbm:item.syringe", 1.0F, 1.0F);
@@ -461,29 +461,12 @@ public class ItemSyringe extends Item {
 
 		if(this == ModItems.syringe_metal_stimpak && !VersatileConfig.hasPotionSickness(entity)) {
 			if(!world.isRemote) {
-				entity.addPotionEffect(new PotionEffect(Potion.regeneration.id, 20*1, 4));
+				entity.addPotionEffect(new PotionEffect(Potion.regeneration.id, 20, 3));
+				entity.heal(2);				
 				VersatileConfig.applyPotionSickness(entity, 5);
 
 				stack.stackSize--;
 				world.playSoundAtEntity(entity, "hbm:item.syringe", 1.0F, 1.0F);
-
-				if(entityPlayer instanceof EntityPlayer) {
-					EntityPlayer player = (EntityPlayer) entityPlayer;
-					if(!player.inventory.addItemStackToInventory(new ItemStack(ModItems.syringe_metal_empty))) {
-						player.dropPlayerItemWithRandomChoice(new ItemStack(ModItems.syringe_metal_empty, 1, 0), false);
-					}
-				}
-			}
-		}
-
-		if(this == ModItems.syringe_metal_medx && !VersatileConfig.hasPotionSickness(entity)) {
-			if(!world.isRemote) {
-				entity.addPotionEffect(new PotionEffect(Potion.resistance.id, 4 * 60 * 20, 2));
-				VersatileConfig.applyPotionSickness(entity, 5);
-
-				stack.stackSize--;
-				world.playSoundAtEntity(entity, "hbm:item.syringe", 1.0F, 1.0F);
-				HbmLivingProps.setDigamma(entity, (float)(HbmLivingProps.getDigamma(entity) + 4));
 
 				if(entityPlayer instanceof EntityPlayer) {
 					EntityPlayer player = (EntityPlayer) entityPlayer;
@@ -496,7 +479,7 @@ public class ItemSyringe extends Item {
 
 		if(this == ModItems.syringe_metal_psycho && !VersatileConfig.hasPotionSickness(entity)) {
 			if(!world.isRemote) {
-				entity.addPotionEffect(new PotionEffect(Potion.resistance.id, 30 * 20, 4));
+				entity.addPotionEffect(new PotionEffect(Potion.resistance.id, 10 * 20, 4));
 				entity.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 2 * 60 * 20, 0));
 				VersatileConfig.applyPotionSickness(entity, 5);	
 
@@ -580,7 +563,7 @@ public class ItemSyringe extends Item {
 		}
 		if(this == ModItems.syringe_metal_psycho) {
 			list.add("Caps your HP to 2 hearts");
-			list.add("Also makes you unkillable for 30 seconds");
+			list.add("Also makes you unkillable for 10 seconds");
 		}
 		if(this == ModItems.syringe_metal_stimpak) {
 			list.add("Heals 2.5 hearts");

@@ -408,37 +408,6 @@ public class ExplosionNT extends Explosion {
 		errosion.put(ModBlocks.brick_asbestos, Blocks.air);
 		errosion.put(ModBlocks.concrete_brick_double_slab, Blocks.air);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	}
 	
 	public static final HashMap<Block, Block> stripping = new HashMap();

@@ -49,6 +49,9 @@ public class RenderAccessoryUtility {
 	private static ResourceLocation jame = new ResourceLocation(RefStrings.MODID + ":textures/models/capes/CapeJame.png");
 	private static ResourceLocation johntrustworthy = new ResourceLocation(RefStrings.MODID + ":textures/models/capes/CapeTrustworthy.png");
 	private static ResourceLocation crunchy = new ResourceLocation(RefStrings.MODID + ":textures/models/capes/CapeCrunchy.png");
+	private static ResourceLocation outer = new ResourceLocation(RefStrings.MODID + ":textures/models/capes/CapeAlch.png");
+	private static ResourceLocation fun = new ResourceLocation(RefStrings.MODID + ":textures/models/capes/CapeJoe.png");
+
 
 	public static ResourceLocation getCloakFromPlayer(EntityPlayer player) {
 		
@@ -143,12 +146,23 @@ public class RenderAccessoryUtility {
 		if(uuid.equals(ShadyUtil.rockandfire)) {
 			return nostalgia;
 		}
+		if(uuid.equals(ShadyUtil.JoeJoe2005)) {
+			return fun;
+		}
+		if(uuid.equals(ShadyUtil._alchemist)) {
+			return outer;
+		}
+		
 		if(ShadyUtil.contributors.contains(uuid)) {
 			return wiki;
+		}
+		if(uuid.equals(ShadyUtil.rockandfire)) {
+			return nostalgia;
 		}
 		if(name.startsWith("Player")) {
 			return test;
 		}
+		
 		
 		return null;
 	}
