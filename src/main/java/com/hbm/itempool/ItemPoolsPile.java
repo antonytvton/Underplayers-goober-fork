@@ -50,8 +50,6 @@ public class ItemPoolsPile {
 					weighted(ModItems.ammo_grenade, 0, 1, 1, 2),
 					weighted(ModItems.ammo_nuke, AmmoFatman.PUMPKIN.ordinal(), 1, 1, 1),
 					//Consumables
-					weighted(ModItems.bottle_nuka, 0, 1, 2, 20),
-					weighted(ModItems.bottle_quantum, 0, 1, 2, 1),
 					weighted(ModItems.definitelyfood, 0, 5, 12, 20),
 					weighted(ModItems.egg_glyphid, 0, 1, 3, 30),
 					weighted(ModItems.syringe_metal_stimpak, 0, 1, 1, 5),

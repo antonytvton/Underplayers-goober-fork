@@ -45,7 +45,6 @@ public class ItemPoolsSingle {
 					weighted(ModItems.gun_uac_pistol, 0, 1, 1, 2),
 					weighted(ModItems.pin, 0, 8, 8, 1),
 					weighted(ModItems.gun_calamity, 0, 1, 1, 1),
-					weighted(ModItems.bottle_quantum, 0, 1, 3, 1),
 					weighted(ModItems.ingot_advanced_alloy, 0, 4, 12, 1),
 					weighted(ModItems.ammo_50bmg, 0, 24, 48, 1),
 					weighted(ModItems.ammo_45, 0, 48, 64, 2),

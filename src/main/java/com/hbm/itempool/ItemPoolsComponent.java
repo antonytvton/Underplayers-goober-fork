@@ -84,7 +84,6 @@ public class ItemPoolsComponent {
 					weighted(ModItems.fuel_tank_medium, 0, 1, 1, 4),
 					weighted(ModItems.bomb_caller, 0, 1, 1, 1),
 					weighted(ModItems.bomb_caller, 3, 1, 1, 1),
-					weighted(ModItems.bottle_nuka, 0, 1, 3, 10)
 			};
 		}};
 		

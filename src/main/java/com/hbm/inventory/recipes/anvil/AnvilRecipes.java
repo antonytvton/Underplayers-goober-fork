@@ -497,13 +497,7 @@ public class AnvilRecipes {
 						new OreDictStack(PB.plate528(), 2),
 						new ComparableStack(ModItems.nuclear_waste_vitrified, 10)
 				}, new AnvilOutput(new ItemStack(ModBlocks.vitrified_barrel))).setTier(3));
-		
-		constructionRecipes.add(new AnvilConstructionRecipe(
-				new AStack[] {
-						new ComparableStack(ModItems.man_core, 1),
-						new OreDictStack(BE.ingot(), 4),
-						new ComparableStack(ModItems.screwdriver, 1)
-				}, new AnvilOutput(new ItemStack(ModItems.demon_core_open))).setTier(3));
+
 		
 		constructionRecipes.add(new AnvilConstructionRecipe(
 				new AStack[] {new OreDictStack(DESH.ingot(), 4), new OreDictStack(ANY_PLASTIC.dust(), 2), new OreDictStack(DURA.ingot(), 1)},

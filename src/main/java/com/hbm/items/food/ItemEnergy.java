@@ -184,9 +184,6 @@ public class ItemEnergy extends Item {
 
 			if(!player.capabilities.isCreativeMode) {
 
-				if(this.cap != null) {
-					player.inventory.addItemStackToInventory(new ItemStack(this.cap));
-				}
 				if(this.container != null) {
 					if(stack.stackSize <= 0) {
 						return new ItemStack(this.container);

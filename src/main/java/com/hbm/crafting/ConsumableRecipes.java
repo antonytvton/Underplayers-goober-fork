@@ -26,73 +26,8 @@ public class ConsumableRecipes {
 	
 	public static void register() {
 		
-		//Airstikes
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.bomb_caller, 1, 0), new Object[] { "TTT", "TRT", "TTT", 'T', Blocks.tnt, 'R', ModItems.detonator_laser });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.bomb_caller, 1, 1), new Object[] { "TTT", "TRT", "TTT", 'T', ModItems.grenade_gascan, 'R', ModItems.detonator_laser });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.bomb_caller, 1, 2), new Object[] { "TTT", "TRT", "TTT", 'T', ModItems.pellet_gas, 'R', ModItems.detonator_laser });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.bomb_caller, 1, 3), new Object[] { "TRT", 'T', ModItems.grenade_cloud, 'R', ModItems.detonator_laser });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.bomb_caller, 1, 4), new Object[] { "TR", 'T', ModItems.ammo_nuke.stackFromEnum(AmmoFatman.HIGH), 'R', ModItems.detonator_laser });
-
-		//Food
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.bomb_waffle, 1), new Object[] { "WEW", "MPM", "WEW", 'W', Items.wheat, 'E', Items.egg, 'M', Items.milk_bucket, 'P', ModItems.man_core });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.schnitzel_vegan, 3), new Object[] { "RWR", "WPW", "RWR", 'W', ModItems.nuclear_waste, 'R', Items.reeds, 'P', Items.pumpkin_seeds });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.cotton_candy, 2), new Object[] { " S ", "SPS", " H ", 'P', PU239.nugget(), 'S', Items.sugar, 'H', Items.stick });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.apple_schrabidium, 1, 0), new Object[] { "SSS", "SAS", "SSS", 'S', SA326.nugget(), 'A', Items.apple });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.apple_schrabidium, 1, 1), new Object[] { "SSS", "SAS", "SSS", 'S', SA326.ingot(), 'A', Items.apple });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.apple_schrabidium, 1, 2), new Object[] { "SSS", "SAS", "SSS", 'S', SA326.block(), 'A', Items.apple });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.apple_lead, 1, 0), new Object[] { "SSS", "SAS", "SSS", 'S', PB.nugget(), 'A', Items.apple });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.apple_lead, 1, 1), new Object[] { "SSS", "SAS", "SSS", 'S', PB.ingot(), 'A', Items.apple });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.apple_lead, 1, 2), new Object[] { "SSS", "SAS", "SSS", 'S', PB.block(), 'A', Items.apple });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.apple_euphemium, 1), new Object[] { "EEE", "EAE", "EEE", 'E', EUPH.nugget(), 'A', Items.apple });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.tem_flakes, 1, 0), new Object[] { GOLD.nugget(), Items.paper });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.tem_flakes, 1, 1), new Object[] { GOLD.nugget(), GOLD.nugget(), GOLD.nugget(), Items.paper });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.tem_flakes, 1, 2), new Object[] { GOLD.ingot(), GOLD.ingot(), GOLD.nugget(), GOLD.nugget(), Items.paper });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.glowing_stew, 1), new Object[] { Items.bowl, Item.getItemFromBlock(ModBlocks.mush), Item.getItemFromBlock(ModBlocks.mush) });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.balefire_scrambled, 1), new Object[] { Items.bowl, ModItems.egg_balefire });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.balefire_and_ham, 1), new Object[] { ModItems.balefire_scrambled, Items.cooked_beef });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.med_ipecac, 1), new Object[] { Items.glass_bottle, Items.nether_wart });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.med_ptsd, 1), new Object[] { ModItems.med_ipecac });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.pancake, 1), new Object[] { REDSTONE.dust(), DIAMOND.dust(), Items.wheat, STEEL.bolt(), CU.wireFine(), STEEL.plate() });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.pancake, 1), new Object[] { REDSTONE.dust(), EMERALD.dust(), Items.wheat, STEEL.bolt(), CU.wireFine(), STEEL.plate() });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.chocolate_milk, 1), new Object[] { KEY_ANYPANE, new ItemStack(Items.dye, 1, 3), Items.milk_bucket, Fluids.NITROGLYCERIN.getDict(1_000) });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.loops), new Object[] { ModItems.flame_pony, Items.wheat, Items.sugar });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.loop_stew), new Object[] { ModItems.loops, ModItems.can_smart, Items.bowl });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.coffee), new Object[] { COAL.dust(), Items.milk_bucket, Items.potionitem, Items.sugar });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.coffee_radium), new Object[] { ModItems.coffee, RA226.nugget() });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.ingot_smore), new Object[] { Items.wheat, new ItemStack(ModItems.marshmallow, 1, 1), new ItemStack(Items.dye, 1, 3) });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.marshmallow), new Object[] { Items.stick, Items.sugar, Items.wheat_seeds });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.quesadilla, 3), new Object[] { ModItems.cheese, ModItems.cheese, Items.bread });
-		
 		//Peas
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.peas), new Object[] { " S ", "SNS", " S ", 'S', Items.wheat_seeds, 'N', GOLD.nugget() });
-		
-		//Cans
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.can_empty, 1), new Object[] { "P", "P", 'P', AL.plate() });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.can_smart, 1), new Object[] { ModItems.can_empty, Items.potionitem, Items.sugar, KNO.dust() });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.can_creature, 1), new Object[] { ModItems.can_empty, Items.potionitem, Items.sugar, Fluids.DIESEL.getDict(1000) });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.can_redbomb, 1), new Object[] { ModItems.can_empty, Items.potionitem, Items.sugar, ModItems.pellet_cluster });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.can_mrsugar, 1), new Object[] { ModItems.can_empty, Items.potionitem, Items.sugar, F.dust() });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.can_overcharge, 1), new Object[] { ModItems.can_empty, Items.potionitem, Items.sugar, S.dust() });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.can_luna, 1), new Object[] { ModItems.can_empty, Items.potionitem, Items.sugar, ModItems.powder_meteorite_tiny });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.mucho_mango, 1), new Object[] { Items.potionitem, Items.sugar, Items.sugar, KEY_ORANGE });
-
-		//Canteens
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.canteen_vodka, 1), new Object[] { "O", "P", 'O', Items.potato, 'P', STEEL.plate() });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.canteen_fab, 1), new Object[] { "VMV", "MVM", "VMV", 'V', ModItems.canteen_vodka, 'M', ModItems.powder_magic });
-
-		//Soda
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.bottle_empty, 6), new Object[] { " G ", "G G", "GGG", 'G', KEY_ANYPANE });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.bottle_nuka, 1), new Object[] { ModItems.bottle_empty, Items.potionitem, Items.sugar, COAL.dust() });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.bottle_cherry, 1), new Object[] { ModItems.bottle_empty, Items.potionitem, Items.sugar, REDSTONE.dust() });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.bottle_quantum, 1), new Object[] { ModItems.bottle_empty, Items.potionitem, Items.sugar, ModItems.trinitite });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.bottle_sparkle), new Object[] { ModItems.bottle_nuka, Items.carrot, GOLD.nugget() });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.bottle_rad), new Object[] { ModItems.bottle_quantum, Items.carrot, GOLD.nugget() });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.bottle2_empty, 6), new Object[] { " G ", "G G", "G G", 'G', KEY_ANYPANE });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.bottle2_korl, 1), new Object[] { ModItems.bottle2_empty, Items.potionitem, Items.sugar, CU.dust() });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.bottle2_fritz, 1), new Object[] { ModItems.bottle2_empty, Items.potionitem, Items.sugar, W.dust() });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.bottle2_korl_special, 1), new Object[] { ModItems.bottle2_empty, Items.potionitem, Items.sugar, CU.dust(), ST.dust() });
-		CraftingManager.addShapelessAuto(new ItemStack(ModItems.bottle2_fritz_special, 1), new Object[] { ModItems.bottle2_empty, Items.potionitem, Items.sugar, W.dust(), TH232.dust() });
-
 		//Syringes
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.syringe_empty, 6), new Object[] { "P", "C", "B", 'B', Item.getItemFromBlock(Blocks.iron_bars), 'C', ModItems.cell_empty, 'P', IRON.plate() });
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.syringe_antidote, 6), new Object[] { "SSS", "PMP", "SSS", 'S', ModItems.syringe_empty, 'P', Items.pumpkin_seeds, 'M', Items.milk_bucket });
@@ -101,17 +36,9 @@ public class ConsumableRecipes {
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.syringe_antidote, 6), new Object[] { "SPS", "SMS", "SPS", 'S', ModItems.syringe_empty, 'P', Items.pumpkin_seeds, 'M', Items.reeds });
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.syringe_poison, 1), new Object[] { "SLS", "LCL", "SLS", 'C', ModItems.syringe_empty, 'S', Items.spider_eye, 'L', PB.dust() });
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.syringe_poison, 1), new Object[] { "SLS", "LCL", "SLS", 'C', ModItems.syringe_empty, 'S', Items.spider_eye, 'L', ModItems.powder_poison });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.syringe_awesome, 1), new Object[] { "SPS", "NCN", "SPS", 'C', ModItems.syringe_empty, 'S', S.dust(), 'P', PU239.nugget(), 'N', PU238.nugget() });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.syringe_awesome, 1), new Object[] { "SNS", "PCP", "SNS", 'C', ModItems.syringe_empty, 'S', S.dust(), 'P', PU239.nugget(), 'N', PU238.nugget() });
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.syringe_metal_empty, 6), new Object[] { "P", "C", "B", 'B', Blocks.iron_bars, 'C', ModItems.rod_empty, 'P', IRON.plate() });
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.syringe_metal_stimpak, 1), new Object[] { " N ", "NSN", " N ", 'N', Items.nether_wart, 'S', ModItems.syringe_metal_empty });
 		CraftingManager.addShapelessAuto(new ItemStack(ModItems.syringe_metal_stimpak, 1), new Object[] { ModItems.nitra_small, ModItems.nitra_small, ModItems.nitra_small, ModItems.syringe_metal_empty });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.syringe_metal_medx, 1), new Object[] { " N ", "NSN", " N ", 'N', Items.quartz, 'S', ModItems.syringe_metal_empty });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.syringe_metal_psycho, 1), new Object[] { " N ", "NSN", " N ", 'N', Items.glowstone_dust, 'S', ModItems.syringe_metal_empty });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.syringe_metal_super, 1), new Object[] { " N ", "PSP", "L L", 'N', ModItems.bottle_nuka, 'P', STEEL.plate(), 'S', ModItems.syringe_metal_stimpak, 'L', Items.leather });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.syringe_metal_super, 1), new Object[] { " N ", "PSP", "L L", 'N', ModItems.bottle_nuka, 'P', STEEL.plate(), 'S', ModItems.syringe_metal_stimpak, 'L', ANY_RUBBER.ingot() });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.syringe_metal_super, 1), new Object[] { " N ", "PSP", "L L", 'N', ModItems.bottle_cherry, 'P', STEEL.plate(), 'S', ModItems.syringe_metal_stimpak, 'L', Items.leather });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.syringe_metal_super, 1), new Object[] { " N ", "PSP", "L L", 'N', ModItems.bottle_cherry, 'P', STEEL.plate(), 'S', ModItems.syringe_metal_stimpak, 'L', ANY_RUBBER.ingot() });
 		CraftingManager.addShapelessAuto(new ItemStack(ModItems.syringe_taint), new Object[] { ModItems.bottle2_empty, ModItems.syringe_metal_empty, ModItems.ducttape, ModItems.powder_magic, SA326.nugget(), Items.potionitem });
 		
 		//Medicine
@@ -130,15 +57,7 @@ public class ConsumableRecipes {
 			CraftingManager.addShapelessAuto(new ItemStack(ModItems.siox, 8), new Object[] { COAL.dust(), ASBESTOS.dust(), ModItems.nugget_bismuth });
 			CraftingManager.addShapelessAuto(new ItemStack(ModItems.xanax, 1), new Object[] { COAL.dust(), KNO.dust(), BR.dust() });
 		}
-		
-		//Med bags
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.med_bag, 1), new Object[] { "LLL", "SIS", "LLL", 'L', Items.leather, 'S', ModItems.syringe_metal_stimpak, 'I', ModItems.syringe_antidote });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.med_bag, 1), new Object[] { "LLL", "SIS", "LLL", 'L', Items.leather, 'S', ModItems.syringe_metal_stimpak, 'I', ModItems.pill_iodine });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.med_bag, 1), new Object[] { "LL", "SI", "LL", 'L', Items.leather, 'S', ModItems.syringe_metal_super, 'I', ModItems.radaway });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.med_bag, 1), new Object[] { "LLL", "SIS", "LLL", 'L', ANY_RUBBER.ingot(), 'S', ModItems.syringe_metal_stimpak, 'I', ModItems.syringe_antidote });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.med_bag, 1), new Object[] { "LLL", "SIS", "LLL", 'L', ANY_RUBBER.ingot(), 'S', ModItems.syringe_metal_stimpak, 'I', ModItems.pill_iodine });
-		CraftingManager.addRecipeAuto(new ItemStack(ModItems.med_bag, 1), new Object[] { "LL", "SI", "LL", 'L', ANY_RUBBER.ingot(), 'S', ModItems.syringe_metal_super, 'I', ModItems.radaway });
-		
+
 		//IV Bags
 		CraftingManager.addRecipeAuto(new ItemStack(ModItems.iv_empty, 4), new Object[] { "S", "I", "S", 'S', ANY_RUBBER.ingot(), 'I', IRON.plate() });
 		CraftingManager.addShapelessAuto(new ItemStack(ModItems.iv_xp_empty, 1), new Object[] { ModItems.iv_empty, ModItems.powder_magic });
