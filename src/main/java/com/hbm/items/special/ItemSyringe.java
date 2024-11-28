@@ -186,30 +186,9 @@ public class ItemSyringe extends Item {
 			}
 		}
 
-		if(this == ModItems.syringe_metal_super && !VersatileConfig.hasPotionSickness(player)) {
-			if(!world.isRemote) {
-				player.heal(25);
-				HbmLivingProps.setDigamma(player, (float)(Math.log(Math.pow(0.5, (HbmLivingProps.getDigamma(player)))-0.1)/-0.30103));
-
-				stack.stackSize--;
-				world.playSoundAtEntity(player, "hbm:item.syringe", 1.0F, 1.0F);
-
-				if(stack.stackSize <= 0) {
-					return new ItemStack(ModItems.syringe_metal_empty);
-				}
-
-				if(!player.inventory.addItemStackToInventory(new ItemStack(ModItems.syringe_metal_empty))) {
-					player.dropPlayerItemWithRandomChoice(new ItemStack(ModItems.syringe_metal_empty, 1, 0), false);
-				}
-				
-				VersatileConfig.applyPotionSickness(player, 15);
-			}
-		}
-
 		if(this == ModItems.med_bag && !VersatileConfig.hasPotionSickness(player)) {
 			if(!world.isRemote) {
 				player.setHealth(player.getMaxHealth());
-
 				player.removePotionEffect(Potion.blindness.id);
 				player.removePotionEffect(Potion.confusion.id);
 				player.removePotionEffect(Potion.digSlowdown.id);
