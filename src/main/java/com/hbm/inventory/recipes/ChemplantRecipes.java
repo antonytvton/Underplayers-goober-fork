@@ -402,24 +402,23 @@ public class ChemplantRecipes extends SerializableRecipe {
 				.inputItems(
 						new OreDictStack(KNO.dust(), 4),
 						new OreDictStack(TI.plateCast(),1))
-				.inputFluids(new FluidStack(Fluids.AROMATICS, 100), new FluidStack(Fluids.NITRIC_ACID, 100))
+				.inputFluids(new FluidStack(Fluids.AROMATICS, 500), new FluidStack(Fluids.NITRIC_ACID, 500))
 				.outputItems(new ItemStack(ModItems.insert_sapi, 1)));
 		
 		recipes.add(new ChemRecipe(105, "BONDED_CERAMIC", 40)
 				.inputItems(
-						new ComparableStack(ModItems.powder_bakelite,2),
+						new ComparableStack(ModItems.powder_bakelite,4),
 						new ComparableStack(ModItems.insert_sapi,2))
-				.inputFluids(new FluidStack(Fluids.UNSATURATEDS, 100), new FluidStack(Fluids.SOLVENT, 100))
+				.inputFluids(new FluidStack(Fluids.UNSATURATEDS, 500), new FluidStack(Fluids.SOLVENT, 500))
 				.outputItems(new ItemStack(ModItems.insert_esapi, 1)));
 		
 		recipes.add(new ChemRecipe(106, "BORON_COMPOSITE", 40)
 				.inputItems(
-						new ComparableStack(ModItems.powder_boron, 2),
+						new ComparableStack(ModItems.powder_boron, 4),
 						new ComparableStack(ModItems.ingot_pc, 4),
-						new ComparableStack(ModItems.insert_esapi,1))
-				.inputFluids(new FluidStack(Fluids.XYLENE, 100), new FluidStack(Fluids.RADIOSOLVENT, 100))
-				.outputItems(new ItemStack(ModItems.insert_xsapi, 2)));
-
+						new ComparableStack(ModItems.insert_esapi,2))
+				.inputFluids(new FluidStack(Fluids.XYLENE, 500), new FluidStack(Fluids.RADIOSOLVENT, 500))
+				.outputItems(new ItemStack(ModItems.insert_xsapi, 1)));
 	}
 
 	public static void registerOtherOil() {
